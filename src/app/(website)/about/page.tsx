@@ -1,7 +1,9 @@
+import About from "@/components/websiteComponent/About/About";
+
 const AboutPage = () => {
   return (
     <div>
-      <h2 className="text-2xl">About page</h2>
+      <About />
     </div>
   );
 };
