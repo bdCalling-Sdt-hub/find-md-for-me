@@ -1,7 +1,9 @@
+import Counties from "@/components/websiteComponent/StateCover/Counties";
+
 const StateCoverPage = () => {
   return (
-    <div>
-      <h2>State cover page</h2>
+    <div className=" container ">
+      <Counties />
     </div>
   );
 };

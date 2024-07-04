@@ -1,7 +1,9 @@
+import FAQ from "@/components/websiteComponent/FAQ/FAQ";
+
 const FaqPage = () => {
   return (
-    <div>
-      <h2>FAQ page</h2>
+    <div className="container">
+      <FAQ />
     </div>
   );
 };

@@ -1,11 +1,22 @@
+import { Layout } from "antd";
+const { Header, Footer, Sider, Content } = Layout;
+
 const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
-      <div className="grid grid-cols-12">
-        <div className="col-span-2 bg-primary h-screen"></div>
-        <div className="col-span-10 bg-slate-300">{children}</div>
-      </div>
-    </div>
+    <Layout>
+      <Sider width="25%" className="bg-red-200">
+        Sider
+      </Sider>
+
+      <Layout>
+        <Header className="bg-red-300">Header</Header>
+
+        <Content className="bg-red-400">
+          <div>{children} </div>
+        </Content>
+        {/* <Footer >Footer</Footer>  */}
+      </Layout>
+    </Layout>
   );
 };
 

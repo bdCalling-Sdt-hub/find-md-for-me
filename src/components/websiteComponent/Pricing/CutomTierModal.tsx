@@ -8,6 +8,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 const CutomTierModal = () => {
   return (
@@ -18,10 +21,17 @@ const CutomTierModal = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            <div className="grid w-full   gap-1.5 mt-10">
+              <Label htmlFor="email" className="mb-2 text-lg">
+                Your Name
+              </Label>
+              <Textarea placeholder="Write your requirements..." cols={15} />
+            </div>
+            <div className=" mt-5 text-end">
+              {" "}
+              <Button variant="btn2"> Submit </Button>
+            </div>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
