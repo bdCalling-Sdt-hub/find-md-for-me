@@ -48,7 +48,7 @@ const Counties = () => {
         <Title> States we cover </Title>
 
         <div className=" flex justify-center items-center mb-10">
-          <p className=" text-[#737373] text-[20px] w-[700px]">
+          <p className=" text-[#737373] text-[20px] lg:w-[700px]">
             {" "}
             Below you will find the states where we are able to provide MD
             oversight. New states will be provided continue to come and check
@@ -58,9 +58,9 @@ const Counties = () => {
       </div>
 
       <div className="  ">
-        <div className="flex  flex-wrap  gap-9 mb-10 ">
+        <div className="flex  flex-wrap  lg:gap-9 gap-4 mb-10 ">
           {counties?.map((data, index) => (
-            <div key={index} className="mx-auto">
+            <div key={index} className="lg:mx-auto">
               <p className=" text-[#737373] text-[20px] text-center ">
                 {" "}
                 {data}{" "}
@@ -76,7 +76,7 @@ const Counties = () => {
           width={800}
           height={300}
           alt=" "
-          style={{ width: "70%", height: "auto" }}
+          style={{ width: "100%", height: "auto" }}
         />
       </div>
     </div>

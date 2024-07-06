@@ -1,6 +1,5 @@
+"use client";
 import Title from "@/components/shared/Title";
-import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-label";
 import styles from "./Contact.module.css";
 
 import React from "react";
@@ -9,9 +8,9 @@ import { IoMdMail } from "react-icons/io";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import SubTitle from "@/components/shared/SubTitle";
+import { Form, Input, Radio } from "antd";
 
 const Contact = () => {
   const values = [
@@ -36,12 +35,12 @@ const Contact = () => {
           {" "}
           Any questions or remarks? Just write us a message!{" "}
         </SubTitle>
-        <p className=" text-[#737373] text-[20px] w-[700px] text-center mx-auto mb-10"></p>
+        <p className=" text-[#737373] text-[20px] lg:w-[700px] text-center mx-auto mb-10"></p>
       </div>
 
       <div>
-        <div className="grid grid-cols-12  mb-10 items-center gap-12  bg-[#FAFAFA] p-10 rounded-lg">
-          <div className={` col-span-4 ${styles.bgImg} `}>
+        <div className="grid lg:grid-cols-12  mb-10 items-center gap-12  bg-[#FAFAFA] lg:p-10 p-5 rounded-lg">
+          <div className={` lg:col-span-4 ${styles.bgImg} `}>
             <div>
               <h1 className=" text-white font-semibold text-3xl text-center  my-10">
                 {" "}
@@ -66,64 +65,93 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className=" col-span-8">
-            <div className=" flex gap-5 mb-10  w-full">
-              <div className=" w-full">
-                <Label>First Name</Label>
-                <Input placeholder="Naziya Sultana" />
-              </div>
-              <div className=" w-full">
-                <Label> Last Name</Label>
-                <Input placeholder="Mithila " />
-              </div>
-            </div>
+          <div className=" lg:col-span-8">
+            <Form>
+              <div className=" lg:flex gap-5  w-full">
+                <Form.Item className=" w-full">
+                  <label className="text-lg mb-6 text-[#737373] font-semibold ">
+                    First Name
+                  </label>
+                  <Input
+                    placeholder="Naziya Sultana"
+                    className="h-[45px] mt-2"
+                  />
+                </Form.Item>
 
-            <div className="  flex gap-5 mb-10 w-full ">
-              <div className=" w-1/2">
-                <Label>Email</Label>
-                <Input type="email" placeholder="Naziya@gmail.com" />
+                <Form.Item className=" w-full">
+                  <label className="text-lg mb-6 text-[#737373] font-semibold ">
+                    {" "}
+                    Last Name
+                  </label>
+                  <Input placeholder="Mithila " className="h-[45px] mt-2" />
+                </Form.Item>
               </div>
-              <div className=" w-1/2">
-                <Label>Phone Number </Label>
-                <Input type="number" placeholder="+0888798345326 " />
-              </div>
-            </div>
 
-            <div className="flex gap-6 mb-10">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms" />
+              <div className="  lg:flex gap-5 w-full ">
+                <Form.Item className=" lg:w-1/2">
+                  <label className="text-lg mb-6 text-[#737373] font-semibold ">
+                    Email
+                  </label>
+                  <Input
+                    type="email"
+                    placeholder="Naziya@gmail.com"
+                    className="h-[45px] mt-2"
+                  />
+                </Form.Item>
+
+                <Form.Item className=" lg:w-1/2">
+                  <label className="text-lg mb-6 text-[#737373] font-semibold ">
+                    Phone Number{" "}
+                  </label>
+                  <Input
+                    type="number"
+                    placeholder="+0888798345326 "
+                    className="h-[45px] mt-2"
+                  />
+                </Form.Item>
+              </div>
+
+              <Form.Item name="business">
                 <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  htmlFor=" "
+                  className="text-lg mb-6 text-[#737373] font-semibold "
                 >
-                  General Inquiry
+                  Subject
                 </label>
-              </div>
+                <div className=" flex-col">
+                  <Radio.Group>
+                    <Radio value="startUp" className=" text-xl my-2">
+                      {" "}
+                      <span className=" text-lg font-medium text-[#737373] ">
+                        General Inquiry{" "}
+                      </span>{" "}
+                    </Radio>{" "}
+                    <Radio value="oneYear" className=" text-xl my-2">
+                      {" "}
+                      <span className=" text-lg font-medium text-[#737373] ">
+                        Jobs
+                      </span>{" "}
+                    </Radio>{" "}
+                    <Radio value="twoYear" className=" text-xl my-2">
+                      {" "}
+                      <span className=" text-lg font-medium  text-[#737373] ">
+                        Partnership
+                      </span>{" "}
+                    </Radio>{" "}
+                  </Radio.Group>
+                </div>
+              </Form.Item>
+            </Form>
 
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms2" />
-                <label
-                  htmlFor="terms2"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Jobs
-                </label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms3" />
-                <label
-                  htmlFor="terms3"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Partnership
-                </label>
-              </div>
-            </div>
-            <div className=" w-full mt-">
-              <Label>Message</Label>
-              <Input placeholder="Write your message.." />
-            </div>
+            <Form.Item className=" w-full ">
+              <label className="text-lg mb-6 text-[#737373] font-semibold ">
+                Message
+              </label>
+              <Input
+                placeholder="Write your message.."
+                className="h-[45px] mt-2"
+              />
+            </Form.Item>
 
             <div className="text-end mt-10">
               <Button variant="getStarted">Submit </Button>

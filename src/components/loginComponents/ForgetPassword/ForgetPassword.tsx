@@ -37,20 +37,20 @@ const ForgetPassword = () => {
   return (
     <div>
       <form
+        className=" lg:w-[550px] w-[400px] lg:px-[90px] px-[20px] lg:py-[57px] py-[30px] "
         style={{
-          width: "550px",
           background: "white",
           borderRadius: "12px",
-          padding: "90px 57px",
+          // padding: "90px 57px",
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1
+          className=" lg:text-center"
           style={{
             fontSize: "32px",
             marginBottom: "54px",
             color: "#494949",
-            textAlign: "center",
           }}
         >
           Forgot Password

@@ -28,11 +28,11 @@ const BannerCard = () => {
   ];
   return (
     <div>
-      <div className=" flex justify-between items-center gap-8  ">
+      <div className=" lg:flex flex-wrap justify-between items-center gap-8   ">
         {values?.map((value, index) => (
           <div
             key={index}
-            className=" p-5 px-8 rounded-lg leading-loose shadow-xl w-[420px] bg-white "
+            className=" p-5 px-8 rounded-lg lg:leading-loose shadow-xl lg:w-[420px]  bg-white  lg:mb-1 mb-8 "
           >
             <p className=" mb-3"> {value?.image}</p>
             <p className=" text-[#1D75F2] text-[16px] font-semibold mb-3">

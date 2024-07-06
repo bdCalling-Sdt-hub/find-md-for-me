@@ -41,17 +41,16 @@ const ResetPassword = () => {
   return (
     <div>
       <form
+        className=" lg:w-[630px] w-[400px] lg:px-[90px] px-[20px] lg:py-[57px] py-[30px] "
         style={{
-          width: "630px",
           background: "white",
           borderRadius: "12px",
-          padding: "90px 57px",
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1
+          className="lg:text-[32px] text-[25px]"
           style={{
-            fontSize: "32px",
             color: "black",
             marginBottom: "13px",
             textAlign: "center",
@@ -73,7 +72,7 @@ const ResetPassword = () => {
           security
         </p>
 
-        <div style={{ margin: "45px 0 20px 0" }}>
+        <div className=" sm:mt-0" style={{ margin: "45px 0 20px 0" }}>
           <label
             style={{ display: "block", color: "#6A6D7C", marginBottom: "5px" }}
             htmlFor=""

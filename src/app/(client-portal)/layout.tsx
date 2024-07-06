@@ -1,22 +1,22 @@
-import { Layout } from "antd";
-const { Header, Footer, Sider, Content } = Layout;
+import Navbar from "@/components/ClientDashboard/Navbar";
+import Sidebar from "@/components/ClientDashboard/Sidebar";
 
 const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Layout>
-      <Sider width="25%" className="bg-red-200">
-        Sider
-      </Sider>
-
-      <Layout>
-        <Header className="bg-red-300">Header</Header>
-
-        <Content className="bg-red-400">
-          <div>{children} </div>
-        </Content>
-        {/* <Footer >Footer</Footer>  */}
-      </Layout>
-    </Layout>
+    <div>
+      <div className="grid grid-cols-12 lg:h-screen ">
+        <div className="lg:col-span-2 col-span-12 lg:bg-[#E8F6FE]">
+          <Sidebar />
+        </div>
+        <div className="lg:col-span-10 col-span-12 ">
+          <div className="h-[80px] bg-[#E8F6FE] hidden lg:block  ">
+            {" "}
+            <Navbar />
+          </div>
+          <div>{children}</div>
+        </div>
+      </div>
+    </div>
   );
 };
 

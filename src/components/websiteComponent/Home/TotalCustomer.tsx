@@ -21,11 +21,11 @@ const TotalCustomer = () => {
     },
   ];
   return (
-    <div className="container my-16">
-      <div className="flex justify-between items-center">
+    <div className="lg:container my-16">
+      <div className="lg:flex justify-between items-center ">
         {values?.map((value, index) => (
-          <div key={index} className="text-center">
-            <p className=" text-5xl font-bold text-[#1D75F2] mb-3">
+          <div key={index} className="text-center  mb-6 lg:mb-1">
+            <p className=" lg:text-5xl text-3xl font-bold text-[#1D75F2] mb-3">
               {" "}
               {value?.total}
             </p>

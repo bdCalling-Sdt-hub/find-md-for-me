@@ -2,6 +2,7 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const PricingTabs = () => {
   const monthlyValues = [
@@ -150,11 +151,11 @@ const PricingTabs = () => {
         </div>
 
         <TabsContent value="account" className="">
-          <div className=" flex justify-between gap-5 text-black  ">
+          <div className=" lg:flex justify-between gap-5 text-black  ">
             {monthlyValues?.map((value, index) => (
               <div
                 key={index}
-                className="bg-[#E8F6FE] rounded-lg p-4 w-1/4 relative h-[85vh] "
+                className="bg-[#E8F6FE] rounded-lg p-4 ps-8 lg:w-1/4 relative h-[78vh] lg:h-[85vh] mb-5 lg:mb-1 "
               >
                 <p className=" text-lg font-semibold ">{value?.title} </p>
                 <p className=" text-[32px] font-semibold mt-2 ">
@@ -183,7 +184,10 @@ const PricingTabs = () => {
 
                 <div className="  mb-3 absolute bottom-0 ">
                   <div className=" mx-5">
-                    <Button variant="getStarted"> Get Started </Button>
+                    <Link href="/intake-info-first">
+                      {" "}
+                      <Button variant="getStarted"> Get Started </Button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -191,11 +195,11 @@ const PricingTabs = () => {
           </div>
         </TabsContent>
         <TabsContent value="password">
-          <div className=" flex justify-between gap-5 text-black ">
+          <div className=" lg:flex justify-between gap-5 text-black ">
             {yearlyValues?.map((value, index) => (
               <div
                 key={index}
-                className="bg-[#E8F6FE] rounded-lg p-4 w-1/4 relative h-[85vh] "
+                className="bg-[#E8F6FE] rounded-lg p-4 lg:w-1/4 relative h-[78vh] lg:h-[85vh] mb-5 lg:mb-1"
               >
                 <p className=" text-lg font-semibold ">{value?.title} </p>
                 <p className=" text-[32px] font-semibold mt-2 ">
@@ -227,7 +231,9 @@ const PricingTabs = () => {
 
                 <div className="  mb-3 absolute bottom-0 ">
                   <div className=" mx-5">
-                    <Button variant="getStarted"> Get Started </Button>
+                    <Link href="/intake-info-first">
+                      <Button variant="getStarted"> Get Started </Button>{" "}
+                    </Link>
                   </div>
                 </div>
               </div>

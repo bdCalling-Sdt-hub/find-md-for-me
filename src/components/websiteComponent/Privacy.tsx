@@ -1,29 +1,9 @@
-"use client";
-import Image from "next/image";
 import React from "react";
-import person1 from "@/assests/person1.png";
-import person2 from "@/assests/person2.png";
 
-const About = () => {
-  const personInfo = [
-    {
-      image: <Image src={person1} width={250} height={100} alt="" />,
-      title: " CEO and Healthcare Administrator",
-      name: " Lamesha Davis BSN, MHA",
-    },
-    {
-      image: <Image src={person2} width={250} height={100} alt="" />,
-      title: " Office Manager",
-      name: " Venessa L.",
-    },
-  ];
+const Privacy = () => {
   return (
     <div className=" container  my-12">
-      <h1 className=" text-[#1D75F2] text-2xl mb-3">
-        {" "}
-        <span className=" font-semibold "> Our Journey: </span> Empowering
-        Aesthetic and Healthcare Providers for Success
-      </h1>
+      <h1 className=" text-[#1D75F2] text-2xl mb-3">Privacy & Policy</h1>
 
       <div>
         <p className=" text-[16px] text-black pb-3  tracking-wide ">
@@ -93,24 +73,8 @@ const About = () => {
           success, today and for generations to come.
         </p>
       </div>
-
-      <div className="">
-        <h1 className=" text-[#1D75F2] text-3xl font-bold tracking-wide text-center py-3">
-          {" "}
-          Meet the team
-        </h1>
-        <div className=" lg:flex flex-wrap items-center justify-center  mx-auto  gap-12 ">
-          {personInfo?.map((data, index) => (
-            <div key={index} className="">
-              <p> {data.image}</p>
-              <p className="font-semibold text-lg pt-2"> {data?.title}</p>
-              <p> {data?.name}</p>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };
 
-export default About;
+export default Privacy;

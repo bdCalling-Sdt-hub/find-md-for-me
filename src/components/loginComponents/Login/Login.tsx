@@ -37,12 +37,11 @@ const Login = () => {
       <>
         <form
           name="normal_login"
-          className="login-form"
+          className="login-form lg:w-[550px] w-[100%] lg:px-[60px] px-[30px] lg:py-[47px] py-[30px]  "
           style={{
-            width: "550px",
             background: "white",
             borderRadius: "12px",
-            padding: "60px 47px",
+            // padding: "60px 47px",
           }}
           onSubmit={handleSubmit(onSubmit)}
         >

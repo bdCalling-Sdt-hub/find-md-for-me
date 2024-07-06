@@ -4,22 +4,15 @@ import type { FormProps } from "antd";
 import { Button, Checkbox, Form, Input, Radio, Select, Space } from "antd";
 import Title from "@/components/shared/Title";
 import SubTitle from "@/components/shared/SubTitle";
+import { useRouter } from "next/navigation";
 
 const { TextArea } = Input;
 
-type FieldType = {
-  username?: string;
-  password?: string;
-  remember?: string;
-};
-
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-  console.log("Success:", values);
-};
-
-const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
+// type FieldType = {
+//   username?: string;
+//   password?: string;
+//   remember?: string;
+// };
 
 const counties = [
   "Alabama",
@@ -61,6 +54,12 @@ const counties = [
 ];
 
 const IntakeInfo: React.FC = () => {
+  const router = useRouter();
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    router.push("/intake-schedule");
+  };
   return (
     <div className=" container ">
       <div>
@@ -76,19 +75,9 @@ const IntakeInfo: React.FC = () => {
         </p>
       </div>
 
-      <div className=" w-[80%] mx-auto mt-10 bg-[#E8F6FE] rounded-lg p-10 px-20  mb-20">
-        <Form
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-          className=" w-[100%]   "
-        >
-          <Form.Item
-            name="name"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+      <div className=" lg:w-[80%] mx-auto mt-10 bg-[#E8F6FE] rounded-lg lg:p-10 p-5 lg:px-20  mb-20">
+        <Form name="basic" onFinish={onFinish} className=" w-[100%]   ">
+          <Form.Item name="name">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -101,10 +90,7 @@ const IntakeInfo: React.FC = () => {
             />
           </Form.Item>
 
-          <Form.Item
-            name="address"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="address">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -117,10 +103,7 @@ const IntakeInfo: React.FC = () => {
             />
           </Form.Item>
 
-          <Form.Item
-            name="business"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -166,10 +149,7 @@ const IntakeInfo: React.FC = () => {
             </div>
           </Form.Item>
 
-          <Form.Item
-            name="business2"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business2">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -190,10 +170,7 @@ const IntakeInfo: React.FC = () => {
             </div>
           </Form.Item>
 
-          <Form.Item
-            name="business3"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business3">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -214,10 +191,7 @@ const IntakeInfo: React.FC = () => {
             </div>
           </Form.Item>
 
-          <Form.Item
-            name="business4"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business4">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -233,10 +207,7 @@ const IntakeInfo: React.FC = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item
-            name="business5"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business5">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -290,10 +261,7 @@ const IntakeInfo: React.FC = () => {
             </Form.Item>
           </div>
 
-          <Form.Item
-            name="business7"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business7">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -327,10 +295,7 @@ const IntakeInfo: React.FC = () => {
             </div>
           </Form.Item>
 
-          <Form.Item
-            name="business8"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business8">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -346,10 +311,7 @@ const IntakeInfo: React.FC = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item
-            name="business9"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business9">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -382,10 +344,7 @@ const IntakeInfo: React.FC = () => {
             </div>
           </Form.Item>
 
-          <Form.Item
-            name="business10"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business10">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -396,10 +355,7 @@ const IntakeInfo: React.FC = () => {
             <Input className=" w-full h-[40px] " type="number" />
           </Form.Item>
 
-          <Form.Item
-            name="business11"
-            rules={[{ required: true, message: " This field is required " }]}
-          >
+          <Form.Item name="business11">
             <label
               htmlFor=" "
               className="text-lg mb-6 text-[#737373] font-semibold "
@@ -418,7 +374,7 @@ const IntakeInfo: React.FC = () => {
             <Button
               type="primary"
               htmlType="submit"
-              className=" bg-[#1D75F2] w-[10%] text-white "
+              className=" bg-[#1D75F2] lg:w-[10%] text-white "
             >
               Next
             </Button>

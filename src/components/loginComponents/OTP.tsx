@@ -33,14 +33,14 @@ const OTP = () => {
   return (
     <div>
       <div
+        className=" lg:w-[550px] w-[400px] lg:px-[90px] px-[20px] lg:py-[57px] py-[30px] "
         style={{
-          width: "550px",
           background: "white",
           borderRadius: "12px",
-          padding: "90px 57px",
         }}
       >
         <h1
+          className="text-center lg:text-[32px] text-[25px]"
           style={{
             fontSize: "32px",
             color: "#6A6D7C",

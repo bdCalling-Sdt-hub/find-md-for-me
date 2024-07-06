@@ -54,26 +54,26 @@ const Footer = () => {
   ];
   return (
     <div className=" bg-[#1DA1F2]">
-      <div className="container flex justify-between text-white py-14">
+      <div className="container lg:flex justify-between text-white py-14">
         <div className=" ">
           <h1 className=" text-white text-2xl  font-bold pb-3 ">
             {" "}
             Find a MD 4 Me
           </h1>
-          <p className=" text-[14px] w-[380px] leading-6 pb-3 tracking-normal">
+          <p className=" text-[14px] lg:w-[380px] leading-6 pb-3 tracking-normal">
             Find a MD 4 Me, is a service organization of an integrated delivery
             system that provides management services for multiple affiliated
             physician practices and clinics. We currently provide management
             services in 27 states
           </p>
-          <p className=" flex items-center gap-4 ">
+          <p className=" flex items-center gap-4 mb-8 lg:mb-1 ">
             <FaFacebook size={28} />
             <RiInstagramFill size={28} />
             <FaGoogle size={28} />
           </p>
         </div>
 
-        <div>
+        <div className="mb-8 lg:mb-1 ">
           <h1 className=" font-semibold text-lg mb-3 ">Info</h1>
           <h1 className=" text-[16px]  font-medium">
             {values?.map((value) => (
@@ -85,7 +85,7 @@ const Footer = () => {
           </h1>
         </div>
 
-        <div>
+        <div className="mb-8 lg:mb-1 ">
           {" "}
           <h1 className=" font-semibold text-lg pb-3 ">Contact Us</h1>
           <h1 className=" text-[16px]  font-medium ">

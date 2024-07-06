@@ -37,7 +37,7 @@ const FAQ = () => {
     <div className="mb-10">
       <Title>FREQUENTLY ASKED QUESTIONS</Title>
       <div className=" mb-10">
-        <p className=" text-[#737373] text-[20px] w-[700px] text-center mx-auto">
+        <p className=" text-[#737373] text-[20px] lg:w-[700px] text-center mx-auto">
           Please reach us{" "}
           <Link
             href="/about"
@@ -50,7 +50,7 @@ const FAQ = () => {
         </p>
       </div>
 
-      <div className=" w-[900px] mx-auto ">
+      <div className=" lg:w-[900px] mx-auto ">
         <div>
           {QA?.map((data, index) => (
             <Accordion key={index} type="single" collapsible className="mb-10">

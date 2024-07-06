@@ -4,36 +4,48 @@ import Image from "next/image";
 import React from "react";
 import bannerImg from "@/assests/bannerImg.png";
 import BannerCard from "./BannerCard";
+import Link from "next/link";
 
 const Banner = () => {
   return (
     <div className="bg-[#FAFAFA]">
-      <div className=" pt-4 mb-5 relative container">
-        <div className=" h-[110vh] ">
-          <div className=" grid grid-cols-2 items-center ">
-            <div className="">
-              <h1 className=" text-[#1DA1F2] text-[56px]  font-bold mb-5 ">
+      <div className=" pt-4 mb-5 relative lg:container">
+        <div className=" lg:h-[110vh] ">
+          <div className=" grid lg:grid-cols-2 grid-cols-1 items-center ">
+            <div className="ps-5">
+              <h1 className=" text-[#1DA1F2] lg:text-[56px] text-[28px]  font-bold mb-5 ">
                 {" "}
                 Find a MD 4 Me
               </h1>
-              <p className="text-[#737373] text-[32px]  mb-5 w-[80%] tracking-wide">
+              <p className="text-[#737373] lg:text-[32px] text-[18px]  mb-5 lg:w-[80%] tracking-wide">
                 {" "}
                 Start today with connecting with MDs in your area
               </p>
 
-              <div className=" flex gap-4">
-                <Button variant="btn2">Get Started Now</Button>
-                <Button variant="default">Learn More</Button>
+              <div className=" flex gap-4 ">
+                <Link href="/intake-info-first">
+                  {" "}
+                  <Button variant="btn2">Get Started Now</Button>{" "}
+                </Link>
+                <Link href="/about">
+                  <Button variant="default">Learn More</Button>
+                </Link>
               </div>
             </div>
 
-            <div>
-              <Image src={bannerImg} width={700} height={200} alt="" />
+            <div className="mt-8 lg:mt-1 p-2">
+              <Image
+                src={bannerImg}
+                width={500}
+                height={200}
+                alt=""
+                style={{ width: "100%" }}
+              />
             </div>
           </div>
         </div>
 
-        <div className=" absolute bottom-20">
+        <div className=" lg:absolute lg:bottom-20 p-2 ">
           <BannerCard />
         </div>
       </div>
