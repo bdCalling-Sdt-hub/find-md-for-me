@@ -56,7 +56,7 @@ const counties = [
 const IntakeInfo: React.FC = () => {
   const router = useRouter();
 
-  const onFinish = (values) => {
+  const onFinish = (values: React.FormEvent) => {
     console.log("Success:", values);
     router.push("/intake-schedule");
   };

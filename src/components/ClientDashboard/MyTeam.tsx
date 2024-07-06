@@ -134,15 +134,17 @@ const data = [
   },
 ];
 const MyTeam = () => {
-  const [page, setPage] = useState(
-    new URLSearchParams(window.location.search).get("page") || 1
-  );
+  let path;
+  if (typeof window !== "undefined") {
+    path = new URLSearchParams(window.location.search).get("page") || 1;
+  }
+  const [page, setPage] = useState(path);
   const [form] = Form.useForm();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (isModalOpen?.key) {
+    if (isModalOpen) {
       form.setFieldsValue(isModalOpen);
     }
   }, [form, isModalOpen]);
@@ -175,7 +177,7 @@ const MyTeam = () => {
     </Menu>
   );
 
-  const columns = [
+  const columns: any = [
     {
       title: "User ID",
       dataIndex: "key",
@@ -203,7 +205,7 @@ const MyTeam = () => {
       dataIndex: "printView",
       key: "printView",
 
-      render: (_, record) => (
+      render: () => (
         <Dropdown className=" bg-white  " overlay={menu}>
           <a onClick={(e) => e.preventDefault()}>
             <Space>
@@ -215,12 +217,12 @@ const MyTeam = () => {
     },
   ];
 
-  const handlePageChange = (page) => {
-    setPage(page);
-    const params = new URLSearchParams(window.location.search);
-    params.set("page", page);
-    window.history.pushState(null, "", `?${params.toString()}`);
-  };
+  // const handlePageChange = (page) => {
+  //   setPage(page);
+  //   const params = new URLSearchParams(window.location.search);
+  //   params.set("page", page);
+  //   window.history.pushState(null, "", `?${params.toString()}`);
+  // };
   return (
     <div>
       {" "}
@@ -256,8 +258,6 @@ const MyTeam = () => {
             className="lg:text-center lg:w-[100%] w-[90%]"
             pagination={{
               pageSize: 10,
-              defaultCurrent: parseInt(page),
-              onChange: handlePageChange,
             }}
           />
         </div>

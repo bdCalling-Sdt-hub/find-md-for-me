@@ -12,7 +12,7 @@ const UserProfile = () => {
   );
   const [imgURL, setImgURL] = useState(image);
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values: React.FormEvent) => {
     console.log(values);
     Swal.fire({
       position: "center",
@@ -23,7 +23,7 @@ const UserProfile = () => {
     });
   };
 
-  const onChange = (e) => {
+  const onChange = (e: any) => {
     const file = e.target.files[0];
     const imgUrl = URL.createObjectURL(file);
     setImgURL(imgUrl);

@@ -5,7 +5,7 @@ import UserProfile from "./UserProfile";
 import { Tabs } from "antd";
 
 const Profile = () => {
-  const onChange = (key) => {
+  const onChange = (key: any) => {
     console.log(key);
   };
 

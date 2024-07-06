@@ -29,7 +29,7 @@ const IntakeSchedule = () => {
     "11:00 PM",
   ];
 
-  const handleClick = (time) => {
+  const handleClick = (time: any) => {
     setClickBtn(time);
   };
 

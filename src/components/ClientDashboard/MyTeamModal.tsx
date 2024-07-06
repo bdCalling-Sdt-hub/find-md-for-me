@@ -1,8 +1,18 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Form, Input, Modal, Upload } from "antd";
-import React from "react";
+import React, { FC } from "react";
 
-const MyTeamModal = ({ isModalOpen, setIsModalOpen, form }) => {
+interface IMyTeam {
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  form: any;
+}
+
+const MyTeamModal: React.FC<IMyTeam> = ({
+  isModalOpen,
+  setIsModalOpen,
+  form,
+}) => {
   const handleOk = () => {
     setIsModalOpen(false);
   };

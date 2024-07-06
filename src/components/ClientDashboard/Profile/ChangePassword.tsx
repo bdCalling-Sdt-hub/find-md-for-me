@@ -8,7 +8,7 @@ const ChangePassword = () => {
   const [conPassError, setConPassError] = useState("");
   const [curPassError, setCurPassError] = useState("");
 
-  const handleChangePassword = (values) => {
+  const handleChangePassword = (values: any) => {
     // console.log(values);
     // if (values?.current_password === values.new_password) {
     //   setNewPassError("The New password is semilar with old Password");
@@ -23,7 +23,9 @@ const ChangePassword = () => {
   };
 
   const handleReset = () => {
-    window.location.reload();
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   };
   return (
     <div>
