@@ -5,8 +5,12 @@ import Link from "next/link";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Dropdown, Menu, Space } from "antd";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathName = usePathname();
+  console.log(pathName);
+
   const values = [
     {
       key: 1,
@@ -48,7 +52,12 @@ const Navbar = () => {
           {values?.map((value) => (
             <p key={value?.key} className=" text-[16px] py-2 ">
               {" "}
-              <Link href={value?.path} className=" text-black">
+              <Link
+                href={value?.path}
+                className={
+                  pathName == value?.path ? " text-[#1D75F2]" : " text-black"
+                }
+              >
                 {" "}
                 {value.name}{" "}
               </Link>{" "}
@@ -96,18 +105,26 @@ const Navbar = () => {
           {values?.map((value) => (
             <p key={value?.key}>
               {" "}
-              <Link href={value?.path}> {value.name} </Link>{" "}
+              <Link
+                href={value?.path}
+                className={
+                  pathName == value?.path ? " text-[#1D75F2]" : " text-black"
+                }
+              >
+                {" "}
+                {value.name}{" "}
+              </Link>{" "}
             </p>
           ))}
         </div>
 
         <div className=" hidden lg:flex gap-2">
           <Link href="/documents">
-            <Button variant="default">Client Protal</Button>
+            <Button variant="default2">Client Protal</Button>
           </Link>
 
           <Link href="/intake-info-first">
-            <Button variant="btn2">Get Started</Button>
+            <Button variant="btn3">Get Started</Button>
           </Link>
         </div>
       </div>

@@ -13,7 +13,7 @@ const Banner = () => {
         <div className=" lg:h-[110vh] ">
           <div className=" grid lg:grid-cols-2 grid-cols-1 items-center ">
             <div className="ps-5">
-              <h1 className=" text-[#1DA1F2] lg:text-[56px] text-[28px]  font-bold mb-5 ">
+              <h1 className=" text-[#1D75F2] lg:text-[56px] text-[28px]  font-bold mb-5 ">
                 {" "}
                 Find a MD 4 Me
               </h1>
@@ -25,7 +25,7 @@ const Banner = () => {
               <div className=" flex gap-4 ">
                 <Link href="/intake-info-first">
                   {" "}
-                  <Button variant="btn2">Get Started Now</Button>{" "}
+                  <Button variant="btn3">Get Started Now</Button>{" "}
                 </Link>
                 <Link href="/about">
                   <Button variant="default">Learn More</Button>

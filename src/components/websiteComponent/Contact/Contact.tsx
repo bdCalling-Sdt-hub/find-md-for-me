@@ -51,13 +51,13 @@ const Contact = () => {
                 {values?.map((data, index) => (
                   <p key={index} className="flex gap-4 items-center mb-10 ">
                     {" "}
-                    <span className="text-[#1D75F2]">{data?.icon} </span>{" "}
+                    <span className="text-[#C738BD]">{data?.icon} </span>{" "}
                     <span className="text-white">{data?.data} </span>{" "}
                   </p>
                 ))}
               </div>
 
-              <p className=" flex items-center gap-4  text-white px-10 pb-9 ">
+              <p className=" flex items-center gap-4  text-[#C738BD] px-10 pb-9 ">
                 <FaFacebook size={28} />
                 <RiInstagramFill size={28} />
                 <FaGoogle size={28} />

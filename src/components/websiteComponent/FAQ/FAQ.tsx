@@ -41,7 +41,7 @@ const FAQ = () => {
           Please reach us{" "}
           <Link
             href="/about"
-            className=" underline font-semibold text-[#1DA1F2]"
+            className=" underline font-semibold text-[#1D75F2]"
           >
             {" "}
             here

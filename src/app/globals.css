@@ -123,3 +123,7 @@
   font-weight: 500;
   font-size: large;
 }
+
+:where(.css-dev-only-do-not-override-f7vrd6).ant-btn-primary {
+  background: #c738bd !important;
+}

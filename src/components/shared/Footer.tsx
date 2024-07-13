@@ -53,8 +53,8 @@ const Footer = () => {
     },
   ];
   return (
-    <div className=" bg-[#1DA1F2]">
-      <div className="container lg:flex justify-between text-white py-14">
+    <div className=" bg-[#1D75F2]">
+      <div className="container lg:flex justify-between text-white lg:py-14 py-10">
         <div className=" ">
           <h1 className=" text-white text-2xl  font-bold pb-3 ">
             {" "}

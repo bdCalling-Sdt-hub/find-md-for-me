@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import img1 from "@/assests/circle1.png";
+import img1 from "../../../assests/circle1.png";
 import img2 from "@/assests/circle2.png";
 import img3 from "@/assests/circle3.png";
 
@@ -35,7 +35,7 @@ const BannerCard = () => {
             className=" p-5 px-8 rounded-lg lg:leading-loose shadow-xl lg:w-[420px]  bg-white  lg:mb-1 mb-8 "
           >
             <p className=" mb-3"> {value?.image}</p>
-            <p className=" text-[#1D75F2] text-[16px] font-semibold mb-3">
+            <p className=" text-[#C738BD] text-[16px] font-semibold mb-3">
               {" "}
               {value?.title}
             </p>

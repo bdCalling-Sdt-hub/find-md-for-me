@@ -3,11 +3,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Popover } from "antd";
 
 const PricingTabs = () => {
   const monthlyValues = [
     {
       title: "Tier 1",
+      titleColor: "#C738BD",
       title2: "$279-I",
       title3: "$800-B",
       type: "Billed Monthly",
@@ -29,6 +31,7 @@ const PricingTabs = () => {
     {
       title: "Tier 2",
       title2: "$479-I",
+      titleColor: "#F59E0B",
       title3: "$1,900-B",
       type: "Billed Monthly",
       sevice: [
@@ -43,6 +46,7 @@ const PricingTabs = () => {
     {
       title: "Tier 3",
       title2: "$579-I",
+      titleColor: "#10B981",
       title3: "$2,300-B",
       type: "Billed Monthly",
       sevice: [
@@ -56,6 +60,7 @@ const PricingTabs = () => {
     {
       title: "Tier 4",
       title2: "$779-I",
+      titleColor: "#AA0BF5",
       title3: "$3,100-B",
       type: "Billed Monthly",
       sevice: [
@@ -76,6 +81,7 @@ const PricingTabs = () => {
   const yearlyValues = [
     {
       title: "Tier 1",
+      titleColor: "#C738BD",
       title2: "$252-I",
       title3: "$720-B",
       type: "Billed Monthly",
@@ -96,6 +102,7 @@ const PricingTabs = () => {
     },
     {
       title: "Tier 2",
+      titleColor: "#F59E0B",
       title2: "$432-I",
       title3: "$1,710-B",
       type: "Billed Monthly",
@@ -110,6 +117,7 @@ const PricingTabs = () => {
     },
     {
       title: "Tier 3",
+      titleColor: "#10B981",
       title2: "$522-I",
       title3: "$2,070-B",
       type: "Billed Monthly",
@@ -123,6 +131,7 @@ const PricingTabs = () => {
     },
     {
       title: "Tier 4",
+      titleColor: "#AA0BF5",
       title2: "$702-I",
       title3: "$2,790-B",
       type: "Billed Monthly",
@@ -146,7 +155,9 @@ const PricingTabs = () => {
         <div className="flex items-center justify-center ">
           <TabsList className="   w-[200px]">
             <TabsTrigger value="account">Monthly</TabsTrigger>
-            <TabsTrigger value="password">Yearly</TabsTrigger>
+            <TabsTrigger value="password">
+              <Popover content={"10% Discount"}> Yearly </Popover>
+            </TabsTrigger>
           </TabsList>
         </div>
 
@@ -155,85 +166,110 @@ const PricingTabs = () => {
             {monthlyValues?.map((value, index) => (
               <div
                 key={index}
-                className="bg-[#E8F6FE] rounded-lg p-4 ps-8 lg:w-1/4 relative h-[78vh] lg:h-[85vh] mb-5 lg:mb-1 "
+                className="bg-[#E8F6FE]  rounded-b-lg  lg:w-1/4 relative h-[80vh] lg:h-[85vh] mb-5 lg:mb-1 "
               >
-                <p className=" text-lg font-semibold ">{value?.title} </p>
-                <p className=" text-[32px] font-semibold mt-2 ">
+                <p
+                  className="w-full h-[2px] rounded-xl"
+                  style={{ backgroundColor: value?.titleColor }}
+                >
                   {" "}
-                  {value?.title2}
                 </p>
-                <p className=" text-[32px] font-semibold mb-2 ">
-                  {" "}
-                  {value?.title3}
-                </p>
-                <p className=" text-[12px] text-[#252B42] pb-3">
-                  {value?.type}
-                </p>
-                {value?.sevice?.map((data, index) => (
-                  <p key={index} className=" flex items-center gap-2 mb-2 ">
-                    {" "}
-                    <span>
-                      <IoCheckmarkDoneOutline
-                        size={20}
-                        className="text-[#1D75F2]"
-                      />{" "}
-                    </span>{" "}
-                    <span>{data} </span>{" "}
+                <div className="p-4 ps-8">
+                  <p
+                    className=" text-lg font-semibold  "
+                    style={{ color: value?.titleColor }}
+                  >
+                    {value?.title}{" "}
                   </p>
-                ))}
-
-                <div className="  mb-3 absolute bottom-0 ">
-                  <div className=" mx-5">
-                    <Link href="/intake-info-first">
+                  <p className=" text-[32px] font-semibold mt-2 ">
+                    {" "}
+                    {value?.title2}
+                  </p>
+                  <p className=" text-[32px] font-semibold mb-2 ">
+                    {" "}
+                    {value?.title3}
+                  </p>
+                  <p className=" text-[12px] text-[#252B42] pb-3">
+                    {value?.type}
+                  </p>
+                  {value?.sevice?.map((data, index) => (
+                    <p key={index} className=" flex items-center gap-2 mb-2 ">
                       {" "}
-                      <Button variant="getStarted"> Get Started </Button>
-                    </Link>
+                      <span>
+                        <IoCheckmarkDoneOutline
+                          size={20}
+                          className="text-[#1D75F2]"
+                        />{" "}
+                      </span>{" "}
+                      <span>{data} </span>{" "}
+                    </p>
+                  ))}
+
+                  <div className="  mb-3 absolute bottom-0 ">
+                    <div className=" mx-5">
+                      <Link href="/intake-info-first">
+                        {" "}
+                        <Button variant="getStarted"> Get Started </Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </TabsContent>
+
         <TabsContent value="password">
           <div className=" lg:flex justify-between gap-5 text-black ">
             {yearlyValues?.map((value, index) => (
               <div
                 key={index}
-                className="bg-[#E8F6FE] rounded-lg p-4 lg:w-1/4 relative h-[78vh] lg:h-[85vh] mb-5 lg:mb-1"
+                className="bg-[#E8F6FE]  rounded-b-lg  lg:w-1/4 relative h-[80vh] lg:h-[85vh] mb-5 lg:mb-1 "
               >
-                <p className=" text-lg font-semibold ">{value?.title} </p>
-                <p className=" text-[32px] font-semibold mt-2 ">
+                <p
+                  className="w-full h-[2px] rounded-xl"
+                  style={{ backgroundColor: value?.titleColor }}
+                >
                   {" "}
-                  {value?.title2}
                 </p>
-                <p className=" text-[32px] font-semibold mb-2 ">
-                  {" "}
-                  {value?.title3}
-                </p>
-                <p className=" text-[12px] text-[#252B42] pb-2">
-                  Monthly breakdown
-                </p>
-                <p className=" text-[12px] text-[#252B42] pb-3">
-                  {value?.type}
-                </p>
-                {value?.sevice?.map((data, index) => (
-                  <p key={index} className=" flex items-center gap-2 mb-2 ">
-                    {" "}
-                    <span>
-                      <IoCheckmarkDoneOutline
-                        size={20}
-                        className="text-[#1D75F2]"
-                      />{" "}
-                    </span>{" "}
-                    <span>{data} </span>{" "}
+                <div className="p-4 ps-8">
+                  <p
+                    className=" text-lg font-semibold  "
+                    style={{ color: value?.titleColor }}
+                  >
+                    {value?.title}{" "}
                   </p>
-                ))}
+                  <p className=" text-[32px] font-semibold mt-2 ">
+                    {" "}
+                    {value?.title2}
+                  </p>
+                  <p className=" text-[32px] font-semibold mb-2 ">
+                    {" "}
+                    {value?.title3}
+                  </p>
+                  <p className=" text-[12px] text-[#252B42] pb-3">
+                    {value?.type}
+                  </p>
+                  {value?.sevice?.map((data, index) => (
+                    <p key={index} className=" flex items-center gap-2 mb-2 ">
+                      {" "}
+                      <span>
+                        <IoCheckmarkDoneOutline
+                          size={20}
+                          className="text-[#1D75F2]"
+                        />{" "}
+                      </span>{" "}
+                      <span>{data} </span>{" "}
+                    </p>
+                  ))}
 
-                <div className="  mb-3 absolute bottom-0 ">
-                  <div className=" mx-5">
-                    <Link href="/intake-info-first">
-                      <Button variant="getStarted"> Get Started </Button>{" "}
-                    </Link>
+                  <div className="  mb-3 absolute bottom-0 ">
+                    <div className=" mx-5">
+                      <Link href="/intake-info-first">
+                        {" "}
+                        <Button variant="getStarted"> Get Started </Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

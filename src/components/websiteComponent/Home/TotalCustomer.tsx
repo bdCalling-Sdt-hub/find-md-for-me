@@ -25,7 +25,7 @@ const TotalCustomer = () => {
       <div className="lg:flex justify-between items-center ">
         {values?.map((value, index) => (
           <div key={index} className="text-center  mb-6 lg:mb-1">
-            <p className=" lg:text-5xl text-3xl font-bold text-[#1D75F2] mb-3">
+            <p className=" lg:text-5xl text-3xl font-bold text-[#C738BD] mb-3">
               {" "}
               {value?.total}
             </p>

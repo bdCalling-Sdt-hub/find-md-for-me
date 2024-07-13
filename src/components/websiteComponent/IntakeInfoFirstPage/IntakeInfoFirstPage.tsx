@@ -61,7 +61,7 @@ const IntakeInfoFirstPage: React.FC = () => {
           If you are looking to connect with a MD in your area, fill out the
           below form.
         </SubTitle>
-        <p className=" text-[#1D75F2]  text-[16px] text-center ">
+        <p className=" text-[#C738BD]  text-[16px] text-center ">
           {" "}
           Please Provide Your Business Information.{" "}
         </p>
@@ -224,7 +224,7 @@ const IntakeInfoFirstPage: React.FC = () => {
             <Button
               type="primary"
               htmlType="submit"
-              className=" bg-[#1D75F2] lg:w-[10%] text-white "
+              className=" bg-[#C738BD] lg:w-[10%] text-white "
             >
               Next
             </Button>

@@ -40,7 +40,7 @@ const IntakeSchedule = () => {
         <p className="text-[#737373] text-[19px]  text-center mx-auto mb-5 ">
           {" "}
           Thank you for visiting{" "}
-          <span className="text-[#1DA1F2]"> Find a MD 4 Me </span> . We look
+          <span className="text-[#1D75F2]"> Find a MD 4 Me </span> . We look
           forward to connecting with you for your business!
         </p>
 
@@ -49,7 +49,7 @@ const IntakeSchedule = () => {
           Please select the best date + time to schedule your introduction
           meeting!
         </SubTitle>
-        <p className=" text-[#1D75F2]  text-[16px] text-center ">
+        <p className=" text-[#C738BD]  text-[16px] text-center ">
           {" "}
           Please Provide Your Business Information.{" "}
         </p>
@@ -79,7 +79,7 @@ const IntakeSchedule = () => {
               {TimeValues?.map((data, index) => (
                 <Button
                   key={index}
-                  variant={clickBtn === data ? "btn2" : "default"}
+                  variant={clickBtn === data ? "btn3" : "default2"}
                   className=" me-4 mb-3"
                   onClick={() => handleClick(data)}
                 >

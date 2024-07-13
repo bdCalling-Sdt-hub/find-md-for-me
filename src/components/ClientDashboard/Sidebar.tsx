@@ -3,11 +3,18 @@
 import Link from "next/link";
 import { MdOutlineFileUpload, MdLogout } from "react-icons/md";
 import { IoMdPerson } from "react-icons/io";
-import { IoDocumentsOutline, IoPeopleOutline } from "react-icons/io5";
+import {
+  IoDocumentAttachOutline,
+  IoDocumentsOutline,
+  IoPeopleOutline,
+  IoVideocamOutline,
+} from "react-icons/io5";
 import { usePathname, useRouter } from "next/navigation";
 import { Dropdown, Space } from "antd";
 import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { GrMoney, GrVend } from "react-icons/gr";
+import { FaHandHoldingMedical } from "react-icons/fa6";
 const Sidebar = () => {
   //   const router = useRouter();
   const pathname = usePathname();
@@ -32,9 +39,34 @@ const Sidebar = () => {
       icon: <IoDocumentsOutline size={24} />,
     },
     {
+      title: "Business Resources",
+      path: "/business-resources",
+      icon: <IoDocumentAttachOutline size={24} />,
+    },
+    {
+      title: "Billing",
+      path: "/billing",
+      icon: <GrMoney size={24} />,
+    },
+    {
       title: "My Teams",
       path: "/myteam",
       icon: <IoPeopleOutline size={24} />,
+    },
+    {
+      title: "Vendors",
+      path: "/vendors",
+      icon: <GrVend size={24} />,
+    },
+    {
+      title: "EHR",
+      path: "/ehr",
+      icon: <FaHandHoldingMedical size={24} />,
+    },
+    {
+      title: "Good Faith Exam",
+      path: "/good-faith",
+      icon: <IoVideocamOutline size={24} />,
     },
     {
       title: "Profile",

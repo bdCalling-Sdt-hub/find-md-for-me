@@ -3,7 +3,7 @@ import React from "react";
 const OversightPricing = () => {
   return (
     <div>
-      <h1 className=" text-[#1D75F2]  text-[32px]  py-4">
+      <h1 className=" text-[#C738BD]  text-[32px]  py-4">
         {" "}
         Oversight Pricing For Individuals and Businesses
       </h1>
@@ -22,8 +22,8 @@ const OversightPricing = () => {
       <p className=" text-[20px]">
         {" "}
         There is a one time onboarding fee of{" "}
-        <span className=" text-[#1D75F2]"> $2,000 </span> for individuals or{" "}
-        <span className=" text-[#1D75F2]"> $3,500 </span> for businesses.{" "}
+        <span className=" text-[#C738BD]"> $2,000 </span> for individuals or{" "}
+        <span className=" text-[#C738BD]"> $3,500 </span> for businesses.{" "}
       </p>
     </div>
   );

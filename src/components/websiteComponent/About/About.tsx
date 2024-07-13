@@ -19,7 +19,7 @@ const About = () => {
   ];
   return (
     <div className=" container  my-12">
-      <h1 className=" text-[#1D75F2] text-2xl mb-3">
+      <h1 className=" text-[#C738BD] text-2xl mb-3">
         {" "}
         <span className=" font-semibold "> Our Journey: </span> Empowering
         Aesthetic and Healthcare Providers for Success
@@ -95,7 +95,7 @@ const About = () => {
       </div>
 
       <div className="">
-        <h1 className=" text-[#1D75F2] text-3xl font-bold tracking-wide text-center py-3">
+        <h1 className=" text-[#C738BD] text-3xl font-bold tracking-wide text-center py-3">
           {" "}
           Meet the team
         </h1>

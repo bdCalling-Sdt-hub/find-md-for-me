@@ -3,6 +3,7 @@ import { Button, Form, Upload } from "antd";
 import React from "react";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import DashboardTitle from "../shared/DashboardTitle";
 
 const Documents = () => {
   const documents = [
@@ -14,6 +15,7 @@ const Documents = () => {
     "CURRENT DRIVERS LICENSE",
     "CURRENT CPR CERTIFICATION",
     "BLOOD BORNE PATHOGEN CERTIFICATION",
+    "Trainings (ex: HIPAA, OSHA, etc.)",
   ];
   const normFile = (e: any) => {
     console.log("Upload event:", e);
@@ -27,10 +29,8 @@ const Documents = () => {
     <div className=" w-full ">
       <div className=" lg:grid lg:grid-cols-12  gap-5 lg:h-screen">
         <div className=" lg:col-span-8 lg:p-10 p-6">
-          <h1 className=" lg:text-3xl text-2xl font-semibold  p-1 ">
-            {" "}
-            Upload Documents
-          </h1>
+          <DashboardTitle>Upload Documents</DashboardTitle>
+
           <div className=" w-full mt-4 ">
             {documents?.map((data, index) => (
               <div key={index}>

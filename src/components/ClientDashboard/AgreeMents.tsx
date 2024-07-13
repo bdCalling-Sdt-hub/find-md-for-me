@@ -3,6 +3,7 @@ import { Button, Form, Upload } from "antd";
 import React from "react";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import DashboardTitle from "../shared/DashboardTitle";
 
 const AgreeMents = () => {
   const documents = [
@@ -22,10 +23,8 @@ const AgreeMents = () => {
     <div className=" w-full ">
       <div className=" grid lg:grid-cols-12  gap-5 h-screen">
         <div className=" lg:col-span-8 lg:p-10 p-6">
-          <h1 className=" lg:text-3xl text-2xl font-semibold  p-2 ">
-            {" "}
-            Upload Agreements
-          </h1>
+          <DashboardTitle> Upload Agreements </DashboardTitle>
+
           <div className=" w-full mt-4 ">
             {documents?.map((data, index) => (
               <div key={index}>

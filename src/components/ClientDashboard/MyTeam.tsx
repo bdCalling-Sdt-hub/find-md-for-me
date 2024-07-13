@@ -11,6 +11,7 @@ import {
 import { MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import MyTeamModal from "./MyTeamModal";
+import DashboardTitle from "../shared/DashboardTitle";
 
 const data = [
   {
@@ -235,16 +236,7 @@ const MyTeam = () => {
         }}
       >
         <div className=" flex items-center justify-between my-5">
-          <h1
-            style={{
-              fontSize: "20px",
-              fontWeight: 600,
-              color: "#2F2F2F",
-              padding: "10px",
-            }}
-          >
-            My Team
-          </h1>
+          <DashboardTitle> My Team</DashboardTitle>
 
           <Button variant="default" onClick={showModal}>
             + Add Member
