@@ -8,7 +8,7 @@ import DashboardTitle from "../shared/DashboardTitle";
 const Documents = () => {
   const documents = [
     "Resume",
-    "LICENSES + CERTIFICATIONS",
+    "LICENSE+CERTIFICATION+CEUs/CME/CE",
     "LIABILITY INSURANCE",
     "BUSINESS FORMATION DOCUMENTS",
     "EIN FORM (SS-4) Sent by IRS",

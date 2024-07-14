@@ -54,7 +54,10 @@ const FAQ = () => {
         <div>
           {QA?.map((data, index) => (
             <Accordion key={index} type="single" collapsible className="mb-10">
-              <AccordionItem value={`item-${index}`}>
+              <AccordionItem
+                value={`item-${index}`}
+                className="data-[state=open]:border-2 data-[state=open]:border-[#1D75F2]"
+              >
                 <AccordionTrigger>{data?.question}</AccordionTrigger>
                 <AccordionContent>{data?.answer}</AccordionContent>
               </AccordionItem>
