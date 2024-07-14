@@ -233,7 +233,7 @@ const Vendors = () => {
             </div>
 
             <div className="lg:flex gap-5 w-full">
-              <div className="w-1/2">
+              <div className="lg:w-1/2">
                 <p className="">
                   Please Note: orders received by 12:00 pm CST will be processed
                   the same day + shipped out the following business day. Orders
@@ -245,7 +245,7 @@ const Vendors = () => {
                   apply.
                 </p>
               </div>
-              <div className="w-1/2 lg:mt-[1px] mt-3">
+              <div className="lg:w-1/2 lg:mt-[1px] mt-3">
                 <p>
                   By printing your name, you are acknowledging + consenting to
                   your credit card on file to be charged for the order submitted

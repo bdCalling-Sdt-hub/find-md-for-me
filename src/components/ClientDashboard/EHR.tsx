@@ -37,15 +37,15 @@ const EHR = () => {
     <div className="pt-3 ps-3">
       <DashboardTitle> EHR</DashboardTitle>
 
-      <div className="mx-10 my-10">
-        <div className="  mx-auto  px-10 bg-[#FDFDFD] py-5">
+      <div className="lg:mx-10 mx-3 lg:my-10 my-5">
+        <div className="  lg:mx-auto  lg:px-10 px-5 bg-[#FDFDFD] py-5">
           <div>
             {QA?.map((data, index) => (
               <Accordion
                 key={index}
                 type="single"
                 collapsible
-                className="mb-10"
+                className="lg:mb-10 mb-5"
               >
                 <AccordionItem
                   value={`item-${index}`}
