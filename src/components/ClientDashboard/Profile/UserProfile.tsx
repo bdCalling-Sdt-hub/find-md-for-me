@@ -38,7 +38,7 @@ const UserProfile = () => {
     <div>
       {" "}
       <div className="lg:h-[53vh]">
-        <div className=" lg:grid lg:grid-cols-3 gap-5 lg:py-10">
+        <div className="">
           {/* image   */}
           <div
             style={{
@@ -88,10 +88,10 @@ const UserProfile = () => {
           </div>
 
           {/* forms  */}
-          <div className="lg:col-span-2  lg:pe-20 ">
+          <div className=" lg:w-2/3 mx-auto ">
             <Form
               name="normal_login"
-              className="login-form"
+              className="login-form "
               initialValues={initialFormValues}
               style={{ width: "100%", height: "fit-content" }}
               onFinish={handleSubmit}
@@ -168,6 +168,70 @@ const UserProfile = () => {
                   <Form.Item name="password" style={{ marginBottom: 0 }}>
                     <Input.Password
                       type="password"
+                      style={{
+                        border: "1px solid #E0E4EC",
+                        height: "52px",
+                        background: "white",
+                        borderRadius: "8px",
+                        outline: "none",
+                      }}
+                    />
+                  </Form.Item>
+                </div>
+
+                <div className="lg:mb-[20px]">
+                  <label style={{ display: "block", marginBottom: "5px" }}>
+                    Contact Number
+                  </label>
+                  <Form.Item style={{ marginBottom: 0 }} name="contact">
+                    <Input
+                      placeholder="Enter Your Full Name"
+                      type="number"
+                      style={{
+                        border: "1px solid #E0E4EC",
+                        height: "52px",
+
+                        background: "white",
+                        borderRadius: "8px",
+                        outline: "none",
+                      }}
+                    />
+                  </Form.Item>
+                </div>
+
+                <div className="lg:mb-[20px]">
+                  <label
+                    style={{ display: "block", marginBottom: "5px" }}
+                    htmlFor=""
+                  >
+                    Business Name
+                  </label>
+                  <Form.Item name="businessName" style={{ marginBottom: 0 }}>
+                    <Input
+                      type="text"
+                      placeholder="Enter your Business name "
+                      style={{
+                        border: "1px solid #E0E4EC",
+                        height: "52px",
+                        background: "white",
+                        borderRadius: "8px",
+                        outline: "none",
+                      }}
+                    />
+                  </Form.Item>
+                </div>
+
+                <div className="lg:mb-[20px]">
+                  <label
+                    style={{ display: "block", marginBottom: "5px" }}
+                    htmlFor=""
+                  >
+                    Business Address
+                  </label>
+                  <Form.Item name="address" style={{ marginBottom: 0 }}>
+                    <Input
+                      type="text"
+                      placeholder="Enter your Business address"
                       style={{
                         border: "1px solid #E0E4EC",
                         height: "52px",

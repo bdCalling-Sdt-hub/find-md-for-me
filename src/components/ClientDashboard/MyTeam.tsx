@@ -12,12 +12,16 @@ import { MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import MyTeamModal from "./MyTeamModal";
 import DashboardTitle from "../shared/DashboardTitle";
+import personImg from "@/assests/person2.png";
+import personImg1 from "@/assests/person1.png";
+import Image from "next/image";
 
 const data = [
   {
     key: "1",
     name: "Tushar",
     email: "tushar@gmail.com",
+    image: <Image src={personImg} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -25,6 +29,7 @@ const data = [
     key: "2",
     name: "Rahman",
     email: "rahman@gmail.com",
+    image: <Image src={personImg1} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "17 july 2024",
   },
@@ -32,6 +37,7 @@ const data = [
     key: "3",
     name: "Rafsan",
     email: "rafsan@gmail.com",
+    image: <Image src={personImg} height={14} width={34} alt="" />,
     role: "Esthetician",
     joinDate: "15 july 2024",
   },
@@ -39,6 +45,7 @@ const data = [
     key: "4",
     name: "jusef",
     email: "jusef@gmail.com",
+    image: <Image src={personImg1} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -46,6 +53,7 @@ const data = [
     key: "5",
     name: "Asad",
     email: "asad@gmail.com",
+    image: <Image src={personImg} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -53,6 +61,7 @@ const data = [
     key: "6",
     name: "Fahim",
     email: "fahim@gmail.com",
+    image: <Image src={personImg1} height={14} width={34} alt="" />,
     role: "NP",
     joinDate: "15 july 2024",
   },
@@ -60,6 +69,7 @@ const data = [
     key: "7",
     name: "Nadir",
     email: "nadir@gmail.com",
+    image: <Image src={personImg} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -67,6 +77,7 @@ const data = [
     key: "8",
     name: "Tushar",
     email: "tushar@gmail.com",
+    image: <Image src={personImg1} height={14} width={34} alt="" />,
     role: "Esthetician",
     joinDate: "15 july 2024",
   },
@@ -74,6 +85,7 @@ const data = [
     key: "9",
     name: "Rahman",
     email: "rahman@gmail.com",
+    image: <Image src={personImg} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -81,6 +93,7 @@ const data = [
     key: "10",
     name: "Rafsan",
     email: "rafsan@gmail.com",
+    image: <Image src={personImg1} height={14} width={34} alt="" />,
     role: "NP",
     joinDate: "15 july 2024",
   },
@@ -88,6 +101,7 @@ const data = [
     key: "11",
     name: "jusef",
     email: "jusef@gmail.com",
+    image: <Image src={personImg} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -95,6 +109,7 @@ const data = [
     key: "12",
     name: "Asad",
     email: "asad@gmail.com",
+    image: <Image src={personImg1} height={14} width={34} alt="" />,
     role: "Esthetician",
     joinDate: "15 july 2024",
   },
@@ -102,6 +117,7 @@ const data = [
     key: "13",
     name: "Fahim",
     email: "fahim@gmail.com",
+    image: <Image src={personImg} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -109,6 +125,7 @@ const data = [
     key: "14",
     name: "Nadir",
     email: "nadir@gmail.com",
+    image: <Image src={personImg1} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -116,6 +133,7 @@ const data = [
     key: "15",
     name: "Asad",
     email: "asad@gmail.com",
+    image: <Image src={personImg} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -123,6 +141,7 @@ const data = [
     key: "16",
     name: "Fahim",
     email: "fahim@gmail.com",
+    image: <Image src={personImg1} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -130,6 +149,7 @@ const data = [
     key: "17",
     name: "Nadir",
     email: "nadir@gmail.com",
+    image: <Image src={personImg} height={14} width={34} alt="" />,
     role: "Nurse",
     joinDate: "15 july 2024",
   },
@@ -189,6 +209,12 @@ const MyTeam = () => {
       title: "User Name",
       dataIndex: "name",
       key: "username",
+      render: (dataIndexValue: any, record: any) => (
+        <div className="flex items-center gap-2">
+          <div>{record?.image} </div>
+          <h1>{dataIndexValue}</h1>
+        </div>
+      ),
     },
     {
       title: "User Email",
