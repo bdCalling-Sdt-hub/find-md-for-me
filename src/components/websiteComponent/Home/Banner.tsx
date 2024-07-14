@@ -36,7 +36,7 @@ const Banner = () => {
             <div className="mt-8 lg:mt-1 p-2">
               <Image
                 src={bannerImg}
-                width={500}
+                width={1000}
                 height={200}
                 alt=""
                 style={{ width: "100%" }}
