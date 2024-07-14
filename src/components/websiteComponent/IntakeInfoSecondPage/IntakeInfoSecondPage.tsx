@@ -371,13 +371,9 @@ const IntakeInfo: React.FC = () => {
           </Form.Item>
 
           <Form.Item className="text-end ">
-            <Button
-              type="primary"
-              htmlType="submit"
-              className=" bg-[#1D75F2] lg:w-[10%] text-white "
-            >
+            <button className=" bg-[#C738BD]  text-white px-6 py-3   rounded-lg">
               Next
-            </Button>
+            </button>
           </Form.Item>
         </Form>
       </div>
