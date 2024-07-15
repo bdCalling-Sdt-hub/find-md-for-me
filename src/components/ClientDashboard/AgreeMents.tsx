@@ -7,10 +7,11 @@ import DashboardTitle from "../shared/DashboardTitle";
 
 const AgreeMents = () => {
   const documents = [
-    "MANAGEMENT SERVICE AGREEMENT",
-    "NDA",
+    "MANAGEMENT SERVICE AGREEMENT/collaborative practice agreement + Joint Protocol",
+    "None disclosure agreement",
     "DELEGATION AGREEMENT",
-    "ACH FORM",
+    "ACH AUTHORIZATION AGREEMENT",
+    "Membership Contract",
   ];
   const normFile = (e: any) => {
     console.log("Upload event:", e);
@@ -36,7 +37,7 @@ const AgreeMents = () => {
                   >
                     <label
                       htmlFor=" "
-                      className="text-[16px] mb-2 text-[#737373] font-semibold flex items-center gap-1 "
+                      className="text-[16px] mb-2 text-[#737373] uppercase font-semibold flex items-center gap-1 "
                     >
                       <span> {index + 1} </span> <span>{data} </span>
                     </label>

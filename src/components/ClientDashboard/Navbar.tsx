@@ -31,8 +31,8 @@ const Navbar = () => {
             width={50}
           />
           <div>
-            <p className="p-3 h-3"> DR. Jim ahhmed </p>
-            <p className="p-3"> ADMIN </p>
+            <p className="p-3 h-3"> Lamesha </p>
+            <p className="p-3"> Client </p>
           </div>
         </div>
       </Link>

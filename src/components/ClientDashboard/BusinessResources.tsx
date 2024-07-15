@@ -7,7 +7,7 @@ const BusinessResources = () => {
   const content = ["Protocols", "Standing Order", "Policies", "Consents"];
   return (
     <div>
-      <Tabs defaultValue="account" className=" mt-5 ">
+      <Tabs defaultValue="Protocols" className=" mt-5 ">
         <TabsList className="bg-transparent text-[#737373] flex justify-center items-center  px-4">
           <TabsTrigger
             value="Protocols"

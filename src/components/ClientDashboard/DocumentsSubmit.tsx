@@ -10,7 +10,11 @@ const DocumentsSubmit = () => {
 
         <SubTitle className="tracking-wide ">
           {" "}
-          We are looking forward to talking to you soon.{" "}
+          Please allow 5-7 Business days for our team to review and verify the
+          documents submitted. If, any additional questions or information is
+          needed during this time we will email you. Once we have verified your
+          documents you will receive a welcome email where you can log into your
+          client portal and schedule your Introduction meeting.{" "}
         </SubTitle>
       </div>
     </div>

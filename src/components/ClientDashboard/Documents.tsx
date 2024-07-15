@@ -7,7 +7,7 @@ import DashboardTitle from "../shared/DashboardTitle";
 
 const Documents = () => {
   const documents = [
-    "Resume",
+    "RESUME",
     "LICENSE+CERTIFICATION+CEUs/CME/CE",
     "LIABILITY INSURANCE",
     "BUSINESS FORMATION DOCUMENTS",
@@ -15,7 +15,7 @@ const Documents = () => {
     "CURRENT DRIVERS LICENSE",
     "CURRENT CPR CERTIFICATION",
     "BLOOD BORNE PATHOGEN CERTIFICATION",
-    "Trainings (ex: HIPAA, OSHA, etc.)",
+    "TRAININGS (ex: HIPAA, OSHA, etc.)",
   ];
   const normFile = (e: any) => {
     console.log("Upload event:", e);
