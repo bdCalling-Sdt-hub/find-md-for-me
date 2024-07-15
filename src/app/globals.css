@@ -127,3 +127,9 @@ body {
 :where(.css-dev-only-do-not-override-f7vrd6).ant-btn-primary {
   background: #c738bd !important;
 }
+
+/* :where(.css-dev-only-do-not-override-f7vrd6).ant-steps
+  .ant-steps-item-finish
+  .ant-steps-item-icon {
+  background-color: #1d75f2 !important;
+} */

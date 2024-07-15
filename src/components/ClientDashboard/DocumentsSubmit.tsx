@@ -4,7 +4,7 @@ import SubTitle from "../shared/SubTitle";
 
 const DocumentsSubmit = () => {
   return (
-    <div>
+    <div className="lg:mb-32">
       <div className=" lg:w-[700px]  mx-auto mt-40 tracking-wide ">
         <Title> Thank you for submitting your intake form.</Title>
 

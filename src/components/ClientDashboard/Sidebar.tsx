@@ -5,7 +5,6 @@ import { MdOutlineFileUpload, MdLogout } from "react-icons/md";
 import { IoMdPerson } from "react-icons/io";
 import {
   IoDocumentAttachOutline,
-  IoDocumentsOutline,
   IoPeopleOutline,
   IoVideocamOutline,
 } from "react-icons/io5";
@@ -19,7 +18,6 @@ const Sidebar = () => {
   //   const router = useRouter();
   const pathname = usePathname();
   console.log(pathname);
-  const [isOpen, setIsOpen] = useState(false);
 
   interface ItemType {
     title: string;
@@ -32,11 +30,6 @@ const Sidebar = () => {
       title: "Upload Documents",
       path: "/documents",
       icon: <MdOutlineFileUpload size={24} />,
-    },
-    {
-      title: "Agreements",
-      path: "/agreements",
-      icon: <IoDocumentsOutline size={24} />,
     },
     {
       title: "Business Resources",

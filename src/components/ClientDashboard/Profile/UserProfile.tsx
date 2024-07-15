@@ -16,9 +16,12 @@ const UserProfile = () => {
     console.log(values);
     Swal.fire({
       position: "center",
-      icon: "success",
-      title: "Updated Successfully",
-      showConfirmButton: false,
+      // icon: "success",
+      title: "Request admin for edit your information",
+      // text:"" ,
+      showConfirmButton: true,
+      confirmButtonColor: "#C738BD",
+      confirmButtonText: "Request edit",
       timer: 1500,
     });
   };

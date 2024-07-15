@@ -176,7 +176,7 @@ const MyTeam = () => {
 
   const menu = (
     <Menu>
-      <div className="bg-white z-30">
+      <div className="bg-white z-30 w-[100px] px-3">
         <button className=" flex items-center gap-2 mb-1 " onClick={showModal}>
           {" "}
           <span className="text-[#1D75F2]">
@@ -188,7 +188,7 @@ const MyTeam = () => {
 
         <button className=" flex items-center gap-2 mb-1 ">
           {" "}
-          <span className="text-[#1D75F2]">
+          <span className="text-[#f5523c]">
             {" "}
             <MdDelete />{" "}
           </span>{" "}

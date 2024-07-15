@@ -91,12 +91,12 @@ const MeetingSchedule = () => {
           </div>
         </div>
       </div>
-
+      {/* 
       <div className="text-center my-10">
         <Link href="/document-submit">
           <Button variant="getStarted"> Submit </Button>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

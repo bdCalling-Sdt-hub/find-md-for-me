@@ -5,13 +5,17 @@ import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import DashboardTitle from "../shared/DashboardTitle";
 
-const AgreeMents = () => {
+const DocumentsComponent = () => {
   const documents = [
-    "MANAGEMENT SERVICE AGREEMENT/collaborative practice agreement + Joint Protocol",
-    "None disclosure agreement",
-    "DELEGATION AGREEMENT",
-    "ACH AUTHORIZATION AGREEMENT",
-    "Membership Contract",
+    "RESUME",
+    "LICENSE+CERTIFICATION+CEUs/CME/CE",
+    "LIABILITY INSURANCE",
+    "BUSINESS FORMATION DOCUMENTS",
+    "EIN FORM (SS-4) Sent by IRS",
+    "CURRENT DRIVERS LICENSE",
+    "CURRENT CPR CERTIFICATION",
+    "BLOOD BORNE PATHOGEN CERTIFICATION",
+    "TRAININGS (ex: HIPAA, OSHA, etc.)",
   ];
   const normFile = (e: any) => {
     console.log("Upload event:", e);
@@ -20,11 +24,12 @@ const AgreeMents = () => {
     }
     return e?.fileList;
   };
+
   return (
     <div className=" w-full ">
-      <div className=" grid lg:grid-cols-12  gap-5 ">
-        <div className=" lg:col-span-8 lg:p-10 p-6">
-          <DashboardTitle> Upload Agreements </DashboardTitle>
+      <div className=" lg:grid lg:grid-cols-12  gap-5 ">
+        <div className=" lg:col-span-8 lg:p-10 lg:pt-0 p-6">
+          <DashboardTitle>Upload Documents</DashboardTitle>
 
           <div className=" w-full mt-4 ">
             {documents?.map((data, index) => (
@@ -37,7 +42,7 @@ const AgreeMents = () => {
                   >
                     <label
                       htmlFor=" "
-                      className="text-[16px] mb-2 text-[#737373] uppercase font-semibold flex items-center gap-1 "
+                      className="text-[16px] mb-2 text-[#737373] font-semibold flex items-center gap-1 "
                     >
                       <span> {index + 1} </span> <span>{data} </span>
                     </label>
@@ -56,8 +61,8 @@ const AgreeMents = () => {
             ))}
           </div>
 
-          {/* <div className=" text-center">
-            <Link href="/document-submit">
+          {/* <div className=" lg:text-end text-center">
+            <Link href="/agreements">
               <Button
                 type="primary"
                 htmlType="submit"
@@ -72,13 +77,13 @@ const AgreeMents = () => {
                   width: "150px",
                 }}
               >
-                Submit
+                Next
               </Button>
             </Link>
           </div> */}
         </div>
 
-        <div className="lg:col-span-4 bg-slate-50 p-10 ">
+        <div className="col-span-4 bg-slate-50 p-10 ">
           <Form>
             <Form.Item>
               <Form.Item
@@ -109,4 +114,4 @@ const AgreeMents = () => {
   );
 };
 
-export default AgreeMents;
+export default DocumentsComponent;
