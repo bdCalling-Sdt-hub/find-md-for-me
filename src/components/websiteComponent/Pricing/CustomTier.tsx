@@ -1,8 +1,11 @@
-import React from "react";
-import CustomModal from "./CutomTierModal";
+"use client";
+import React, { useState } from "react";
+// import CustomModal from "./CutomTierModal";
 import dynamic from "next/dynamic";
+import { Button } from "antd";
 
 const CustomTier = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const DynamicCustomModel = dynamic(() => import("./CutomTierModal"), {
     ssr: false,
   });
@@ -18,8 +21,15 @@ const CustomTier = () => {
         Let's discuss building your custom tier here{" "}
       </p>
       <div>
-        <DynamicCustomModel />
+        <Button type="primary" onClick={() => setIsModalOpen(true)}>
+          {" "}
+          Custom Tier
+        </Button>
       </div>
+      <DynamicCustomModel
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 };

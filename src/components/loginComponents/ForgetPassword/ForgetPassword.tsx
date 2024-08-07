@@ -1,49 +1,44 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-
-type Inputs = {
-  example: string;
-  email: string;
-};
+import { Button, Form, Input } from "antd";
+import { useForgetpassMutation } from "@/redux/apiSlices/AuthSlices";
+import Swal from "sweetalert2";
 
 const ForgetPassword = () => {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    localStorage.setItem("email", JSON.stringify(data.email));
-    console.log("Received values of form: ", data.email);
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "Send OTP ",
-      color: "#1DA1F2",
-      showConfirmButton: false,
-      timer: 1500,
-    }).then(() => {
-      router.push("/otp", { scroll: false });
+  const [forgetpass, { error }] = useForgetpassMutation();
+  const onFinish = async (values: any) => {
+    await forgetpass({ email: values?.email }).then((res) => {
+      console.log(res);
+      if (res?.data?.status === 200) {
+        Swal.fire({
+          text: res?.data?.message,
+          icon: "success",
+          timer: 1500,
+        }).then(() => {
+          router.push(`/otp/${values?.email}`);
+        });
+      } else {
+        Swal.fire({
+          title: "Failed to Login",
+          // @ts-ignore
+          text: error?.data?.message,
+          icon: "error",
+        });
+      }
     });
+    // router.push("/otp");
   };
   return (
     <div>
-      <form
+      <div
         className=" lg:w-[550px] w-[400px] lg:px-[90px] px-[20px] lg:py-[57px] py-[30px] "
         style={{
           background: "white",
           borderRadius: "12px",
           // padding: "90px 57px",
         }}
-        onSubmit={handleSubmit(onSubmit)}
       >
         <h1
           className=" lg:text-center"
@@ -56,16 +51,28 @@ const ForgetPassword = () => {
           Forgot Password
         </h1>
 
-        <div style={{ marginBottom: "24px", width: "100%" }}>
-          <Label
-            htmlFor="email"
-            style={{ display: "block", marginBottom: "5px", fontSize: "18px" }}
+        <Form
+          style={{ marginBottom: "24px", width: "100%" }}
+          onFinish={onFinish}
+          layout="vertical"
+        >
+          <Form.Item
+            name="email"
+            style={{ marginBottom: 0 }}
+            label={
+              <p style={{ display: "block", fontSize: "18px" }}>
+                {" "}
+                Email Address{" "}
+              </p>
+            }
+            rules={[
+              {
+                required: true,
+                message: "Please input your Email!",
+              },
+            ]}
           >
-            {" "}
-            Email Address
-          </Label>
-          <div style={{ marginBottom: 0 }} id="email">
-            <input
+            <Input
               placeholder="Enter your email address"
               type="email"
               style={{
@@ -76,24 +83,18 @@ const ForgetPassword = () => {
                 outline: "none",
                 width: "100%",
                 padding: "8px",
-                marginTop: "20px",
+                marginBottom: "15px",
               }}
-              {...register("email", { required: true })}
             />
-            {errors.email && (
-              <span className="text-red-500">Email is required</span>
-            )}
-          </div>
-        </div>
+          </Form.Item>
 
-        <div>
-          <div className="text-center" style={{ marginBottom: 0 }}>
-            <Button type="submit" variant="getStarted">
+          <Form.Item className="text-center my-4" style={{ marginBottom: 0 }}>
+            <Button htmlType="submit" type="primary">
               Send a Code
             </Button>
-          </div>
-        </div>
-      </form>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 };

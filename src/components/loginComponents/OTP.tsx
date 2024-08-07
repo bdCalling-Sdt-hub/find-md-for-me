@@ -1,7 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { Form } from "react-hook-form";
 import Swal from "sweetalert2";
 import {
   InputOTP,
@@ -10,22 +9,70 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "../ui/button";
+import {
+  useForgetpassMutation,
+  usePostOTPMutation,
+} from "@/redux/apiSlices/AuthSlices";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 
 const OTP = () => {
+  const [forgetpass, { error }] = useForgetpassMutation();
+  const [postOTP, { error: error1 }] = usePostOTPMutation();
   const router = useRouter();
 
-  const handleVerifyOtp = () => {
-    Swal.fire({
-      title: "Password Reset",
-      text: "Your password has been successfully reset. click confirm to set a new password",
-      showDenyButton: false,
-      showCancelButton: false,
-      confirmButtonText: "Confirm",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        router.push("/resetPassword");
+  const param = useParams<{ email: string | string[] }>();
+  const encodedEmail = param.email as string;
+  const decodedEmail = decodeURIComponent(encodedEmail);
+
+  const [otp, setOtp] = useState(null);
+  console.log(otp);
+
+  const handleResendEmail = async () => {
+    await forgetpass({ email: decodedEmail }).then((res) => {
+      console.log(res);
+      if (res?.data?.status === 200) {
+        Swal.fire({
+          text: res?.data?.message,
+          icon: "success",
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          title: "Failed to Login",
+          // @ts-ignore
+          text: error?.data?.message,
+          icon: "error",
+        });
       }
     });
+  };
+
+  const handleVerifyOtp = async () => {
+    await postOTP({ otp: otp }).then((res) => {
+      if (res?.data?.status === 200) {
+        Swal.fire({
+          title: "Password Reset",
+          text: res?.data?.message,
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          router.push(`/resetPassword/${decodedEmail}`);
+        });
+      } else {
+        Swal.fire({
+          title: "Oops",
+          // @ts-ignore
+          text: error1?.data?.message,
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    });
+  };
+  const handleOnchange = (value: any) => {
+    setOtp(value);
   };
   //   const handleResendEmail = () => {
   //     const email = JSON.parse(localStorage.getItem("email"));
@@ -65,7 +112,11 @@ const OTP = () => {
             marginTop: "30px",
           }}
         >
-          <InputOTP maxLength={12}>
+          <InputOTP
+            maxLength={12}
+            onChange={handleOnchange}
+            pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+          >
             <InputOTPGroup>
               <InputOTPSlot index={0} />
               <InputOTPSlot index={1} />
@@ -99,7 +150,7 @@ const OTP = () => {
         >
           Didn’t receive code?
           <p
-            // onClick={handleResendEmail}
+            onClick={handleResendEmail}
             style={{
               color: "#A05C56",
               textDecoration: "underline",

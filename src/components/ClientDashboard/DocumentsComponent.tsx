@@ -1,115 +1,158 @@
 "use client";
-import { Button, Form, Upload } from "antd";
-import React from "react";
-import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
-import Link from "next/link";
+import { Button, Form, Input, Upload } from "antd";
+import React, { useState } from "react";
+import { UploadOutlined } from "@ant-design/icons";
 import DashboardTitle from "../shared/DashboardTitle";
+import { usePostDocumentMutation } from "@/redux/apiSlices/ClientDashboardSlices";
+import DataAlerts from "../shared/DataAlerts";
 
 const DocumentsComponent = () => {
   const documents = [
-    "RESUME",
-    "LICENSE+CERTIFICATION+CEUs/CME/CE",
-    "LIABILITY INSURANCE",
-    "BUSINESS FORMATION DOCUMENTS",
-    "EIN FORM (SS-4) Sent by IRS",
-    "CURRENT DRIVERS LICENSE",
-    "CURRENT CPR CERTIFICATION",
-    "BLOOD BORNE PATHOGEN CERTIFICATION",
-    "TRAININGS (ex: HIPAA, OSHA, etc.)",
+    {
+      title: "RESUME",
+      value: "resume",
+    },
+    {
+      title: "LICENSE+CERTIFICATION+CEUs/CME/CE",
+      value: "license_certification",
+    },
+    {
+      title: "LIABILITY INSURANCE",
+      value: "libability_insurnce",
+    },
+    {
+      title: "BUSINESS FORMATION DOCUMENTS",
+      value: "buisness_formations_doc",
+    },
+    {
+      title: "EIN FORM (SS-4) Sent by IRS",
+      value: "enform",
+    },
+    {
+      title: "CURRENT DRIVERS LICENSE",
+      value: "currrent_driver_license",
+    },
+    {
+      title: "CURRENT CPR CERTIFICATION",
+      value: "current_cpr_certification",
+    },
+    {
+      title: "BLOOD BORNE PATHOGEN CERTIFICATION",
+      value: "blood_bron_pathogen_certificaton",
+    },
+    {
+      title: "TRAININGS (ex: HIPAA, OSHA, etc.)",
+      value: "training_hipaa_osha",
+    },
   ];
-  const normFile = (e: any) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
+
+  const [document, setDocument] = useState<{ [key: string]: File }>({});
+  const [userId, setUserId] = useState(null);
+  console.log(userId);
+  const [postDocument, { isError, isSuccess, error }] =
+    usePostDocumentMutation();
+  const path = `/documents/${userId}?step=1`;
+  console.log(document);
+
+  const onFinish = async (values: any) => {
+    console.log(values);
+    const formdata = new FormData();
+
+    Object.entries(document).forEach(([key, value]) => {
+      formdata.append(key, value);
+    });
+
+    await postDocument(formdata).then((res) => {
+      setUserId(res?.data?.data?.id);
+    });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setDocument((prev: any) => ({
+        ...prev,
+        // @ts-ignore
+        [e.target.name]: e?.target?.files[0],
+      }));
     }
-    return e?.fileList;
   };
 
   return (
     <div className=" w-full ">
-      <div className=" lg:grid lg:grid-cols-12  gap-5 ">
-        <div className=" lg:col-span-8 lg:p-10 lg:pt-0 p-6">
+      <div className="">
+        <div className=" lg:p-10 lg:pt-0 p-6 ">
           <DashboardTitle>Upload Documents</DashboardTitle>
 
-          <div className=" w-full mt-4 ">
-            {documents?.map((data, index) => (
-              <div key={index}>
-                <Form className="w-full ">
+          <div className="mt-4">
+            <Form
+              className="w-full lg:w-[60%] mt-4  "
+              onFinish={onFinish}
+              layout="vertical"
+            >
+              {documents?.map((data: any, index: number) => (
+                <div key={index}>
                   <Form.Item
-                    name="upload"
-                    valuePropName="fileList"
-                    getValueFromEvent={normFile}
+                    name={data?.value}
+                    label={
+                      <p className="text-[16px]  text-[#737373] font-semibold flex items-center gap-1">
+                        <span> {index + 1} </span>.<span>{data?.title} </span>
+                      </p>
+                    }
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: `Please upload your ${data?.title} file!`,
+                    //   },
+                    // ]}
+                    className=""
                   >
+                    <Input
+                      name={data?.value}
+                      type="file"
+                      id={data?.value}
+                      onChange={handleChange}
+                      style={{
+                        display: "none",
+                      }}
+                    />
                     <label
-                      htmlFor=" "
-                      className="text-[16px] mb-2 text-[#737373] font-semibold flex items-center gap-1 "
+                      htmlFor={data?.value}
+                      className=" flex items-center w-full gap-2 bg-[#E8F6FE] py-3 px-2 rounded-lg"
                     >
-                      <span> {index + 1} </span> <span>{data} </span>
+                      {" "}
+                      <span className=" h-[30px] w-[30px] bg-white rounded-full text-center my-1/2  text-xl text-[#737373]">
+                        <UploadOutlined />{" "}
+                      </span>{" "}
+                      <span className="  text-[16px] font-medium text-[#737373]">
+                        {document[data.value]?.name ? (
+                          <p className="text-[#1d75f2]">
+                            {document[data.value].name}{" "}
+                          </p>
+                        ) : (
+                          <p> Click to upload</p>
+                        )}
+                      </span>
                     </label>
-                    <Upload name="logo" action="/upload.do" listType="picture">
-                      <Button className=" flex items-center w-full">
-                        {" "}
-                        <span>
-                          <UploadOutlined />{" "}
-                        </span>{" "}
-                        <span>Click to upload</span>
-                      </Button>
-                    </Upload>
                   </Form.Item>
-                </Form>
-              </div>
-            ))}
-          </div>
+                </div>
+              ))}
 
-          {/* <div className=" lg:text-end text-center">
-            <Link href="/agreements">
-              <Button
-                type="primary"
-                htmlType="submit"
-                block
-                style={{
-                  border: "none",
-                  height: "41px",
-                  background: "#1D75F2",
-                  color: "white",
-                  borderRadius: "8px",
-                  outline: "none",
-                  width: "150px",
-                }}
-              >
-                Next
-              </Button>
-            </Link>
-          </div> */}
-        </div>
-
-        <div className="col-span-4 bg-slate-50 p-10 ">
-          <Form>
-            <Form.Item>
-              <Form.Item
-                name="dragger"
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                noStyle
-              >
-                <Upload.Dragger
-                  name="files"
-                  action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                  listType="picture"
-                >
-                  <p className="ant-upload-drag-icon">
-                    <InboxOutlined />
-                  </p>
-                  <p className="ant-upload-text">
-                    Click or drag file to this area to upload
-                  </p>
-                  <p className="ant-upload-hint"> (Max. File size: 50 MB)</p>
-                </Upload.Dragger>
+              <Form.Item className="text-end">
+                <Button type="primary" htmlType="submit">
+                  {" "}
+                  Next
+                </Button>
               </Form.Item>
-            </Form.Item>
-          </Form>
+            </Form>
+          </div>
         </div>
       </div>
+      <DataAlerts
+        isShow={isSuccess}
+        path={path}
+        isError={isError}
+        showMSG={error}
+      />
     </div>
   );
 };

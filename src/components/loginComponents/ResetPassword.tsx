@@ -1,52 +1,57 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-import { Button } from "../ui/button";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Button, Form, Input } from "antd";
+import { useResetPassMutation } from "@/redux/apiSlices/AuthSlices";
 
 const ResetPassword = () => {
   const router = useRouter();
+  const [resetPass, { error }] = useResetPassMutation();
+  const param = useParams<{ email: string | string[] }>();
+  const encodedEmail = param.email as string;
+  const decodedEmail = decodeURIComponent(encodedEmail);
+  console.log(decodedEmail);
 
-  type inputs = {
-    email: string;
-    password: any;
-    confirmPassword: any;
-  };
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<inputs>({
-    defaultValues: {},
-  });
-  const onSubmit: SubmitHandler<inputs> = (data) => {
-    console.log(data);
-    const { password, confirmPassword } = data;
-    Swal.fire({
-      title: "Successfully",
-      text: "Your password has been updated, please change your password regularly to avoid this happening",
-      showDenyButton: false,
-      showCancelButton: false,
-      confirmButtonText: "Confirm",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        router.push("/");
+  const onFinish = async (values: any) => {
+    const data = {
+      email: decodedEmail,
+      password: values?.password,
+      password_confirmation: values?.password_confirmation,
+    };
+    await resetPass(data).then((res) => {
+      console.log(res);
+      if (res?.data?.status === 200) {
+        Swal.fire({
+          title: "Login Successful",
+          text: res?.data?.message,
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          router.push(`/documents/${res?.data?.data?.id}`);
+        });
+      } else {
+        Swal.fire({
+          title: "Oops",
+          // @ts-ignore
+          text: error?.data?.message,
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
     });
   };
 
   return (
     <div>
-      <form
+      <div
         className=" lg:w-[630px] w-[400px] lg:px-[90px] px-[20px] lg:py-[57px] py-[30px] "
         style={{
           background: "white",
           borderRadius: "12px",
         }}
-        onSubmit={handleSubmit(onSubmit)}
       >
         <h1
           className="lg:text-[32px] text-[25px]"
@@ -72,15 +77,25 @@ const ResetPassword = () => {
           security
         </p>
 
-        <div className=" sm:mt-0" style={{ margin: "45px 0 20px 0" }}>
-          <label
-            style={{ display: "block", color: "#6A6D7C", marginBottom: "5px" }}
-            htmlFor=""
+        <Form onFinish={onFinish} layout="vertical">
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+            hasFeedback
+            style={{ marginBottom: "15px", marginTop: "10px" }}
+            label={
+              <p style={{ display: "block", color: "#6A6D7C" }}>
+                {" "}
+                New Password
+              </p>
+            }
           >
-            New Password
-          </label>
-          <div style={{ marginBottom: 0 }}>
-            <input
+            <Input.Password
               type="password"
               placeholder="Enter New password"
               style={{
@@ -92,23 +107,37 @@ const ResetPassword = () => {
                 width: "100%",
                 padding: "8px",
               }}
-              {...register("password", { required: true })}
             />
-            {errors.password && (
-              <p style={{ color: "red" }}>Password is required.</p>
-            )}
-          </div>
-        </div>
-
-        <div style={{ marginBottom: "40px" }}>
-          <label
-            style={{ display: "block", color: "#6A6D7C", marginBottom: "5px" }}
-            htmlFor="email"
+          </Form.Item>
+          <Form.Item
+            name="password_confirmation"
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Please confirm your password!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("The new password that you entered do not match!")
+                  );
+                },
+              }),
+            ]}
+            style={{ marginBottom: "15px" }}
+            label={
+              <p style={{ display: "block", color: "#6A6D7C" }}>
+                {" "}
+                Confirm Password
+              </p>
+            }
           >
-            Confirm Password
-          </label>
-          <div style={{ marginBottom: 0 }}>
-            <input
+            <Input.Password
               type="password"
               placeholder="Enter Confirm password"
               style={{
@@ -120,20 +149,16 @@ const ResetPassword = () => {
                 width: "100%",
                 padding: "8px",
               }}
-              {...register("confirmPassword", { required: true })}
             />
-            {errors.confirmPassword && (
-              <p style={{ color: "red" }}>Confirm Password is required.</p>
-            )}
-          </div>
-        </div>
+          </Form.Item>
 
-        <div className="text-center">
-          <Button type="submit" variant="getStarted">
-            UPDATE
-          </Button>
-        </div>
-      </form>
+          <Form.Item className="text-center">
+            <Button htmlType="submit" type="primary">
+              UPDATE
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 };

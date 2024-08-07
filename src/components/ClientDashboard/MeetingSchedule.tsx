@@ -3,14 +3,18 @@ import SubTitle from "@/components/shared/SubTitle";
 import Title from "@/components/shared/Title";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import Link from "next/link";
+import { usePostAppointmentMutation } from "@/redux/apiSlices/ClientDashboardSlices";
+import moment from "moment";
+import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const MeetingSchedule = () => {
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [clickBtn, setClickBtn] = useState(null);
-  //   const [variant, setVariant] = useState("default");
-  console.log(clickBtn);
+  const [postAppointment] = usePostAppointmentMutation();
+  const params = useParams();
+  const router = useRouter();
 
   const TimeValues = [
     "09:00 AM",
@@ -33,6 +37,29 @@ const MeetingSchedule = () => {
   const handleClick = (time: any) => {
     setClickBtn(time);
   };
+  const newDate = moment(date).format("L");
+
+  const handleSubmit = async () => {
+    const data = {
+      id: params?.userId,
+      time: clickBtn,
+      date: newDate,
+    };
+
+    await postAppointment(data).then((res) => {
+      if (res?.data?.status === 200) {
+        router.push(`/documents/${params?.userId}?step=4`);
+      } else {
+        Swal.fire({
+          title: "Failed to Submit",
+          // @ts-ignore
+          text: res?.error?.data?.message || "An error occurred",
+          icon: "error",
+        });
+      }
+    });
+  };
+
   return (
     <div>
       <div className="p-5">
@@ -55,48 +82,49 @@ const MeetingSchedule = () => {
         </p>
       </div>
 
-      <div className=" lg:flex  lg:mt-16 mt-2 items-center lg:mx-12">
-        <div>
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            className="rounded-md border lg:w-full w-[90%] mx-auto "
-          />
-        </div>
+      <div onClick={handleSubmit}>
+        <div className=" lg:flex gap-4 mt-16 items-center px-8">
+          <div>
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="rounded-md border w-full"
+            />
+          </div>
 
-        <div className="w-full lg:mt-1 mt-14 ">
-          <div className="  lg:w-[80%] mx-auto ">
-            <p className=" text-center text-lg text-[#737373] pb-3 lg:w-2/3 mx-auto tracking-wide ">
-              All appointments are scheduled in Central Standard Time zone
-              (CST).
-            </p>
-            <p className=" font-semibold  text-lg text-center mb-2">
-              {" "}
-              Select Hours
-            </p>
-            <div className=" flex-wrap  gap-4  bg-[#FAFAFA] rounded-xl shadow-md p-10 pe-0 m-5">
-              {TimeValues?.map((data, index) => (
-                <Button
-                  key={index}
-                  variant={clickBtn === data ? "btn2" : "default"}
-                  className=" me-4 mb-3"
-                  onClick={() => handleClick(data)}
-                >
-                  {" "}
-                  {data}
-                </Button>
-              ))}
+          <div className="w-full mt-10 lg:mt-1">
+            <div className="  w-[80%] mx-auto  ">
+              <p className=" text-center text-lg text-[#737373] pb-3 w-2/3 mx-auto tracking-wide ">
+                All appointments are scheduled in Central Standard Time zone
+                (CST).
+              </p>
+              <p className=" font-semibold  text-lg text-center mb-2">
+                {" "}
+                Select Hours
+              </p>
+              <div className=" flex-wrap  gap-4  bg-[#FAFAFA] rounded-xl shadow-md p-10 pe-0 ">
+                {TimeValues?.map((data, index) => (
+                  <Button
+                    key={index}
+                    variant={clickBtn === data ? "btn3" : "default2"}
+                    className=" me-4 mb-3"
+                    onClick={() => handleClick(data)}
+                  >
+                    {" "}
+                    {data}
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* 
-      <div className="text-center my-10">
-        <Link href="/document-submit">
+        <div className="text-center my-10">
+          {/* <Link href="/intake-submitting">  */}
           <Button variant="getStarted"> Submit </Button>
-        </Link>
-      </div> */}
+          {/* </Link>  */}
+        </div>
+      </div>
     </div>
   );
 };

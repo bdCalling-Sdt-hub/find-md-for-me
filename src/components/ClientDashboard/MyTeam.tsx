@@ -3,166 +3,38 @@ import { Dropdown, Form, Menu, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa6";
 import { Button } from "../ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import MyTeamModal from "./MyTeamModal";
 import DashboardTitle from "../shared/DashboardTitle";
-import personImg from "@/assests/person2.png";
-import personImg1 from "@/assests/person1.png";
-import Image from "next/image";
+import {
+  useDeleteTeamMutation,
+  useGetTeamQuery,
+} from "@/redux/apiSlices/ClientDashboardSlices";
+import SingleUserDetails from "./SingleUserDetails";
+import Swal from "sweetalert2";
 
-const data = [
-  {
-    key: "1",
-    name: "Tushar",
-    email: "tushar@gmail.com",
-    image: <Image src={personImg} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "2",
-    name: "Rahman",
-    email: "rahman@gmail.com",
-    image: <Image src={personImg1} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "17 july 2024",
-  },
-  {
-    key: "3",
-    name: "Rafsan",
-    email: "rafsan@gmail.com",
-    image: <Image src={personImg} height={14} width={34} alt="" />,
-    role: "Esthetician",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "4",
-    name: "jusef",
-    email: "jusef@gmail.com",
-    image: <Image src={personImg1} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "5",
-    name: "Asad",
-    email: "asad@gmail.com",
-    image: <Image src={personImg} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "6",
-    name: "Fahim",
-    email: "fahim@gmail.com",
-    image: <Image src={personImg1} height={14} width={34} alt="" />,
-    role: "NP",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "7",
-    name: "Nadir",
-    email: "nadir@gmail.com",
-    image: <Image src={personImg} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "8",
-    name: "Tushar",
-    email: "tushar@gmail.com",
-    image: <Image src={personImg1} height={14} width={34} alt="" />,
-    role: "Esthetician",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "9",
-    name: "Rahman",
-    email: "rahman@gmail.com",
-    image: <Image src={personImg} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "10",
-    name: "Rafsan",
-    email: "rafsan@gmail.com",
-    image: <Image src={personImg1} height={14} width={34} alt="" />,
-    role: "NP",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "11",
-    name: "jusef",
-    email: "jusef@gmail.com",
-    image: <Image src={personImg} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "12",
-    name: "Asad",
-    email: "asad@gmail.com",
-    image: <Image src={personImg1} height={14} width={34} alt="" />,
-    role: "Esthetician",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "13",
-    name: "Fahim",
-    email: "fahim@gmail.com",
-    image: <Image src={personImg} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "14",
-    name: "Nadir",
-    email: "nadir@gmail.com",
-    image: <Image src={personImg1} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "15",
-    name: "Asad",
-    email: "asad@gmail.com",
-    image: <Image src={personImg} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "16",
-    name: "Fahim",
-    email: "fahim@gmail.com",
-    image: <Image src={personImg1} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-  {
-    key: "17",
-    name: "Nadir",
-    email: "nadir@gmail.com",
-    image: <Image src={personImg} height={14} width={34} alt="" />,
-    role: "Nurse",
-    joinDate: "15 july 2024",
-  },
-];
 const MyTeam = () => {
-  let path;
-  if (typeof window !== "undefined") {
-    path = new URLSearchParams(window.location.search).get("page") || 1;
-  }
-  const [page, setPage] = useState(path);
   const [form] = Form.useForm();
-
+  const { data: teamData, refetch } = useGetTeamQuery(undefined);
+  console.log(teamData);
+  const [deleteTeam, { error }] = useDeleteTeamMutation(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewModal, setViewModal] = useState(false);
+  const [value, setValue] = useState(null);
+
+  const data = teamData?.data?.data.map((value: any, index: number) => ({
+    key: index + 1,
+    name: value?.first_name,
+    lastName: value?.last_name,
+    email: value?.email,
+    role: value?.Role,
+    license_certificate_number: value?.license_certificate_number,
+    addisional_certificate: value?.addisional_certificate,
+    phone: value?.phone,
+    userId: value?.id,
+    dob: value?.dob,
+  }));
 
   useEffect(() => {
     if (isModalOpen) {
@@ -173,30 +45,6 @@ const MyTeam = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
-
-  const menu = (
-    <Menu>
-      <div className="bg-white z-30 w-[100px] px-3">
-        <button className=" flex items-center gap-2 mb-1 " onClick={showModal}>
-          {" "}
-          <span className="text-[#1D75F2]">
-            {" "}
-            <FaEye />{" "}
-          </span>{" "}
-          <span> View</span>
-        </button>
-
-        <button className=" flex items-center gap-2 mb-1 ">
-          {" "}
-          <span className="text-[#f5523c]">
-            {" "}
-            <MdDelete />{" "}
-          </span>{" "}
-          <span> Delete</span>
-        </button>
-      </div>
-    </Menu>
-  );
 
   const columns: any = [
     {
@@ -211,8 +59,8 @@ const MyTeam = () => {
       key: "username",
       render: (dataIndexValue: any, record: any) => (
         <div className="flex items-center gap-2">
-          <div>{record?.image} </div>
           <h1>{dataIndexValue}</h1>
+          <div>{record?.lastName} </div>
         </div>
       ),
     },
@@ -232,24 +80,70 @@ const MyTeam = () => {
       dataIndex: "printView",
       key: "printView",
 
-      render: () => (
-        <Dropdown className=" bg-white  " overlay={menu}>
-          <a onClick={(e) => e.preventDefault()}>
-            <Space>
-              <BsThreeDotsVertical />
-            </Space>
-          </a>
-        </Dropdown>
+      render: (_: any, record: any) => (
+        <div className="flex items-center gap-2">
+          <button
+            className=" text-xl text-[#1d75f2] "
+            onClick={() => handleViewModal(record)}
+          >
+            <FaEye />
+          </button>
+
+          <button
+            className=" text-xl text-[#f5523c] "
+            onClick={() => handleDelete(record?.userId)}
+          >
+            <MdDelete />
+          </button>
+        </div>
       ),
     },
   ];
 
-  // const handlePageChange = (page) => {
-  //   setPage(page);
-  //   const params = new URLSearchParams(window.location.search);
-  //   params.set("page", page);
-  //   window.history.pushState(null, "", `?${params.toString()}`);
-  // };
+  const handleViewModal = (value: any) => {
+    setValue(value);
+    setViewModal(true);
+  };
+
+  const handleDelete = async (id: any) => {
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteTeam(id).then((res) => {
+          console.log(res);
+          if (res?.data?.status === 200) {
+            Swal.fire({
+              title: "Deleted!",
+              text: res?.data?.message,
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(() => {
+              refetch();
+            });
+          } else {
+            Swal.fire({
+              title: "Oops",
+              // @ts-ignore
+              text: error?.data?.message,
+              icon: "error",
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          }
+        });
+      }
+    });
+  };
+
   return (
     <div>
       {" "}
@@ -284,6 +178,11 @@ const MyTeam = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         form={form}
+      />
+      <SingleUserDetails
+        viewModal={viewModal}
+        setViewModal={setViewModal}
+        singleValue={value}
       />
     </div>
   );

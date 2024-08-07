@@ -2,36 +2,41 @@
 import React, { useState } from "react";
 
 import { Button, Form, Input } from "antd";
+import { useChangePassMutation } from "@/redux/apiSlices/AuthSlices";
+import Swal from "sweetalert2";
 
 const ChangePassword = () => {
-  const [newPassError, setNewPassError] = useState("");
-  const [conPassError, setConPassError] = useState("");
-  const [curPassError, setCurPassError] = useState("");
-
-  const handleChangePassword = (values: any) => {
-    // console.log(values);
-    // if (values?.current_password === values.new_password) {
-    //   setNewPassError("The New password is semilar with old Password");
-    // } else {
-    //   setNewPassError("");
-    // }
-    // if (values?.new_password !== values.confirm_password) {
-    //   setConPassError("New Password and Confirm Password Doesn't Matched");
-    // } else {
-    //   setConPassError("");
-    // }
+  const [changePass] = useChangePassMutation();
+  const handleChangePassword = async (values: any) => {
+    console.log(values);
+    await changePass(values).then((res) => {
+      console.log(res);
+      if (res?.data?.status === 200) {
+        Swal.fire({
+          position: "center",
+          title: res?.data?.message,
+          showConfirmButton: true,
+          confirmButtonColor: "#C738BD",
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          title: "Oops",
+          // @ts-ignore
+          text: error?.data?.message,
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    });
   };
 
-  const handleReset = () => {
-    if (typeof window !== "undefined") {
-      window.location.reload();
-    }
-  };
   return (
     <div>
       {" "}
       <div className="h-[53vh]">
-        <div style={{}}>
+        <div>
           <Form
             name="normal_login"
             className="login-form lg:ms-[50px] pe-[30px] mt-[30px] "
@@ -70,14 +75,6 @@ const ChangePassword = () => {
                   }}
                 />
               </Form.Item>
-              {curPassError && (
-                <label
-                  style={{ display: "block", color: "red" }}
-                  htmlFor="error"
-                >
-                  {curPassError}
-                </label>
-              )}
             </div>
 
             <div className=" mb-[20px]  lg:w-[50%] w-[100%]">
@@ -109,14 +106,6 @@ const ChangePassword = () => {
                   }}
                 />
               </Form.Item>
-              {newPassError && (
-                <label
-                  style={{ display: "block", color: "red" }}
-                  htmlFor="error"
-                >
-                  {newPassError}
-                </label>
-              )}
             </div>
 
             <div className=" mb-[40px]  lg:w-[50%] w-[100%]">
@@ -129,11 +118,25 @@ const ChangePassword = () => {
               <Form.Item
                 style={{ marginBottom: 0 }}
                 name="confirm_password"
+                dependencies={["new_password"]}
+                hasFeedback
                 rules={[
                   {
                     required: true,
-                    message: "Please input your Re-type Password!",
+                    message: "Please confirm your password!",
                   },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("new_password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(
+                          "The new password that you entered do not match!"
+                        )
+                      );
+                    },
+                  }),
                 ]}
               >
                 <Input.Password
@@ -148,14 +151,6 @@ const ChangePassword = () => {
                   }}
                 />
               </Form.Item>
-              {conPassError && (
-                <label
-                  style={{ display: "block", color: "red" }}
-                  htmlFor="error"
-                >
-                  {conPassError}
-                </label>
-              )}
             </div>
 
             <div

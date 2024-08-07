@@ -3,14 +3,13 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
 import bannerImg from "@/assests/bannerImg.png";
-import BannerCard from "./BannerCard";
 import Link from "next/link";
 
 const Banner = () => {
   return (
     <div className="bg-[#FAFAFA]">
-      <div className=" pt-4 mb-5 relative lg:container">
-        <div className=" lg:h-[110vh] ">
+      <div className=" pt-4 mb-5  lg:container">
+        <div className=" lg:h-[97vh] ">
           <div className=" grid lg:grid-cols-2 grid-cols-1 items-center ">
             <div className="ps-5">
               <h1 className=" text-[#1D75F2] lg:text-[56px] text-[28px]  font-bold mb-5 ">
@@ -43,10 +42,6 @@ const Banner = () => {
               />
             </div>
           </div>
-        </div>
-
-        <div className=" lg:absolute lg:bottom-20 p-2 ">
-          <BannerCard />
         </div>
       </div>
     </div>

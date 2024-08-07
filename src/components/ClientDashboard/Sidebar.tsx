@@ -14,8 +14,11 @@ import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GrMoney, GrVend } from "react-icons/gr";
 import { FaHandHoldingMedical } from "react-icons/fa6";
+import { useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
 const Sidebar = () => {
   //   const router = useRouter();
+  const { data } = useGetProfileQuery(undefined);
+  const userId = data?.user?.id;
   const pathname = usePathname();
   console.log(pathname);
 
@@ -28,7 +31,7 @@ const Sidebar = () => {
   const linkItems: ItemType[] = [
     {
       title: "Upload Documents",
-      path: "/documents",
+      path: `/documents/${userId}`,
       icon: <MdOutlineFileUpload size={24} />,
     },
     {

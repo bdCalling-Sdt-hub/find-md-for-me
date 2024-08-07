@@ -1,60 +1,87 @@
 "use client";
 import React from "react";
 import DashboardTitle from "../shared/DashboardTitle";
-import { Button } from "../ui/button";
-import { Form, Input, Select } from "antd";
-import Link from "next/link";
+
+import { Button, Form, Input, Select } from "antd";
+
+import {
+  usePostVendorFormMutation,
+  useVendorDataQuery,
+} from "@/redux/apiSlices/ClientDashboardSlices";
+import DataAlerts from "../shared/DataAlerts";
 
 const Vendors = () => {
-  const vendors = [
-    "ALLERGAN",
-    "DRUGCRAFTERS",
-    "EVOLUS",
-    "GALDERMA",
-    "MCKESSON",
-    "MERZ",
-    "OLYMPIA",
-    "PROLLENIUM",
-    "RITE VALUE",
-    "V-SOFT THREADS",
-  ];
+  const { data } = useVendorDataQuery(undefined);
+  console.log(data?.data);
+  const [postVendorForm, { isSuccess, isError, error }] =
+    usePostVendorFormMutation();
+
   const shipping = ["Overnight", "Expedited", "Standard"];
+  const path = "/document-submit";
+  const onFinish = async (values: any) => {
+    console.log(values);
+    await postVendorForm(values).then((res) => console.log(res));
+  };
 
   return (
     <div>
       <div className="pt-3 ps-3">
         {" "}
         <DashboardTitle>Order Form</DashboardTitle>
-        <div className=" flex justify-center items-center mt-2 mb-5">
-          <Button variant="default">Order Form Here</Button>
+        <div className="  flex justify-center items-center mb-4">
+          <p className=" border border-[#C738BD] text-[#C738BD]   w-[200px] h-[50px]  flex justify-center items-center rounded-lg">
+            Order Form Here
+          </p>
         </div>
       </div>
 
       <div className="flex justify-center items-center mb-10  ">
-        <Form className="w-3/4 bg-[#E8F6FE] rounded-lg  ">
+        <Form
+          className="w-3/4 bg-[#E8F6FE] rounded-lg  "
+          layout="vertical"
+          onFinish={onFinish}
+        >
           <div className="py-10 px-10 ">
             <div className=" lg:flex gap-5  w-full">
-              <Form.Item className=" w-full">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  First Name
-                </label>
+              <Form.Item
+                className=" w-full"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold ">
+                    First Name
+                  </p>
+                }
+                name="first_name"
+                rules={[{ required: true, message: "This field is required" }]}
+              >
                 <Input placeholder="Naziya Sultana" className="h-[45px] mt-2" />
               </Form.Item>
 
-              <Form.Item className=" w-full">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  {" "}
-                  Last Name
-                </label>
+              <Form.Item
+                className=" w-full"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold ">
+                    {" "}
+                    Last Name
+                  </p>
+                }
+                name="last_name"
+                rules={[{ required: true, message: "This field is required" }]}
+              >
                 <Input placeholder="Mithila " className="h-[45px] mt-2" />
               </Form.Item>
             </div>
 
             <div className="  lg:flex gap-5 w-full ">
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Email
-                </label>
+              <Form.Item
+                className=" lg:w-1/2"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold ">
+                    Email
+                  </p>
+                }
+                name="email"
+                rules={[{ required: true, message: "This field is required" }]}
+              >
                 <Input
                   type="email"
                   placeholder="Naziya@gmail.com"
@@ -62,10 +89,16 @@ const Vendors = () => {
                 />
               </Form.Item>
 
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Phone Number{" "}
-                </label>
+              <Form.Item
+                className=" lg:w-1/2"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold ">
+                    Phone Number{" "}
+                  </p>
+                }
+                name="phone"
+                rules={[{ required: true, message: "This field is required" }]}
+              >
                 <Input
                   type="number"
                   placeholder="+0888798345326 "
@@ -75,28 +108,49 @@ const Vendors = () => {
             </div>
 
             <div className="  lg:flex gap-5 w-full ">
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Shipping Address
-                </label>
-                <Input
-                  type="text"
-                  placeholder="Street Address"
-                  className="h-[45px] mt-2"
-                />
-                <div className="mt-3">
+              <div className=" lg:w-1/2">
+                <Form.Item
+                  label={
+                    <p className="text-lg  text-[#737373] font-semibold ">
+                      Shipping Address
+                    </p>
+                  }
+                  name="shiping_address"
+                  rules={[
+                    { required: true, message: "This field is required" },
+                  ]}
+                >
+                  <Input
+                    type="text"
+                    placeholder="Street Address"
+                    className="h-[45px] mt-2"
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name="shiping_address1"
+                  rules={[
+                    { required: true, message: "This field is required" },
+                  ]}
+                >
                   <Input
                     type="text"
                     placeholder="City/State/Province/Region"
                     className="h-[45px] "
                   />
-                </div>
-              </Form.Item>
+                </Form.Item>
+              </div>
 
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Items Description{" "}
-                </label>
+              <Form.Item
+                className=" lg:w-1/2"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold ">
+                    Items Description{" "}
+                  </p>
+                }
+                name="item_description"
+                rules={[{ required: true, message: "This field is required" }]}
+              >
                 <Input.TextArea
                   rows={4}
                   placeholder=" Description of Products "
@@ -106,10 +160,16 @@ const Vendors = () => {
             </div>
 
             <div className="  lg:flex gap-5 w-full ">
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Item Number (If available)
-                </label>
+              <Form.Item
+                className=" lg:w-1/2"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold ">
+                    Item Number (If available)
+                  </p>
+                }
+                name="item_number"
+                rules={[{ required: true, message: "This field is required" }]}
+              >
                 <Input
                   type="number"
                   placeholder="9879074"
@@ -117,10 +177,16 @@ const Vendors = () => {
                 />
               </Form.Item>
 
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Price{" "}
-                </label>
+              <Form.Item
+                className=" lg:w-1/2"
+                name="price"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold ">
+                    Price{" "}
+                  </p>
+                }
+                rules={[{ required: true, message: "This field is required" }]}
+              >
                 <Input
                   type="number"
                   placeholder="$787"
@@ -130,41 +196,16 @@ const Vendors = () => {
             </div>
 
             <div className="  lg:flex gap-5 w-full ">
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Shipping Address
-                </label>
-                <Input
-                  type="text"
-                  placeholder="Street Address"
-                  className="h-[45px] mt-2"
-                />
-                <div className="mt-3">
-                  <Input
-                    type="text"
-                    placeholder="City/State/Province/Region"
-                    className="h-[45px] "
-                  />
-                </div>
-              </Form.Item>
-
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Items Description{" "}
-                </label>
-                <Input.TextArea
-                  rows={4}
-                  placeholder=" Description of Products "
-                  className=" mt-2"
-                />
-              </Form.Item>
-            </div>
-
-            <div className="  lg:flex gap-5 w-full ">
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Quantity
-                </label>
+              <Form.Item
+                className=" lg:w-1/2"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold ">
+                    Quantity
+                  </p>
+                }
+                name="quantity"
+                rules={[{ required: true, message: "This field is required" }]}
+              >
                 <Input
                   type="number"
                   placeholder="9"
@@ -172,17 +213,24 @@ const Vendors = () => {
                 />
               </Form.Item>
 
-              <Form.Item className="lg:w-1/2">
-                <label
-                  htmlFor=" "
-                  className="text-lg mb-6 text-[#737373] font-semibold  "
+              <Form.Item
+                className="lg:w-1/2"
+                name="vendor"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold  ">
+                    Select Vendor
+                  </p>
+                }
+                rules={[{ required: true, message: "This field is required" }]}
+              >
+                <Select
+                  style={{
+                    height: "45px",
+                  }}
                 >
-                  What state(s) is your business registered in?
-                </label>
-                <Select className="h-[45px]  mt-2">
-                  {vendors?.map((value, index) => (
-                    <Select.Option key={index} value={value}>
-                      {value}
+                  {data?.data.map((value: any, index: number) => (
+                    <Select.Option key={index} value={value?.vendor_name}>
+                      {value?.vendor_name}
                     </Select.Option>
                   ))}
                 </Select>
@@ -190,10 +238,16 @@ const Vendors = () => {
             </div>
 
             <div className="  lg:flex gap-5 w-full ">
-              <Form.Item className=" lg:w-1/2">
-                <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                  Comments/Questions{" "}
-                </label>
+              <Form.Item
+                className=" lg:w-1/2"
+                name="comments"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold ">
+                    Comments/Questions{" "}
+                  </p>
+                }
+                rules={[{ required: true, message: "This field is required" }]}
+              >
                 <Input.TextArea
                   rows={5}
                   placeholder="write here... "
@@ -202,14 +256,22 @@ const Vendors = () => {
               </Form.Item>
 
               <div className="lg:w-1/2">
-                <Form.Item>
-                  <label
-                    htmlFor=" "
-                    className="text-lg mb-6 text-[#737373] font-semibold  "
+                <Form.Item
+                  label={
+                    <p className="text-lg  text-[#737373] font-semibold  ">
+                      Shipping
+                    </p>
+                  }
+                  name="shiping"
+                  rules={[
+                    { required: true, message: "This field is required" },
+                  ]}
+                >
+                  <Select
+                    style={{
+                      height: "45px",
+                    }}
                   >
-                    What state(s) is your business registered in?
-                  </label>
-                  <Select className="h-[45px]  mt-2 py-2">
                     {shipping?.map((value, index) => (
                       <Select.Option key={index} value={value}>
                         {value}
@@ -218,15 +280,23 @@ const Vendors = () => {
                   </Select>
                 </Form.Item>
 
-                <Form.Item className=" ">
-                  <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                    Print Name{" "}
-                    <span className="text-[#C738BD]"> (Required)</span>
-                  </label>
+                <Form.Item
+                  className=" "
+                  name="print_name"
+                  label={
+                    <p className="text-lg  text-[#737373] font-semibold ">
+                      Print Name{" "}
+                      <span className="text-[#C738BD]"> (Required)</span>
+                    </p>
+                  }
+                  rules={[
+                    { required: true, message: "This field is required" },
+                  ]}
+                >
                   <Input
                     type="text"
                     placeholder="Warren Buffett"
-                    className="h-[45px] mt-2"
+                    className="h-[45px] "
                   />
                 </Form.Item>
               </div>
@@ -255,14 +325,20 @@ const Vendors = () => {
               </div>
             </div>
 
-            <div className="flex justify-center items-center mt-4">
-              <Link href="/document-submit">
-                <Button variant="btn2">Confirm Order</Button>
-              </Link>
-            </div>
+            <Form.Item className="flex justify-center items-center mt-4">
+              <Button htmlType="submit" type="primary">
+                Confirm Order
+              </Button>
+            </Form.Item>
           </div>
         </Form>
       </div>
+      <DataAlerts
+        isShow={isSuccess}
+        path={path}
+        isError={isError}
+        showMSG={error}
+      />
     </div>
   );
 };

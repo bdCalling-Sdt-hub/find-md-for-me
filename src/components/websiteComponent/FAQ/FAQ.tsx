@@ -1,3 +1,4 @@
+"use client";
 import Title from "@/components/shared/Title";
 import Link from "next/link";
 import React from "react";
@@ -7,34 +8,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-const QA = [
-  {
-    question: "Does Find a MD 4 Me provide MDs for Estheticians and LVNs?",
-    answer:
-      "Yes, we do. Provided that the client only practices within scope and the medical director believes the business is suitable for our company.",
-  },
-  {
-    question: "I’m located in Texas and need a MD, do you have a MD in Texas?",
-    answer:
-      "Yes, we do. Provided that the client only practices within scope and the medical director believes the business is suitable for our company.",
-  },
-  {
-    question: "How much is the monthly fee and is there a onboarding fee?",
-    answer:
-      "Yes, we do. Provided that the client only practices within scope and the medical director believes the business is suitable for our company.",
-  },
-  {
-    question:
-      "If I want to start a tele health business for wellness can you find a MD for me?",
-    answer:
-      "Yes, we do. Provided that the client only practices within scope and the medical director believes the business is suitable for our company.",
-  },
-];
+import { useGetFAQQuery } from "@/redux/apiSlices/WebPagesSlices";
 
 const FAQ = () => {
+  const { data } = useGetFAQQuery(undefined);
+
   return (
-    <div className="mb-10">
+    <div className="mb-10   h-[calc(100vh-520px)] ">
       <Title>FREQUENTLY ASKED QUESTIONS</Title>
       <div className=" mb-10">
         <p className=" text-[#737373] text-[20px] lg:w-[700px] text-center mx-auto">
@@ -50,16 +30,16 @@ const FAQ = () => {
         </p>
       </div>
 
-      <div className=" lg:w-[900px] mx-auto ">
+      <div className=" lg:w-[900px] mx-auto  ">
         <div>
-          {QA?.map((data, index) => (
+          {data?.data?.map((value: any, index: number) => (
             <Accordion key={index} type="single" collapsible className="mb-10">
               <AccordionItem
                 value={`item-${index}`}
                 className="data-[state=open]:border-2 data-[state=open]:border-[#1D75F2]"
               >
-                <AccordionTrigger>{data?.question}</AccordionTrigger>
-                <AccordionContent>{data?.answer}</AccordionContent>
+                <AccordionTrigger>{value?.question}</AccordionTrigger>
+                <AccordionContent>{value?.answare}</AccordionContent>
               </AccordionItem>
             </Accordion>
           ))}

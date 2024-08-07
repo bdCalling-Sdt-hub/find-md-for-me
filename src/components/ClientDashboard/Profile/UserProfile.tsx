@@ -1,42 +1,80 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Form, Input, Button } from "antd";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import Swal from "sweetalert2";
-// import person from "@/assests/person.png"
+import {
+  useGetProfileQuery,
+  usePostProfileMutation,
+} from "@/redux/apiSlices/AuthSlices";
 
+import { useForm } from "antd/lib/form/Form";
 const UserProfile = () => {
-  const [image, setImage] = useState(
-    "https://avatars.design/wp-content/uploads/2021/02/corporate-avatars-TN-1.jpg"
-  );
+  const [form] = useForm();
+  const [image, setImage] = useState("");
   const [imgURL, setImgURL] = useState(image);
+  const { data } = useGetProfileQuery(undefined);
+  const [postProfile] = usePostProfileMutation();
 
-  const handleSubmit = (values: React.FormEvent) => {
-    console.log(values);
-    Swal.fire({
-      position: "center",
-      // icon: "success",
-      title: "Request admin for edit your information",
-      // text:"" ,
-      showConfirmButton: true,
-      confirmButtonColor: "#C738BD",
-      confirmButtonText: "Request edit",
-      timer: 1500,
+  // todo: get image
+  // console.log(image);
+  const handleSubmit = async (values: any) => {
+    const datas = {
+      image: image,
+      first_name: values?.first_name,
+      last_name: values?.last_name,
+      email: values?.email,
+      buisnes_name: values?.buisnes_name,
+      buisness_address: values?.buisness_address,
+      phone: values?.phone,
+    };
+    // console.log(datas);
+    await postProfile(datas).then((res) => {
+      console.log(res);
+      if (res?.data?.status === 200) {
+        Swal.fire({
+          position: "center",
+          title: res?.data?.message,
+          showConfirmButton: true,
+          confirmButtonColor: "#C738BD",
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          title: "Oops",
+          // @ts-ignore
+          text: error?.data?.message,
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
     });
+
+    // console.log(values);
   };
 
   const onChange = (e: any) => {
     const file = e.target.files[0];
+    console.log(file);
     const imgUrl = URL.createObjectURL(file);
     setImgURL(imgUrl);
     setImage(file);
   };
-  const initialFormValues = {
-    fullName: "Nadir Hossain",
-    email: "nadirhossain336@gmail.com",
-    mobile_number: "01756953936",
-  };
+
+  useEffect(() => {
+    if (data) {
+      form.setFieldsValue({
+        first_name: data?.user?.first_name,
+        last_name: data?.user?.last_name,
+        email: data?.user?.email,
+        phone: data?.user?.phone,
+        buisnes_name: data?.user?.buisnes_name,
+        buisness_address: data?.user?.buisness_address,
+      });
+    }
+  }, [data, form]);
   return (
     <div>
       {" "}
@@ -93,20 +131,34 @@ const UserProfile = () => {
           {/* forms  */}
           <div className=" lg:w-2/3 mx-auto ">
             <Form
+              form={form}
               name="normal_login"
-              className="login-form "
-              initialValues={initialFormValues}
+              className="login-form"
+              initialValues={{
+                first_name: "",
+                last_name: "",
+                email: "",
+                phone: "",
+                buisnes_name: "",
+                buisness_address: "",
+              }}
               style={{ width: "100%", height: "fit-content" }}
               onFinish={handleSubmit}
             >
               <div className=" grid lg:grid-cols-2 grid-cols-1 lg:gap-x-16 w-full gap-y-4 pt-5">
-                <div className="lg:mb-[20px]">
+                <div className="lg:mb-[15px]">
                   <label style={{ display: "block", marginBottom: "5px" }}>
-                    Full Name
+                    First Name
                   </label>
-                  <Form.Item style={{ marginBottom: 0 }} name="fullName">
+                  <Form.Item
+                    style={{ marginBottom: 0 }}
+                    name="first_name"
+                    rules={[
+                      { required: true, message: "This field is required" },
+                    ]}
+                  >
                     <Input
-                      placeholder="Enter Your Full Name"
+                      placeholder="Enter Your First Name"
                       type="text"
                       style={{
                         border: "1px solid #E0E4EC",
@@ -120,17 +172,49 @@ const UserProfile = () => {
                   </Form.Item>
                 </div>
 
-                <div className="lg:mb-[20px]">
+                <div className="lg:mb-[15px]">
+                  <label style={{ display: "block", marginBottom: "5px" }}>
+                    Last Name
+                  </label>
+                  <Form.Item
+                    style={{ marginBottom: 0 }}
+                    name="last_name"
+                    rules={[
+                      { required: true, message: "This field is required" },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Enter Your Last Name"
+                      type="text"
+                      style={{
+                        border: "1px solid #E0E4EC",
+                        height: "52px",
+
+                        background: "white",
+                        borderRadius: "8px",
+                        outline: "none",
+                      }}
+                    />
+                  </Form.Item>
+                </div>
+
+                <div className="lg:mb-[15px]">
                   <label
                     style={{ display: "block", marginBottom: "5px" }}
                     htmlFor=""
                   >
-                    EmaiUser
+                    Email
                   </label>
-                  <Form.Item name="email" style={{ marginBottom: 0 }}>
+                  <Form.Item
+                    name="email"
+                    style={{ marginBottom: 0 }}
+                    rules={[
+                      { required: true, message: "This field is required" },
+                    ]}
+                  >
                     <Input
                       type="text"
-                      placeholder="Enter Email"
+                      placeholder=" Please Enter  Your  Email"
                       style={{
                         border: "1px solid #E0E4EC",
                         height: "52px",
@@ -142,13 +226,17 @@ const UserProfile = () => {
                   </Form.Item>
                 </div>
 
-                <div className="lg:mb-[40px]">
-                  <label style={{ marginBottom: "5px" }} htmlFor="email">
-                    Phone Number
-                  </label>
-                  <Form.Item style={{ marginBottom: 0 }} name="mobile_number">
+                <div className="lg:mb-[15px]">
+                  <label style={{ marginBottom: "5px" }}>Phone Number</label>
+                  <Form.Item
+                    style={{ marginBottom: 0 }}
+                    name="phone"
+                    rules={[
+                      { required: true, message: "This field is required" },
+                    ]}
+                  >
                     <Input
-                      type="text"
+                      type="number"
                       placeholder="Enter Phone Number"
                       style={{
                         border: "1px solid #E0E4EC",
@@ -161,55 +249,20 @@ const UserProfile = () => {
                   </Form.Item>
                 </div>
 
-                <div className="lg:mb-[20px] mb-[20px]">
-                  <label
-                    style={{ display: "block", marginBottom: "5px" }}
-                    htmlFor=""
-                  >
-                    Password
-                  </label>
-                  <Form.Item name="password" style={{ marginBottom: 0 }}>
-                    <Input.Password
-                      type="password"
-                      style={{
-                        border: "1px solid #E0E4EC",
-                        height: "52px",
-                        background: "white",
-                        borderRadius: "8px",
-                        outline: "none",
-                      }}
-                    />
-                  </Form.Item>
-                </div>
-
-                <div className="lg:mb-[20px]">
-                  <label style={{ display: "block", marginBottom: "5px" }}>
-                    Contact Number
-                  </label>
-                  <Form.Item style={{ marginBottom: 0 }} name="contact">
-                    <Input
-                      placeholder="Enter Your Full Name"
-                      type="number"
-                      style={{
-                        border: "1px solid #E0E4EC",
-                        height: "52px",
-
-                        background: "white",
-                        borderRadius: "8px",
-                        outline: "none",
-                      }}
-                    />
-                  </Form.Item>
-                </div>
-
-                <div className="lg:mb-[20px]">
+                <div className="lg:mb-[15px]">
                   <label
                     style={{ display: "block", marginBottom: "5px" }}
                     htmlFor=""
                   >
                     Business Name
                   </label>
-                  <Form.Item name="businessName" style={{ marginBottom: 0 }}>
+                  <Form.Item
+                    name="buisnes_name"
+                    style={{ marginBottom: 0 }}
+                    rules={[
+                      { required: true, message: "This field is required" },
+                    ]}
+                  >
                     <Input
                       type="text"
                       placeholder="Enter your Business name "
@@ -224,14 +277,20 @@ const UserProfile = () => {
                   </Form.Item>
                 </div>
 
-                <div className="lg:mb-[20px]">
+                <div className="lg:mb-[15px]">
                   <label
                     style={{ display: "block", marginBottom: "5px" }}
                     htmlFor=""
                   >
                     Business Address
                   </label>
-                  <Form.Item name="address" style={{ marginBottom: 0 }}>
+                  <Form.Item
+                    name="buisness_address"
+                    style={{ marginBottom: 0 }}
+                    rules={[
+                      { required: true, message: "This field is required" },
+                    ]}
+                  >
                     <Input
                       type="text"
                       placeholder="Enter your Business address"
@@ -255,7 +314,10 @@ const UserProfile = () => {
                   alignItems: "center",
                 }}
               >
-                <div style={{ width: "100%", position: "relative" }}>
+                <div
+                  style={{ width: "100%", position: "relative" }}
+                  className=" mt-5"
+                >
                   <Form.Item>
                     <Button
                       type="primary"

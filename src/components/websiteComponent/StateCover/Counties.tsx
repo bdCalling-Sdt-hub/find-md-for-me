@@ -1,47 +1,52 @@
+"use client";
 import React from "react";
 import mapImg from "@/assests/map.png";
 import Image from "next/image";
 import Title from "@/components/shared/Title";
+import { useGetStateQuery } from "@/redux/apiSlices/WebPagesSlices";
 
 const Counties = () => {
-  const counties = [
-    "Alabama",
-    " Arizona",
-    "Colorado ",
-    "Connecticut",
-    "District of Colombia ",
-    "Deleware ",
-    "Florida",
-    "Idaho ",
-    "Illinois ",
-    "Iowa",
-    "Indiana",
-    "Kentucky ",
-    "Louisiana ",
-    "Maine",
-    " Mississippi",
-    " Montana",
-    " Maryland ",
-    "Michigan ",
-    "Minnesota ",
-    "Nebraska ",
-    " Nevada",
-    " New Jersey",
-    " North Dakota",
-    "New Hampshire ",
-    "South Carolina",
-    "Ohio ",
-    "Oklahoma",
-    "Tennessee ",
-    "Texas ",
-    "Utah ",
-    "Virginia ",
-    "Vermont ",
-    " Washington",
-    " West Virginia",
-    " Wyoming",
-    "Wisconsin ",
-  ];
+  const { data } = useGetStateQuery(undefined);
+  console.log(data?.data);
+
+  // const counties = [
+  //   "Alabama",
+  //   " Arizona",
+  //   "Colorado ",
+  //   "Connecticut",
+  //   "District of Colombia ",
+  //   "Deleware ",
+  //   "Florida",
+  //   "Idaho ",
+  //   "Illinois ",
+  //   "Iowa",
+  //   "Indiana",
+  //   "Kentucky ",
+  //   "Louisiana ",
+  //   "Maine",
+  //   " Mississippi",
+  //   " Montana",
+  //   " Maryland ",
+  //   "Michigan ",
+  //   "Minnesota ",
+  //   "Nebraska ",
+  //   " Nevada",
+  //   " New Jersey",
+  //   " North Dakota",
+  //   "New Hampshire ",
+  //   "South Carolina",
+  //   "Ohio ",
+  //   "Oklahoma",
+  //   "Tennessee ",
+  //   "Texas ",
+  //   "Utah ",
+  //   "Virginia ",
+  //   "Vermont ",
+  //   " Washington",
+  //   " West Virginia",
+  //   " Wyoming",
+  //   "Wisconsin ",
+  // ];
   return (
     <div className="container">
       <div className=" text-center">
@@ -59,11 +64,11 @@ const Counties = () => {
 
       <div className="  ">
         <div className="flex  flex-wrap  lg:gap-9 gap-4 mb-10 ">
-          {counties?.map((data, index) => (
+          {data?.data?.map((value: any, index: number) => (
             <div key={index} className="lg:mx-auto">
               <p className=" text-[#737373] text-[20px] text-center ">
                 {" "}
-                {data}{" "}
+                {value?.state_name}{" "}
               </p>
             </div>
           ))}

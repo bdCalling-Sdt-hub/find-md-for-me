@@ -1,138 +1,174 @@
 "use client";
-import { Button, DatePicker, Form, Upload } from "antd";
-import React from "react";
-import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import dayjs from "dayjs";
+import { Button, DatePicker, Form, Input, Upload } from "antd";
+import React, { useState } from "react";
+import { UploadOutlined } from "@ant-design/icons";
+
 import DashboardTitle from "../shared/DashboardTitle";
+import moment from "moment";
+import { usePostBillingMutation } from "@/redux/apiSlices/ClientDashboardSlices";
+import DataAlerts from "../shared/DataAlerts";
 
 const Billing = () => {
   const documents = [
-    "Onboarding Fee",
-    "Monthly/Annual ACH payments",
-    "Vendor Ordering",
+    {
+      title: "Onboarding Fee",
+      value: "onoarding_fee",
+    },
+    {
+      title: "Monthly/Annual ACH payments",
+      value: "ach_payment",
+    },
+    {
+      title: "Vendor Ordering",
+      value: "vendor_ordering",
+    },
   ];
-  const normFile = (e: any) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
+
+  const [postBilling, { isSuccess, isError, error }] = usePostBillingMutation();
+  const [document, setDocument] = useState<{ [key: string]: File }>({});
+  const path = "/documents";
+  console.log(document);
+
+  const onFinish = async (values: any) => {
+    const formData = new FormData();
+    console.log(values);
+
+    const newDate = moment(values?.payment_date).format("L");
+    formData.append("payment_date", newDate);
+
+    Object.entries(document).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    await postBilling(formData).then((res) => {
+      console.log(res);
+    });
   };
 
-  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY", "DD-MM-YYYY", "DD-MM-YY"];
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setDocument((prev: any) => ({
+        ...prev,
+        [e.target.name]: e?.target?.files[0],
+      }));
+    }
+  };
 
   return (
     <div>
+      {/* todo : date add hobe  */}
       <div className=" w-full ">
         <div className=" grid lg:grid-cols-12  gap-5 h-screen">
           <div className=" lg:col-span-8 lg:p-10 p-6">
             <div className=" flex items-center justify-between">
               <DashboardTitle> Upload Your Receipts </DashboardTitle>
-
-              <button className="  border border-[#C738BD] text-black bg-transparent lg:px-6 py-2 px-2  rounded-lg">
-                Paid on
-              </button>
             </div>
 
-            <div className=" lg:flex  w-full ">
-              <div className=" lg:w-1/2 mt-6 ms-2 ">
-                {documents?.map((data, index) => (
-                  <div key={index}>
-                    <Form className="w-full ">
-                      <Form.Item
-                        name="upload"
-                        valuePropName="fileList"
-                        getValueFromEvent={normFile}
-                      >
-                        <label
-                          htmlFor=" "
-                          className="text-[16px] mb-2 text-black font-semibold flex items-center gap-1 "
+            <div className="mt-4">
+              <Form
+                className="w-full  mt-4  "
+                onFinish={onFinish}
+                layout="vertical"
+              >
+                <div className=" grid grid-cols-2 w-full  gap-20">
+                  <div className="">
+                    {documents?.map((data: any, index: number) => (
+                      <div key={index}>
+                        <Form.Item
+                          name={data?.value}
+                          label={
+                            <p className="text-[16px]  text-[#737373] font-semibold flex items-center gap-1">
+                              <span> {index + 1} </span>.
+                              <span>{data?.title} </span>
+                            </p>
+                          }
+                          // rules={[
+                          //   {
+                          //     required: true,
+                          //     message: `Please upload your ${data?.title} file!`,
+                          //   },
+                          // ]}
+                          className=""
                         >
-                          <span> {index + 1} </span> <span>{data} </span>
-                        </label>
-                        <div className="">
-                          <Upload
-                            name="logo"
-                            action="/upload.do"
-                            listType="picture"
-                            className=" "
+                          <Input
+                            name={data?.value}
+                            type="file"
+                            id={data?.value}
+                            onChange={handleChange}
+                            style={{
+                              display: "none",
+                            }}
+                          />
+                          <label
+                            htmlFor={data?.value}
+                            className=" flex items-center w-full gap-2 bg-[#E8F6FE] py-3 px-2 rounded-lg"
                           >
-                            <Button className=" flex items-center w-full shadow-xl">
-                              {" "}
-                              <span>
-                                <UploadOutlined />{" "}
-                              </span>{" "}
-                              <span>Click to upload</span>
-                            </Button>
-                          </Upload>
-                        </div>
-                      </Form.Item>
-                    </Form>
+                            {" "}
+                            <span className=" h-[30px] w-[30px] bg-white rounded-full text-center my-1/2  text-xl text-[#737373]">
+                              <UploadOutlined />{" "}
+                            </span>{" "}
+                            <span className="  text-[16px] font-medium text-[#737373]">
+                              {document[data.value]?.name ? (
+                                <p className="text-[#1d75f2]">
+                                  {document[data.value].name}{" "}
+                                </p>
+                              ) : (
+                                <p> Click to upload</p>
+                              )}
+                            </span>
+                          </label>
+                        </Form.Item>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
-              {/* date   */}
-              <div className="lg:w-1/2 mt-8 mb-8 lg:mb-1">
-                <DatePicker
-                  defaultValue={dayjs("01/01/2024", dateFormatList[0])}
-                  format={dateFormatList}
-                  className="lg:w-[250px]"
-                />
-              </div>
-            </div>
+                  <div className="text-end">
+                    <Form.Item
+                      name="payment_date"
+                      rules={[
+                        { required: true, message: " This field is required " },
+                      ]}
+                      className=""
+                      label={
+                        <p className="text-lg  text-[#737373] font-semibold ">
+                          Payment Date:
+                        </p>
+                      }
+                    >
+                      <DatePicker className=" w-full h-[40px]" />
+                    </Form.Item>
+                  </div>
+                </div>
 
-            <div className=" lg:text-center text-end">
-              <Link href="/meeting-schedule">
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  block
-                  style={{
-                    border: "none",
-                    height: "41px",
-                    background: "#1D75F2",
-                    color: "white",
-                    borderRadius: "8px",
-                    outline: "none",
-                    width: "150px",
-                  }}
-                >
-                  Next
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 bg-slate-50 p-10  ">
-            <Form>
-              <Form.Item>
-                <Form.Item
-                  name="dragger"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                  noStyle
-                >
-                  <Upload.Dragger
-                    name="files"
-                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                    listType="picture"
+                <Form.Item className="text-end">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    block
+                    style={{
+                      border: "none",
+                      height: "41px",
+                      background: "#1D75F2",
+                      color: "white",
+                      borderRadius: "8px",
+                      outline: "none",
+                      width: "150px",
+                    }}
                   >
-                    <p className="ant-upload-drag-icon">
-                      <InboxOutlined />
-                    </p>
-                    <p className="ant-upload-text">
-                      Click or drag file to this area to upload
-                    </p>
-                    <p className="ant-upload-hint"> (Max. File size: 50 MB)</p>
-                  </Upload.Dragger>
+                    Next
+                  </Button>
                 </Form.Item>
-              </Form.Item>
-            </Form>
+              </Form>
+            </div>
           </div>
         </div>
       </div>
+      <DataAlerts
+        isShow={isSuccess}
+        path={path}
+        isError={isError}
+        showMSG={error}
+      />
     </div>
   );
 };

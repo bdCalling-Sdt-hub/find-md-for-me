@@ -8,11 +8,14 @@ import { IoMdMail } from "react-icons/io";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
-import { Button } from "@/components/ui/button";
 import SubTitle from "@/components/shared/SubTitle";
-import { Form, Input, Radio } from "antd";
+import { Button, Form, Input, Radio } from "antd";
+import { usePostContactMutation } from "@/redux/apiSlices/WebPagesSlices";
+import Swal from "sweetalert2";
 
 const Contact = () => {
+  const [postContact] = usePostContactMutation();
+  const [form] = Form.useForm();
   const values = [
     {
       icon: <MdPhoneInTalk size={24} />,
@@ -27,6 +30,22 @@ const Contact = () => {
       data: "7075 FM 1960 RD W STE 1010G Houston, Texas 77069",
     },
   ];
+
+  const onFinish = async (values: any) => {
+    console.log(values);
+    await postContact(values).then((res) => {
+      console.log(res?.data?.status);
+      if (res?.data?.status === "200") {
+        Swal.fire({
+          icon: "success",
+          title: res?.data?.message,
+          showConfirmButton: false,
+          timer: 500,
+        });
+        form.resetFields();
+      }
+    });
+  };
   return (
     <div>
       <div>
@@ -39,7 +58,7 @@ const Contact = () => {
       </div>
 
       <div>
-        <div className="grid lg:grid-cols-12  mb-10 items-center gap-12  bg-[#FAFAFA] lg:p-10 p-5 rounded-lg">
+        <div className="grid lg:grid-cols-12  mb-10 items-center gap-12  bg-[#FAFAFA] lg:p-10 p-5 rounded-lg z-0">
           <div className={` lg:col-span-4 ${styles.bgImg} `}>
             <div>
               <h1 className=" text-white font-semibold text-3xl text-center  my-10">
@@ -64,34 +83,69 @@ const Contact = () => {
               </p>
             </div>
           </div>
-
-          <div className=" lg:col-span-8">
-            <Form>
-              <div className=" lg:flex gap-5  w-full">
-                <Form.Item className=" w-full">
-                  <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                    First Name
-                  </label>
+          <div className="lg:col-span-8">
+            <Form onFinish={onFinish} layout="vertical" form={form}>
+              <div className="lg:flex gap-5 w-full">
+                <Form.Item
+                  className="w-full"
+                  name="first_name"
+                  label={
+                    <p className="text-lg text-[#737373] font-semibold">
+                      First Name
+                    </p>
+                  }
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your first name!",
+                    },
+                  ]}
+                >
                   <Input
                     placeholder="Naziya Sultana"
                     className="h-[45px] mt-2"
                   />
                 </Form.Item>
 
-                <Form.Item className=" w-full">
-                  <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                    {" "}
-                    Last Name
-                  </label>
-                  <Input placeholder="Mithila " className="h-[45px] mt-2" />
+                <Form.Item
+                  className="w-full"
+                  name="last_name"
+                  label={
+                    <p className="text-lg  text-[#737373] font-semibold">
+                      Last Name
+                    </p>
+                  }
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your last name!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Mithila" className="h-[45px] mt-2" />
                 </Form.Item>
               </div>
 
-              <div className="  lg:flex gap-5 w-full ">
-                <Form.Item className=" lg:w-1/2">
-                  <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                    Email
-                  </label>
+              <div className="lg:flex gap-5 w-full">
+                <Form.Item
+                  className="lg:w-1/2"
+                  name="email"
+                  label={
+                    <p className="text-lg  text-[#737373] font-semibold">
+                      Email
+                    </p>
+                  }
+                  rules={[
+                    {
+                      type: "email",
+                      message: "The input is not valid E-mail!",
+                    },
+                    {
+                      required: true,
+                      message: "Please input your E-mail!",
+                    },
+                  ]}
+                >
                   <Input
                     type="email"
                     placeholder="Naziya@gmail.com"
@@ -99,63 +153,92 @@ const Contact = () => {
                   />
                 </Form.Item>
 
-                <Form.Item className=" lg:w-1/2">
-                  <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                    Phone Number{" "}
-                  </label>
+                <Form.Item
+                  className="lg:w-1/2"
+                  name="phone"
+                  label={
+                    <p className="text-lg  text-[#737373] font-semibold">
+                      Phone Number
+                    </p>
+                  }
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your Phone Number!",
+                    },
+                  ]}
+                >
                   <Input
                     type="number"
-                    placeholder="+0888798345326 "
+                    placeholder="+0888798345326"
                     className="h-[45px] mt-2"
                   />
                 </Form.Item>
               </div>
 
-              <Form.Item name="business">
-                <label
-                  htmlFor=" "
-                  className="text-lg mb-6 text-[#737373] font-semibold "
-                >
-                  Subject
-                </label>
-                <div className=" flex-col">
+              <Form.Item
+                name="subject"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold">
+                    Subject
+                  </p>
+                }
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Subject!",
+                  },
+                ]}
+              >
+                <div className="flex-col">
                   <Radio.Group>
-                    <Radio value="startUp" className=" text-xl my-2">
-                      {" "}
-                      <span className=" text-lg font-medium text-[#737373] ">
-                        General Inquiry{" "}
-                      </span>{" "}
-                    </Radio>{" "}
-                    <Radio value="oneYear" className=" text-xl my-2">
-                      {" "}
-                      <span className=" text-lg font-medium text-[#737373] ">
+                    <Radio value="generalInquiry" className="text-xl my-2">
+                      <span className="text-lg font-medium text-[#737373]">
+                        General Inquiry
+                      </span>
+                    </Radio>
+                    <Radio value="jobs" className="text-xl my-2">
+                      <span className="text-lg font-medium text-[#737373]">
                         Jobs
-                      </span>{" "}
-                    </Radio>{" "}
-                    <Radio value="twoYear" className=" text-xl my-2">
-                      {" "}
-                      <span className=" text-lg font-medium  text-[#737373] ">
+                      </span>
+                    </Radio>
+                    <Radio value="partnership" className="text-xl my-2">
+                      <span className="text-lg font-medium text-[#737373]">
                         Partnership
-                      </span>{" "}
-                    </Radio>{" "}
+                      </span>
+                    </Radio>
                   </Radio.Group>
                 </div>
               </Form.Item>
+
+              <Form.Item
+                className="w-full"
+                name="message"
+                label={
+                  <p className="text-lg  text-[#737373] font-semibold">
+                    Message
+                  </p>
+                }
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Message!",
+                  },
+                ]}
+              >
+                <Input.TextArea
+                  rows={3}
+                  placeholder="Write your message.."
+                  className="mt-2"
+                />
+              </Form.Item>
+
+              <Form.Item className="text-end mt-10">
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
             </Form>
-
-            <Form.Item className=" w-full ">
-              <label className="text-lg mb-6 text-[#737373] font-semibold ">
-                Message
-              </label>
-              <Input
-                placeholder="Write your message.."
-                className="h-[45px] mt-2"
-              />
-            </Form.Item>
-
-            <div className="text-end mt-10">
-              <Button variant="getStarted">Submit </Button>
-            </div>
           </div>
         </div>
       </div>

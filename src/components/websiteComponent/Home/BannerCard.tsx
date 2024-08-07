@@ -27,8 +27,8 @@ const BannerCard = () => {
     },
   ];
   return (
-    <div>
-      <div className=" lg:flex flex-wrap justify-between items-center gap-8   ">
+    <div className="lg:container">
+      <div className=" flex lg:flex-row flex-col justify-between items-center gap-8   ">
         {values?.map((value, index) => (
           <div
             key={index}

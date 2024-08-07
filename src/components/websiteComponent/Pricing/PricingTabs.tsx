@@ -1,217 +1,128 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Popover } from "antd";
+import { useGetPriceQuery } from "@/redux/apiSlices/WebPagesSlices";
 
 const PricingTabs = () => {
-  const monthlyValues = [
-    {
-      title: "Tier 1",
-      titleColor: "#C738BD",
-      title2: "$279-I",
-      title3: "$800-B",
-      type: "Billed Monthly",
-      sevice: [
-        "Prescriptive Skin Care",
-        "Numbing Cream",
-        "Hydroquinone ",
-        "Peptides + Hair ",
-        "Rejuvenation ",
-        " Medical Grade Skin Peels ",
-        " Body Sculpting like EmSculpt ",
-        " Cryosculpting & Cool Sculpting ",
-        " Sculpture, Laser Lipo, Mesotherapy, Exosomes",
-        "Microneeding & PRP Microneeding ",
-        "HydrafacialMD ",
-        " Dermaplane",
-      ],
-    },
-    {
-      title: "Tier 2",
-      title2: "$479-I",
-      titleColor: "#F59E0B",
-      title3: "$1,900-B",
-      type: "Billed Monthly",
-      sevice: [
-        "In addition to Tier 1",
-        "Requirers GFE",
-        "Botox (Neurotoxin) Injectables ",
-        "Derma Filler Injectables ",
-        "PDO Threads ",
-        " Laser + Light Based Therapies(Hair Removal, IPL, etc) ",
-      ],
-    },
-    {
-      title: "Tier 3",
-      title2: "$579-I",
-      titleColor: "#10B981",
-      title3: "$2,300-B",
-      type: "Billed Monthly",
-      sevice: [
-        "In addition to Tier 1 + 2",
-        "Requirers GFE",
-        "Injectable Nutrients ",
-        "B12/Skinny Shots ",
-        "IV Nutrient Therapies ",
-      ],
-    },
-    {
-      title: "Tier 4",
-      title2: "$779-I",
-      titleColor: "#AA0BF5",
-      title3: "$3,100-B",
-      type: "Billed Monthly",
-      sevice: [
-        "In addition to Tier 1 + 2 + 3",
-        "Requirers GFE",
-        "Prescriptive Weight Loss ",
-        "(Semaglutide) Injectable Wellness Peptides ",
-        "Medications Like Phentermine ",
-        " AOD-9604, Naltrexone, ECA Stacks ",
-        " Hormone Optimization Therapy(Testosterone, Estrogen, Thyroid Hormone) ",
-        " Blood Spot Finger Pack Lab Testing Powered by ZRT Labs ",
-        " Full Spectrum of Injectable Wellness peptides such as Sermorelin",
-        "Ipamorelin, BPC-157 “Wolverine” + AOD-9604 ",
-      ],
-    },
-  ];
+  const [pricingType, setPricingType] = useState("Monthly");
+  const { data, refetch } = useGetPriceQuery(pricingType);
+  console.log(data?.data);
 
-  const yearlyValues = [
-    {
-      title: "Tier 1",
-      titleColor: "#C738BD",
-      title2: "$252-I",
-      title3: "$720-B",
-      type: "Billed Monthly",
-      sevice: [
-        "Prescriptive Skin Care",
-        "Numbing Cream",
-        "Hydroquinone ",
-        "Peptides + Hair ",
-        "Rejuvenation ",
-        " Medical Grade Skin Peels ",
-        " Body Sculpting like EmSculpt ",
-        " Cryosculpting & Cool Sculpting ",
-        " Sculpture, Laser Lipo, Mesotherapy, Exosomes",
-        "Microneeding & PRP Microneeding ",
-        "HydrafacialMD ",
-        " Dermaplane",
-      ],
-    },
-    {
-      title: "Tier 2",
-      titleColor: "#F59E0B",
-      title2: "$432-I",
-      title3: "$1,710-B",
-      type: "Billed Monthly",
-      sevice: [
-        "In addition to Tier 1",
-        "Requirers GFE",
-        "Botox (Neurotoxin) Injectables ",
-        "Derma Filler Injectables ",
-        "PDO Threads ",
-        " Laser + Light Based Therapies(Hair Removal, IPL, etc) ",
-      ],
-    },
-    {
-      title: "Tier 3",
-      titleColor: "#10B981",
-      title2: "$522-I",
-      title3: "$2,070-B",
-      type: "Billed Monthly",
-      sevice: [
-        "In addition to Tier 1 + 2",
-        "Requirers GFE",
-        "Injectable Nutrients ",
-        "B12/Skinny Shots ",
-        "IV Nutrient Therapies ",
-      ],
-    },
-    {
-      title: "Tier 4",
-      titleColor: "#AA0BF5",
-      title2: "$702-I",
-      title3: "$2,790-B",
-      type: "Billed Monthly",
-      sevice: [
-        "In addition to Tier 1 + 2 + 3",
-        "Requirers GFE",
-        "Prescriptive Weight Loss ",
-        "(Semaglutide) Injectable Wellness Peptides ",
-        "Medications Like Phentermine ",
-        " AOD-9604, Naltrexone, ECA Stacks ",
-        " Hormone Optimization Therapy(Testosterone, Estrogen, Thyroid Hormone) ",
-        " Blood Spot Finger Pack Lab Testing Powered by ZRT Labs ",
-        " Full Spectrum of Injectable Wellness peptides such as Sermorelin",
-        "Ipamorelin, BPC-157 “Wolverine” + AOD-9604 ",
-      ],
-    },
-  ];
+  useEffect(() => {
+    refetch();
+  }, [pricingType]);
+
+  const handleValue = (value: any) => {
+    console.log(value);
+    setPricingType(value);
+  };
+
+  const monthlyValues = data?.data.map((value: any) => ({
+    title: value?.tyer_name,
+    title2: `$${value?.price[0]?.price_1}-I`,
+    title3: `$${value?.price[0]?.price_2}-B`,
+    type: value?.price[0]?.pricing_type,
+    sevice: value?.price[0]?.service,
+  }));
+
+  const yearlyValues = data?.data.map((value: any) => ({
+    title: value?.tyer_name,
+    title2: `$${value?.price[0]?.price_1}-I`,
+    title3: `$${value?.price[0]?.price_2}-B`,
+    type: value?.price[0]?.pricing_type,
+    sevice: value?.price[0]?.service,
+  }));
+
   return (
     <div>
-      <Tabs defaultValue="account" className="w-full  mt-9 ">
+      <Tabs
+        defaultValue="Monthly"
+        value={pricingType}
+        // onValueChange={(value) => setPricingType(value)}
+        onValueChange={(value) => handleValue(value)}
+        className="w-full  mt-9 "
+      >
         <div className="flex items-center justify-center ">
-          <TabsList className="   w-[200px]">
-            <TabsTrigger value="account">Monthly</TabsTrigger>
-            <TabsTrigger value="password">
-              <Popover content={"10% Discount"}> Yearly </Popover>
+          <TabsList className="  w-[200px]">
+            <TabsTrigger value="Monthly">Monthly</TabsTrigger>
+            <TabsTrigger value="yearly">
+              <Popover content={"10% Discount"} open>
+                {" "}
+                Yearly{" "}
+              </Popover>
             </TabsTrigger>
           </TabsList>
         </div>
 
-        <TabsContent value="account" className="">
-          <div className=" lg:flex justify-between gap-5 text-black  ">
-            {monthlyValues?.map((value, index) => (
+        <TabsContent value="Monthly" className="">
+          <div className=" flex lg:flex-row flex-col lg:gap-5 md:gap-2 text-black  ">
+            {monthlyValues?.map((value: any, index: number) => (
               <div
                 key={index}
-                className="bg-[#E8F6FE]  rounded-b-lg  lg:w-1/4 relative h-[80vh] lg:h-[85vh] mb-5 lg:mb-1 "
+                className="bg-[#E8F6FE]  rounded-b-lg   lg:w-1/4 relative h-[70vh] mb-5 lg:mb-1 "
               >
                 <p
-                  className="w-full h-[2px] rounded-xl"
-                  style={{ backgroundColor: value?.titleColor }}
+                  className={`w-full h-[2px] rounded-xl  ${
+                    value?.title === "Tier 1" && "bg-[#FF31F7]"
+                  } ${value?.title === "Tier 2" && "bg-[#F59E0B]"} 
+                   ${value?.title === "Tier 3" && "bg-[#10B981]"} 
+                    ${value?.title === "Tier 4" && "bg-[#AA0BF5]"}  `}
+                  // style={{ backgroundColor: value?.titleColor }}
                 >
                   {" "}
                 </p>
-                <div className="p-4 ps-8">
-                  <p
-                    className=" text-lg font-semibold  "
-                    style={{ color: value?.titleColor }}
-                  >
-                    {value?.title}{" "}
-                  </p>
-                  <p className=" text-[32px] font-semibold mt-2 ">
-                    {" "}
-                    {value?.title2}
-                  </p>
-                  <p className=" text-[32px] font-semibold mb-2 ">
-                    {" "}
-                    {value?.title3}
-                  </p>
-                  <p className=" text-[12px] text-[#252B42] pb-3">
-                    {value?.type}
-                  </p>
-                  {value?.sevice?.map((data, index) => (
-                    <p key={index} className=" flex items-center gap-2 mb-2 ">
-                      {" "}
-                      <span>
-                        <IoCheckmarkDoneOutline
-                          size={20}
-                          className="text-[#1D75F2]"
-                        />{" "}
-                      </span>{" "}
-                      <span>{data} </span>{" "}
-                    </p>
-                  ))}
 
-                  <div className="  mb-3 absolute bottom-0 ">
-                    <div className=" mx-5">
-                      <Link href="/intake-info-first">
+                <div className="p-4 flex flex-col h-full">
+                  <div className="  ">
+                    <p
+                      className={`text-lg font-semibold  ${
+                        value?.title === "Tier 1" && "text-[#FF31F7]"
+                      } ${value?.title === "Tier 2" && "text-[#F59E0B]"} 
+                       ${value?.title === "Tier 3" && "text-[#10B981]"} 
+                        ${value?.title === "Tier 4" && "text-[#AA0BF5]"}  `}
+                      // style={{ color: value?.titleColor }}
+                    >
+                      {value?.title}{" "}
+                    </p>
+                    <p className=" text-[28px] font-semibold mt-2 ">
+                      {" "}
+                      {value?.title2}
+                    </p>
+                    <p className=" text-[28px] font-semibold mb-2 ">
+                      {" "}
+                      {value?.title3}
+                    </p>
+                    <p className=" text-[12px] text-[#252B42] pb-2">
+                      {value?.type}
+                    </p>
+                  </div>
+
+                  <div className="h-full flex-1 overflow-y-auto ">
+                    {value?.sevice?.map((data: any, index: number) => (
+                      <p
+                        key={index}
+                        className=" flex items-center gap-2 lg:mb-2 mb-[2px] "
+                      >
                         {" "}
-                        <Button variant="getStarted"> Get Started </Button>
-                      </Link>
-                    </div>
+                        <span>
+                          <IoCheckmarkDoneOutline className="text-[#1D75F2] text-lg" />{" "}
+                        </span>{" "}
+                        <span className=" text-[14px]">{data} </span>{" "}
+                      </p>
+                    ))}
+                  </div>
+
+                  <div className="  flex justify-center items-center  ">
+                    <Link href="/intake-info-first" className=" ">
+                      {" "}
+                      <button className=" w-full bg-[#c738bd] px-3 py-2  rounded-lg text-white">
+                        {" "}
+                        Get Started{" "}
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -219,57 +130,72 @@ const PricingTabs = () => {
           </div>
         </TabsContent>
 
-        <TabsContent value="password">
-          <div className=" lg:flex justify-between gap-5 text-black ">
-            {yearlyValues?.map((value, index) => (
+        <TabsContent value="yearly">
+          <div className=" flex lg:flex-row flex-col lg:gap-5 md:gap-2 text-black  ">
+            {yearlyValues?.map((value: any, index: number) => (
               <div
                 key={index}
-                className="bg-[#E8F6FE]  rounded-b-lg  lg:w-1/4 relative h-[80vh] lg:h-[85vh] mb-5 lg:mb-1 "
+                className="bg-[#E8F6FE]  rounded-b-lg   lg:w-1/4 relative h-[70vh] mb-5 lg:mb-1 "
               >
                 <p
-                  className="w-full h-[2px] rounded-xl"
-                  style={{ backgroundColor: value?.titleColor }}
+                  className={`w-full h-[2px] rounded-xl ${
+                    value?.title === "Tier 1" && "bg-[#FF31F7]"
+                  } ${value?.title === "Tier 2" && "bg-[#F59E0B]"} 
+                   ${value?.title === "Tier 3" && "bg-[#10B981]"} 
+                    ${value?.title === "Tier 4" && "bg-[#AA0BF5]"} `}
+                  // style={{ backgroundColor: value?.titleColor }}
                 >
                   {" "}
                 </p>
-                <div className="p-4 ps-8">
-                  <p
-                    className=" text-lg font-semibold  "
-                    style={{ color: value?.titleColor }}
-                  >
-                    {value?.title}{" "}
-                  </p>
-                  <p className=" text-[32px] font-semibold mt-2 ">
-                    {" "}
-                    {value?.title2}
-                  </p>
-                  <p className=" text-[32px] font-semibold mb-2 ">
-                    {" "}
-                    {value?.title3}
-                  </p>
-                  <p className=" text-[12px] text-[#252B42] pb-3">
-                    {value?.type}
-                  </p>
-                  {value?.sevice?.map((data, index) => (
-                    <p key={index} className=" flex items-center gap-2 mb-2 ">
-                      {" "}
-                      <span>
-                        <IoCheckmarkDoneOutline
-                          size={20}
-                          className="text-[#1D75F2]"
-                        />{" "}
-                      </span>{" "}
-                      <span>{data} </span>{" "}
-                    </p>
-                  ))}
 
-                  <div className="  mb-3 absolute bottom-0 ">
-                    <div className=" mx-5">
-                      <Link href="/intake-info-first">
+                <div className="p-4 flex flex-col h-full">
+                  <div className="  ">
+                    <p
+                      className={`text-lg font-semibold ${
+                        value?.title === "Tier 1" && "text-[#FF31F7]"
+                      } ${value?.title === "Tier 2" && "text-[#F59E0B]"} 
+                       ${value?.title === "Tier 3" && "text-[#10B981]"} 
+                        ${value?.title === "Tier 4" && "text-[#AA0BF5]"} `}
+                      // style={{ color: value?.titleColor }}
+                    >
+                      {value?.title}{" "}
+                    </p>
+                    <p className=" text-[28px] font-semibold mt-2 ">
+                      {" "}
+                      {value?.title2}
+                    </p>
+                    <p className=" text-[28px] font-semibold mb-2 ">
+                      {" "}
+                      {value?.title3}
+                    </p>
+                    <p className=" text-[12px] text-[#252B42] pb-2">
+                      {value?.type}
+                    </p>
+                  </div>
+
+                  <div className="h-full flex-1 overflow-y-auto ">
+                    {value?.sevice?.map((data: any, index: number) => (
+                      <p
+                        key={index}
+                        className=" flex items-center gap-2 lg:mb-2 mb-[2px] "
+                      >
                         {" "}
-                        <Button variant="getStarted"> Get Started </Button>
-                      </Link>
-                    </div>
+                        <span>
+                          <IoCheckmarkDoneOutline className="text-[#1D75F2] text-lg" />{" "}
+                        </span>{" "}
+                        <span className=" text-[14px]">{data} </span>{" "}
+                      </p>
+                    ))}
+                  </div>
+
+                  <div className="  flex justify-center items-center  ">
+                    <Link href="/intake-info-first" className=" ">
+                      {" "}
+                      <button className=" w-full bg-[#c738bd] px-3 py-2  rounded-lg text-white">
+                        {" "}
+                        Get Started{" "}
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -119,7 +119,7 @@ const Navbar = () => {
         </div>
 
         <div className=" hidden lg:flex gap-2">
-          <Link href="/documents">
+          <Link href="/login">
             <Button variant="default2">Client Protal</Button>
           </Link>
 

@@ -133,3 +133,7 @@ body {
   .ant-steps-item-icon {
   background-color: #1d75f2 !important;
 } */
+
+.ant-tooltip .ant-tooltip-inner {
+  display: none !important;
+}

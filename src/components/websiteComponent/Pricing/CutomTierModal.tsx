@@ -1,42 +1,95 @@
-import React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import React, { Dispatch, SetStateAction } from "react";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogDescription,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogTrigger,
+// } from "@/components/ui/dialog";
+// import { Button } from "@/components/ui/button";
 
-const CutomTierModal = () => {
+// import { Label } from "@/components/ui/label";
+// import { Textarea } from "@/components/ui/textarea";
+import { Button, Form, Input, Modal } from "antd";
+import { usePostCustomTierMutation } from "@/redux/apiSlices/WebPagesSlices";
+import Swal from "sweetalert2";
+
+const CutomTierModal = ({
+  isModalOpen,
+  setIsModalOpen,
+}: {
+  isModalOpen: boolean;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const [PostCustomTier] = usePostCustomTierMutation();
+  const [form] = Form.useForm();
+  const onFinish = async (values: any) => {
+    console.log(values);
+    await PostCustomTier(values).then((res) => {
+      console.log(res);
+      if (res?.data?.status === "200") {
+        Swal.fire({
+          icon: "success",
+          title: res?.data?.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setIsModalOpen(false);
+        form.resetFields();
+      }
+    });
+  };
   return (
     <div className="">
-      <Dialog>
-        <DialogTrigger>
-          {" "}
-          <Button variant="getStarted"> Custom Tier </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogDescription>
-              <div className="grid w-full   gap-1.5 mt-10">
-                <Label htmlFor="email" className="mb-2 text-lg">
-                  Your Name
-                </Label>
-                <Textarea placeholder="Write your requirements..." cols={15} />
-              </div>
-              <div className=" mt-5 text-end">
-                {" "}
-                <Button variant="btn2"> Submit </Button>
-              </div>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <Modal
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={false}
+      >
+        <Form
+          form={form}
+          onFinish={onFinish}
+          layout="vertical"
+          className=" my-5"
+        >
+          <Form.Item
+            name="email"
+            label={<p className="text-[18px] text-gray-500 "> Your Email</p>}
+            rules={[
+              {
+                type: "email",
+                message: "The input is not valid E-mail!",
+              },
+              {
+                required: true,
+                message: "Please input your E-mail!",
+              },
+            ]}
+          >
+            <Input className=" h-[40px]" />
+          </Form.Item>
+          <Form.Item
+            name="trial"
+            label={<p className="text-[18px] text-gray-500 ">Your Tier </p>}
+            rules={[
+              {
+                required: true,
+                message: "Please input your E-mail!",
+              },
+            ]}
+          >
+            <Input.TextArea rows={5} />
+          </Form.Item>
+
+          <Form.Item className=" mt-5 text-end">
+            <Button type="primary" htmlType="submit">
+              {" "}
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

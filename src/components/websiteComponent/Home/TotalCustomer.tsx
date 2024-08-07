@@ -1,7 +1,12 @@
 "use client";
+import { useGetStateQuery } from "@/redux/apiSlices/WebPagesSlices";
 import React from "react";
 
 const TotalCustomer = () => {
+  const { data } = useGetStateQuery(undefined);
+  const stateData = data?.data;
+  const stateDataLength = stateData?.length;
+
   const values = [
     {
       total: "853",
@@ -12,7 +17,7 @@ const TotalCustomer = () => {
       title: "Monthly Visitors",
     },
     {
-      total: "38+",
+      total: stateDataLength,
       title: "States",
     },
     {
