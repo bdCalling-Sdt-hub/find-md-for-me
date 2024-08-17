@@ -36,8 +36,8 @@ const AgreeMents = ({current ,setCurrent}:any) => {
   const [document, setDocument] = useState<{ [key: string]: File }>({});
   const [postAgreement] = usePostAgreementMutation();
   const uploadId = localStorage.getItem("upload_id") 
-  console.log(uploadId);
-  console.log(document);
+  // console.log(uploadId); 
+  // console.log(document); 
 
   const onFinish = async (values: any) => {
     const formdata = new FormData();
@@ -49,7 +49,7 @@ const AgreeMents = ({current ,setCurrent}:any) => {
  
     try {
       const response = await postAgreement(formdata); 
-  console.log(response);
+  // console.log(response); 
       if (response?.data?.status === 200) {
         const nextStep = current + 1;
         setCurrent(nextStep);

@@ -7,7 +7,7 @@ import { useGetApprovalQuery } from "@/redux/apiSlices/ClientDashboardSlices";
 
 const DocumentsSubmit = ({current ,setCurrent , setIsNextDisabled}:any) => {  
   const {data} = useGetApprovalQuery(null) 
-  console.log(data);
+  // console.log(data); 
 
   useEffect(() => {
     if (data === undefined) {

@@ -8,7 +8,7 @@ import { baseUrl } from "@/redux/api/apiSlice";
 const BusinessResources = () => { 
   const {data} = useBusinessResourcesQuery(undefined)  
   const resources = data?.data 
-  console.log(resources);
+  // console.log(resources); 
   // const content = ["Protocols", "Standing Order", "Policies", "Consents"]; 
   return (
     <div className=" shadow-lg lg:my-4  lg:h-[85vh] h-screen relative">

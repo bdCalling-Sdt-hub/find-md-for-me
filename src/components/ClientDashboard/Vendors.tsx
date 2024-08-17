@@ -20,7 +20,7 @@ const Vendors = () => {
   const shipping = ["Overnight", "Expedited", "Standard"];
   const onFinish = async (values: any) => {
     await postVendorForm(values).then((res)=>{ 
-      console.log(res);
+      // console.log(res); 
       if(res?.data?.status === "200"){
         router.push("/vendor-confirmation")
        } else{

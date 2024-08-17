@@ -4,7 +4,7 @@ import React from "react";
 
 const TermsCondition = () => {
   const { data } = useGetTermsQuery(undefined); 
-  console.log(data);
+  // console.log(data); 
 
   return (
     <div className="container  my-12  ">

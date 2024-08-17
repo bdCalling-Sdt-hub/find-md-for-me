@@ -62,7 +62,7 @@ const DocumentsComponent = ({current, setCurrent}:any) => {
   
     try {
       const response = await postDocument(formdata); 
-      console.log(response);
+      // console.log(response); 
   
       if (response?.data?.status === 200) {
         localStorage.setItem("upload_id", response?.data?.data?.id)

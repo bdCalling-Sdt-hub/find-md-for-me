@@ -18,11 +18,11 @@ const UserProfile = () => {
   const [imgURL, setImgURL] = useState(image);
   const { data } = useGetProfileQuery(undefined);
   const [postProfile] = usePostProfileMutation(); 
-  console.log(data);
+  // console.log(data); 
 
   // todo: get image
-  console.log(image); 
-  console.log(imgURL);  
+  // console.log(image);  
+  // console.log(imgURL);   
 
 
   useEffect(() => {
@@ -50,7 +50,7 @@ formData.append(key ,value)
     }) 
 
     await postProfile(formData).then((res) => {
-      console.log(res);
+      // console.log(res); 
       if (res?.data?.status === 200) {
         Swal.fire({
           position: "center",

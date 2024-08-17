@@ -45,7 +45,7 @@ const IntakeInfo: React.FC = () => {
     setCompanyType(e.target.value);
   }; 
   const IntakeId = GetLocalStorage("intakeId")  
-  console.log(IntakeId);
+  // console.log(IntakeId); 
  
 
   const onFinish = async (values: React.FormEvent) => {

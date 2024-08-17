@@ -2,7 +2,7 @@ import React from 'react';
 import { IoCheckmarkDoneOutline } from 'react-icons/io5';
 
 const TierDetails = ({value}:any) => { 
-    console.log(value);
+    // console.log(value); 
     return (
         <div>
             <div

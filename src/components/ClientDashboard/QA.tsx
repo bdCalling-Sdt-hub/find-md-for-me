@@ -8,7 +8,7 @@ import { baseUrl } from '@/redux/api/apiSlice';
 const QA = () => { 
   const {data} = useGetQAQuery(undefined)  
   const QAData = data?.data
-  console.log(QAData);
+  // console.log(QAData); 
     return (
         <div className='pt-3 ps-3'>
             <DashboardTitle>QA</DashboardTitle>  

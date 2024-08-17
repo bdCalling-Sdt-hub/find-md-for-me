@@ -7,7 +7,7 @@ import { useGetAboutQuery } from "@/redux/apiSlices/WebPagesSlices";
 
 const About = () => {
   const { data } = useGetAboutQuery(undefined); 
-  console.log(data);
+  // console.log(data); 
   const personInfo = [
     {
       image: <Image src={person1} width={250} height={100} alt="" />,

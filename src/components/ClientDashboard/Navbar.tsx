@@ -9,7 +9,7 @@ import { baseUrl } from "@/redux/api/apiSlice";
 const Navbar = () => { 
   const { data } = useGetProfileQuery(undefined); 
   const user = data?.user
-  console.log(user);
+  // console.log(user); 
   return (
     <div
       className=" "
