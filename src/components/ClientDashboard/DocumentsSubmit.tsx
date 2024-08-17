@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect } from "react";
 import Title from "../shared/Title";
 import SubTitle from "../shared/SubTitle";

@@ -78,7 +78,7 @@ const OTP = () => {
   return (
     <div>
       <div
-        className=" lg:w-[550px] w-[400px] lg:px-[90px] px-[20px] lg:py-[57px] py-[30px] "
+        className=" lg:w-[550px] w-[400px] lg:px-[70px] px-[20px] lg:py-[57px] py-[30px] "
         style={{
           background: "white",
           borderRadius: "12px",
@@ -96,10 +96,9 @@ const OTP = () => {
           Check your email
         </h1>
         <p
-          style={{ width: "380px", color: "#B8B8B8", margin: "0 auto 0 auto" }}
+          style={{  color: "#B8B8B8", margin: "0 auto 0 auto" }}
         >
-          We sent a reset link to{" "}
-          <span style={{ color: "#6A6D7C" }}> contact@dscode...com </span>
+          We sent a reset link to  <span style={{ color: "#6A6D7C" }}> {decodedEmail} </span>
           enter 6 digit code that mentioned in the email
         </p>
         <div

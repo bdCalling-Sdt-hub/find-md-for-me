@@ -3,19 +3,23 @@ import SubTitle from "@/components/shared/SubTitle";
 import Title from "@/components/shared/Title";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
 import { usePostAppointmentMutation } from "@/redux/apiSlices/ClientDashboardSlices";
 import moment from "moment";
-import { useParams, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
-const MeetingSchedule = ({current , setCurrent}: any) => {
-  const [date, setDate] = React.useState<Date | undefined>(new Date()); 
-const document_id = localStorage.getItem("upload_id")
-  const [clickBtn, setClickBtn] = useState(null);
+const MeetingSchedule = ({ current, setCurrent }: any) => {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [documentId, setDocumentId] = useState<string | null>(null);
+  const [clickBtn, setClickBtn] = useState<string | null>(null);
   const [postAppointment] = usePostAppointmentMutation();
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const uploadId = localStorage.getItem("upload_id");
+      setDocumentId(uploadId);
+    }
+  }, []);
 
   const TimeValues = [
     "09:00 AM",
@@ -35,27 +39,27 @@ const document_id = localStorage.getItem("upload_id")
     "11:00 PM",
   ];
 
-  const handleClick = (time: any) => {
+  const handleClick = (time: string) => {
     setClickBtn(time);
   };
+
   const newDate = moment(date).format("L");
 
   const handleSubmit = async () => {
     const data = {
-      id: document_id ,
+      id: documentId,
       time: clickBtn,
       date: newDate,
-    }; 
+    };
 
-  
     await postAppointment(data).then((res) => {
       if (res?.data?.status === 200) {
         const nextStep = current + 1;
-        setCurrent(nextStep); 
+        setCurrent(nextStep);
       } else {
         Swal.fire({
-          title: "Failed to Submit",
-          // @ts-ignore
+          title: "Failed to Submit", 
+          //@ts-ignore
           text: res?.error?.data?.message || "An error occurred",
           icon: "error",
         });
@@ -66,18 +70,14 @@ const document_id = localStorage.getItem("upload_id")
   return (
     <div>
       <div className="p-5">
-        <Title>Schedule Your Appointment </Title>
-      
-
-        <SubTitle className=" ">
-          {" "}
+        <Title>Schedule Your Appointment</Title>
+        <SubTitle className="">
           Please select the best date + time to schedule your appointment for meeting with our staff.
         </SubTitle>
-     
       </div>
 
       <div>
-        <div className=" lg:flex gap-4 mt-16 items-center px-8">
+        <div className="lg:flex gap-4 mt-16 items-center px-8">
           <div>
             <Calendar
               mode="single"
@@ -88,24 +88,19 @@ const document_id = localStorage.getItem("upload_id")
           </div>
 
           <div className="w-full mt-10 lg:mt-1">
-            <div className="  lg:w-[80%] mx-auto  ">
-              <p className=" text-center text-lg text-[#737373] pb-3 w-2/3 mx-auto tracking-wide ">
-                All appointments are scheduled in Central Standard Time zone
-                (CST).
+            <div className="lg:w-[80%] mx-auto">
+              <p className="text-center text-lg text-[#737373] pb-3 w-2/3 mx-auto tracking-wide">
+                All appointments are scheduled in Central Standard Time zone (CST).
               </p>
-              <p className=" font-semibold  text-lg text-center mb-2">
-                {" "}
-                Select Hours
-              </p>
-              <div className=" flex-wrap  gap-4  bg-[#FAFAFA] rounded-xl shadow-md p-10 pe-0 ">
-                {TimeValues?.map((data, index) => (
+              <p className="font-semibold text-lg text-center mb-2">Select Hours</p>
+              <div className="flex-wrap gap-4 bg-[#FAFAFA] rounded-xl shadow-md p-10 pe-0">
+                {TimeValues.map((data, index) => (
                   <Button
                     key={index}
                     variant={clickBtn === data ? "btn3" : "default2"}
-                    className=" me-4 mb-3"
+                    className="me-4 mb-3"
                     onClick={() => handleClick(data)}
                   >
-                    {" "}
                     {data}
                   </Button>
                 ))}
@@ -114,9 +109,9 @@ const document_id = localStorage.getItem("upload_id")
           </div>
         </div>
         <div className="text-center my-10">
-         
-          <Button variant="getStarted"  onClick={handleSubmit} > Submit </Button>
-         
+          <Button variant="getStarted" onClick={handleSubmit}>
+            Submit
+          </Button>
         </div>
       </div>
     </div>
