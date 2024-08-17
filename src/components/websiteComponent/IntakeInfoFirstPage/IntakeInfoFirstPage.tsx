@@ -1,7 +1,7 @@
 "use client";
 import SubTitle from "@/components/shared/SubTitle";
 import Title from "@/components/shared/Title";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, DatePicker, Form, Input, Radio, Select } from "antd";
 import { useRouter } from "next/navigation";
 import {
@@ -10,31 +10,43 @@ import {
 } from "@/redux/apiSlices/WebPagesSlices";
 import moment from "moment";
 import Swal from "sweetalert2";
-import DataAlerts from "@/components/shared/DataAlerts";
-// import dayjs from "dayjs";
-
-// const dateFormat = "YYYY/MM/DD";
+import { SetLocalStorage } from "@/util/LocalStorage";
 
 const IntakeInfoFirstPage: React.FC = () => {
   const { data } = useGetStateQuery("");
-  const [postPersonalInfo, { error, data: postData, isSuccess, isError }] =
-    usePostPersonalInfoMutation();
-  console.log(postData?.data?.id);
+  const [postPersonalInfo, { error, data: postData }] = usePostPersonalInfoMutation();
 
-  const counties = data?.data?.map((data: any) => ({
-    label: data?.state_name,
-    value: data?.state_name,
+
+
+
+  const counties = data?.data?.map((state: any) => ({
+    label: state?.state_name,
+    value: state?.state_name,
   }));
 
-  const path = `/intake-info-second/${postData?.data?.id}`;
+  const router = useRouter();
+
   const onFinish = async (values: any) => {
-    const { birthDate, ...otherValue } = values;
-    const date = moment(values?.birthDate).format("l");
+    const { birthDate, ...otherValues } = values;
+    const formattedDate = moment(birthDate).format("L");
     const data = {
-      dob: date,
-      ...otherValue,
+      dob: formattedDate,
+      ...otherValues,
     };
-    await postPersonalInfo(data);
+
+    await postPersonalInfo(data).then((res: any) => {
+      if (res?.data?.status === 200) {
+        const newIntakeId = res?.data?.data?.id;
+        SetLocalStorage("intakeId", newIntakeId);
+        router.push(`/intake-info-second/${newIntakeId}`);
+      } else {
+        Swal.fire({ 
+          // @ts-ignore
+          text: error?.data?.message || "An error occurred",
+          icon: "error",
+        });
+      }
+    });
   };
 
   return (
@@ -48,7 +60,7 @@ const IntakeInfoFirstPage: React.FC = () => {
         </SubTitle>
         <p className=" text-[#C738BD]  text-[16px] text-center ">
           {" "}
-          Please Provide Your Business Information.{" "}
+          Please Provide Your Personal Information.{" "}
         </p>
       </div>
 
@@ -284,12 +296,7 @@ const IntakeInfoFirstPage: React.FC = () => {
           </Form.Item>
         </Form>
       </div>
-      <DataAlerts
-        isShow={isSuccess}
-        path={path}
-        isError={isError}
-        showMSG={error}
-      />
+  
     </div>
   );
 };

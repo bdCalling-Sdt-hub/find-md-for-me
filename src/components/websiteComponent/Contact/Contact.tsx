@@ -32,9 +32,7 @@ const Contact = () => {
   ];
 
   const onFinish = async (values: any) => {
-    console.log(values);
     await postContact(values).then((res) => {
-      console.log(res?.data?.status);
       if (res?.data?.status === "200") {
         Swal.fire({
           icon: "success",

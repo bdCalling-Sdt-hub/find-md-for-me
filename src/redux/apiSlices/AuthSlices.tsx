@@ -52,7 +52,7 @@ const authApi = api.injectEndpoints({
     // post user profile info
     postProfile: builder.mutation({
       query: (values) => {
-        console.log(values);
+        console.log(values); 
         return {
           url: "/profile-update/request",
           method: "POST",

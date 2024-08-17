@@ -25,11 +25,9 @@ const OTP = () => {
   const decodedEmail = decodeURIComponent(encodedEmail);
 
   const [otp, setOtp] = useState(null);
-  console.log(otp);
 
   const handleResendEmail = async () => {
     await forgetpass({ email: decodedEmail }).then((res) => {
-      console.log(res);
       if (res?.data?.status === 200) {
         Swal.fire({
           text: res?.data?.message,

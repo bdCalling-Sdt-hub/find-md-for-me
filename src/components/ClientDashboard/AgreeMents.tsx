@@ -1,17 +1,14 @@
 "use client";
 import { Button, Form, Input, Upload } from "antd";
 import React, { useState } from "react";
-import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
-import Link from "next/link";
+import {  UploadOutlined } from "@ant-design/icons";
 import DashboardTitle from "../shared/DashboardTitle";
 import {
   usePostAgreementMutation,
-  usePostDocumentMutation,
 } from "@/redux/apiSlices/ClientDashboardSlices";
-import { useParams, useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 
-const AgreeMents = () => {
+const AgreeMents = ({current ,setCurrent}:any) => {
   const documents = [
     {
       title:
@@ -38,38 +35,45 @@ const AgreeMents = () => {
 
   const [document, setDocument] = useState<{ [key: string]: File }>({});
   const [postAgreement] = usePostAgreementMutation();
-  const params = useParams();
-  const router = useRouter();
-  console.log(params);
+  const uploadId = localStorage.getItem("upload_id") 
+  console.log(uploadId);
+  console.log(document);
 
   const onFinish = async (values: any) => {
-    const id = params?.userId;
     const formdata = new FormData();
     // @ts-ignore
-    formdata.append("id", id);
+    formdata.append("id", uploadId);
     Object.entries(document).forEach(([key, value]) => {
       formdata.append(key, value);
-    });
-
-    const res = await postAgreement(formdata);
-
-    if (res?.data?.status === 200) {
+    }); 
+ 
+    try {
+      const response = await postAgreement(formdata); 
+  console.log(response);
+      if (response?.data?.status === 200) {
+        const nextStep = current + 1;
+        setCurrent(nextStep);
+  
+        const params = new URLSearchParams(window.location.search);
+        params.set("step", nextStep.toString());
+        window.history.pushState(null, "", `?${params.toString()}`);
+      } else {
+        Swal.fire({ 
+          // @ts-ignore
+          text: response?.error?.data?.message || "An error occurred",
+          icon: "error",
+          timer: 1500,
+        });
+      }
+    } catch (error) {
       Swal.fire({
-        text: res?.data?.message,
-        icon: "success",
-        timer: 1500,
-      }).then(() => {
-        router.push(`/documents/${params?.userId}?step=2`);
-      });
-    } else {
-      Swal.fire({
-        title: "Failed to Login",
-        // @ts-ignore
-        text: res?.error?.data?.message,
+        text: "An unexpected error occurred",
         icon: "error",
+        timer: 1500,
       });
     }
-  };
+ 
+ };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -101,12 +105,7 @@ const AgreeMents = () => {
                         <span> {index + 1} </span>.<span>{data?.title} </span>
                       </p>
                     }
-                    // rules={[
-                    //   {
-                    //     required: true,
-                    //     message: `Please upload your ${data?.title} file!`,
-                    //   },
-                    // ]}
+                    
                     className=""
                   >
                     <Input
@@ -142,7 +141,7 @@ const AgreeMents = () => {
 
               <Form.Item className="text-end">
                 {/* <Link href="/documents?step=2">  */}
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" style={{height:"45px" , width:"120px" , fontSize:"20px"}}>
                   {" "}
                   Next
                 </Button>

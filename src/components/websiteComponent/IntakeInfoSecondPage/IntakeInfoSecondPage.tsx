@@ -1,32 +1,33 @@
 "use client";
 import React, { useState } from "react";
-import type { FormProps } from "antd";
-import { Button, Checkbox, Form, Input, Radio, Select, Space } from "antd";
+import { Button,  Form, Input, Popover, Radio, Select, Space } from "antd";
 import Title from "@/components/shared/Title";
 import SubTitle from "@/components/shared/SubTitle";
-import { useParams } from "next/navigation";
+import {  useRouter,} from "next/navigation";
 import {
+  useGetPriceQuery,
   useGetStateQuery,
-  useGetTierQuery,
   usePostBussinessInfoMutation,
 } from "@/redux/apiSlices/WebPagesSlices";
-import DataAlerts from "@/components/shared/DataAlerts";
+import Swal from "sweetalert2";
+import TierDetails from "./TierDetails";
+import Link from "next/link";
+import { GetLocalStorage } from "@/util/LocalStorage";
+
 
 const { TextArea } = Input;
 const IntakeInfo: React.FC = () => {
   const [companyType, setCompanyType] = useState(null);
 
   const { data } = useGetStateQuery(undefined);
-  const [postBussinessInfo, { isError, error, isSuccess }] =
+  const [postBussinessInfo, {  error,}] =
     usePostBussinessInfoMutation();
-  const [selectedValue, setSelectedValue] = useState("employee");
-  const [inputValues, setInputValues] = useState(null);
-  const params = useParams();
-  const path = `/intake-schedule/${params?.valueId}`;
-  // @ts-ignore
-  const { data: tierData } = useGetTierQuery(undefined);
-  console.log(tierData);
-
+  const [selectedValue, setSelectedValue] = useState("employee"); 
+  const [inputValues, setInputValues] = useState(null); 
+  const router = useRouter() 
+  // @ts-ignore 
+  const { data: tierData } = useGetPriceQuery("Monthly"); 
+  
   const handleRadioChange = (e: any) => {
     setSelectedValue(e.target.value);
   };
@@ -42,15 +43,31 @@ const IntakeInfo: React.FC = () => {
 
   const onChange = (e: any) => {
     setCompanyType(e.target.value);
-  };
+  }; 
+  const IntakeId = GetLocalStorage("intakeId")  
+  console.log(IntakeId);
+ 
 
   const onFinish = async (values: React.FormEvent) => {
     // console.log("Success:", values);
-    const data = {
-      parsonal_id: params?.valueId,
+    const data = { 
+      parsonal_id:IntakeId , 
       ...values,
-    };
-    await postBussinessInfo(data).then((res) => console.log(res));
+    };  
+
+
+    await postBussinessInfo(data).then((res) => {  
+     if(res?.data?.status === 200){
+      router.push(`/intake-schedule/${IntakeId}`) 
+     } else{
+      Swal.fire({
+        // @ts-ignore
+        text: error?.data?.message,
+        icon: "error",
+      });
+     }
+    
+    });
   };
   return (
     <div className=" container ">
@@ -135,28 +152,28 @@ const IntakeInfo: React.FC = () => {
                   <span className=" text-lg font-medium ">Start Up </span>{" "}
                 </Radio>{" "}
                 <br />
-                <Radio value="oneYear" className=" text-xl my-2">
+                <Radio value="less than one year" className=" text-xl my-2">
                   {" "}
                   <span className=" text-lg font-medium ">
                     Less than 1 year{" "}
                   </span>{" "}
                 </Radio>{" "}
                 <br />
-                <Radio value="twoYear" className=" text-xl my-2">
+                <Radio value="less than 2 years" className=" text-xl my-2">
                   {" "}
                   <span className=" text-lg font-medium ">
                     Less than 2 years{" "}
                   </span>{" "}
                 </Radio>{" "}
                 <br />
-                <Radio value="thirdYear" className=" text-xl my-2">
+                <Radio value="greater than 3 years" className=" text-xl my-2">
                   {" "}
                   <span className=" text-lg font-medium ">
                     Greater than 3 years{" "}
                   </span>{" "}
                 </Radio>{" "}
                 <br />
-                <Radio value="fiveYear" className=" text-xl my-2">
+                <Radio value="greater than 5 years" className=" text-xl my-2">
                   {" "}
                   <span className=" text-lg font-medium ">
                     Greater than 5 years{" "}
@@ -288,12 +305,17 @@ const IntakeInfo: React.FC = () => {
                     <Radio.Group>
                       <Radio value="llc" className=" text-xl my-2">
                         {" "}
-                        <span className=" text-lg font-medium ">llc </span>{" "}
+                        <span className=" text-lg font-medium ">LLC </span>{" "}
                       </Radio>{" "}
                       <br />
                       <Radio value="pllc" className=" text-xl my-2">
                         {" "}
                         <span className=" text-lg font-medium ">PLLC</span>{" "}
+                      </Radio>{" "}
+                      <br />
+                      <Radio value="corporation" className=" text-xl my-2">
+                        {" "}
+                        <span className=" text-lg font-medium ">Corporation</span>{" "}
                       </Radio>{" "}
                     </Radio.Group>
                   </div>
@@ -388,9 +410,10 @@ const IntakeInfo: React.FC = () => {
           >
             <div className=" flex-col gap-4">
               <Radio.Group>
-                {tierData?.data?.map((value: any, index: number) => (
-                  <Radio
-                    key={index}
+                {tierData?.data?.map((value: any, index: number) => ( 
+                   <Popover  key={index} content={<TierDetails value={value} />} trigger="hover">  
+                        <Radio
+                   
                     value={value?.id}
                     className=" text-xl my-2"
                   >
@@ -399,10 +422,41 @@ const IntakeInfo: React.FC = () => {
                       {value?.tyer_name}
                     </span>{" "}
                   </Radio>
+                   </Popover>
+             
                 ))}
               </Radio.Group>
             </div>
+          </Form.Item> 
+
+          <Form.Item
+            name="client_type"
+            rules={[
+              {
+                required: true,
+                message: "Please enter your Type !",
+              },
+            ]}
+            label={
+              <p className="text-lg  text-[#737373] font-semibold ">
+              Client Type?
+              </p>
+            }
+          >
+            <div className=" flex-col gap-4">
+              <Radio.Group>
+                <Radio value="individual" className=" text-xl my-2">
+                  {" "}
+                  <span className=" text-lg font-medium ">Individual </span>{" "}
+                </Radio>{" "}
+                <Radio value="business" className=" text-xl my-2">
+                  {" "}
+                  <span className=" text-lg font-medium ">Business </span>{" "}
+                </Radio>{" "}
+              </Radio.Group>
+            </div>
           </Form.Item>
+
 
           <Form.Item
             name="how_many_client_patients_service_month"
@@ -443,20 +497,23 @@ const IntakeInfo: React.FC = () => {
               className=""
             />
           </Form.Item>
+ 
 
-          <Form.Item className="text-end ">
-            <button className=" bg-[#C738BD]  text-white px-6 py-3   rounded-lg">
+ <div className=" flex items-center justify-end gap-4">  
+  <Link  href="/intake-info-first"> 
+  <Button className="w-20 h-11 border border-[#C738BD] text-[#C738BD] text-[16px] font-medium  px-2 py-2 rounded-lg"> Previous</Button> 
+  </Link>
+ 
+  <Form.Item className="mt-[16px] ">
+            <Button  type="primary" htmlType="submit" style={{ width:"100px" , height:"45px" }}>
               Next
-            </button>
+            </Button>
           </Form.Item>
+ </div>
+         
         </Form>
       </div>
-      <DataAlerts
-        isShow={isSuccess}
-        path={path}
-        isError={isError}
-        showMSG={error}
-      />
+
     </div>
   );
 };

@@ -18,10 +18,10 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn("p-8", className)}
+      className={cn("p-8 mx-auto", className)}
       classNames={{
         months:
-          "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0 ",
+          "flex flex-col  space-y-4  ",
         month: "lg:space-y-6 lg:space-x-8 font-semibold text-xl  ",
         caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-lg font-medium",
@@ -35,17 +35,17 @@ function Calendar({
         table: "w-full border-collapse space-y-5 text-2xl",
         head_row: "flex",
         head_cell:
-          "text-muted-foreground rounded-md lg:w-20 w-10 font-semibold text-[0.8rem]",
+          "text-muted-foreground rounded-md lg:w-20 w-full font-semibold text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: cn(
-          "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
+          "relative p-0 lg:w-20 w-full text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
           props.mode === "range"
             ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
             : "[&:has([aria-selected])]:rounded-md"
         ),
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-8 lg:w-20 w-10 p-0 font-normal aria-selected:opacity-100"
+          "h-8 w-full p-0 font-normal aria-selected:opacity-100"
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",

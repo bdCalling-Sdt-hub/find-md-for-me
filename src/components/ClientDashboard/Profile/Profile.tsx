@@ -6,7 +6,7 @@ import { Tabs } from "antd";
 
 const Profile = () => {
   const onChange = (key: any) => {
-    console.log(key);
+    // console.log(key); 
   };
 
   const items = [

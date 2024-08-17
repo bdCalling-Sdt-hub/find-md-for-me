@@ -10,27 +10,46 @@ import {
 } from "@/redux/apiSlices/AuthSlices";
 
 import { useForm } from "antd/lib/form/Form";
+import { baseUrl } from "@/redux/api/apiSlice"; 
+import person from "@/assests/person.png"
 const UserProfile = () => {
   const [form] = useForm();
   const [image, setImage] = useState("");
   const [imgURL, setImgURL] = useState(image);
   const { data } = useGetProfileQuery(undefined);
-  const [postProfile] = usePostProfileMutation();
+  const [postProfile] = usePostProfileMutation(); 
+  console.log(data);
 
   // todo: get image
-  // console.log(image);
-  const handleSubmit = async (values: any) => {
-    const datas = {
-      image: image,
-      first_name: values?.first_name,
-      last_name: values?.last_name,
-      email: values?.email,
-      buisnes_name: values?.buisnes_name,
-      buisness_address: values?.buisness_address,
-      phone: values?.phone,
-    };
-    // console.log(datas);
-    await postProfile(datas).then((res) => {
+  console.log(image); 
+  console.log(imgURL);  
+
+
+  useEffect(() => {
+   
+      const imageUrl = data?.user?.image
+        ? data?.user?.image.startsWith('https')
+          ? data?.user?.image
+          : data?.user?.image === null ? `${baseUrl}/${data?.user?.image}` :  `${baseUrl}${data?.user?.image}`
+        : person ; 
+  
+      setImgURL(imageUrl);
+  
+  }, [data]);
+
+
+  const handleSubmit = async (values: any) => { 
+    const formData= new FormData() 
+    if(image){
+ formData.append("image",image)
+    } 
+
+    Object.entries(values).forEach(([key,value])=>{ 
+      // @ts-ignore
+formData.append(key ,value)
+    }) 
+
+    await postProfile(formData).then((res) => {
       console.log(res);
       if (res?.data?.status === 200) {
         Swal.fire({
@@ -57,7 +76,7 @@ const UserProfile = () => {
 
   const onChange = (e: any) => {
     const file = e.target.files[0];
-    console.log(file);
+    // console.log(file); 
     const imgUrl = URL.createObjectURL(file);
     setImgURL(imgUrl);
     setImage(file);
@@ -70,8 +89,10 @@ const UserProfile = () => {
         last_name: data?.user?.last_name,
         email: data?.user?.email,
         phone: data?.user?.phone,
-        buisnes_name: data?.user?.buisnes_name,
-        buisness_address: data?.user?.buisness_address,
+        buisnes_name: data?.user?.buisness_name,
+        buisness_address: data?.user?.buisness_address, 
+        client_type: data?.BisnessInfo?.client_type , 
+        tier_type: data?.Tier?.tyer_name
       });
     }
   }, [data, form]);
@@ -96,34 +117,37 @@ const UserProfile = () => {
               id="img"
               style={{ display: "none" }}
             />
-            <label
+            <label 
+            className="relative"
               htmlFor="img"
               style={{
                 width: "220px",
                 cursor: "pointer",
                 height: "180px",
                 borderRadius: "18px",
-                border: "1px dashed #4C535F",
+                border: "1px solid #1D75F2",
                 background: "white",
                 backgroundImage: `url(${imgURL})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             >
-              <div
+              <div 
+              className="absolute -right-4 bottom-0 "
                 style={{
-                  background: "rgba(0, 0, 0, 0.4)",
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "18px",
+                  background: "#E8F6FE",
+                  width: "50px",
+                  height: "50px", 
+                  border:"2px solid  #1D75F2" ,
+                  borderRadius: "100%",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <MdOutlineAddPhotoAlternate size={36} color="white" />
-                <p style={{ color: "white", marginTop: "12px" }}>Edit Photo</p>
+                <MdOutlineAddPhotoAlternate size={22} color="#1D75F2" />
+               
               </div>
             </label>
           </div>
@@ -145,7 +169,7 @@ const UserProfile = () => {
               style={{ width: "100%", height: "fit-content" }}
               onFinish={handleSubmit}
             >
-              <div className=" grid lg:grid-cols-2 grid-cols-1 lg:gap-x-16 w-full gap-y-4 pt-5">
+              <div className=" grid lg:grid-cols-2 grid-cols-1 lg:gap-x-16 w-full gap-y-2 pt-5">
                 <div className="lg:mb-[15px]">
                   <label style={{ display: "block", marginBottom: "5px" }}>
                     First Name
@@ -303,7 +327,69 @@ const UserProfile = () => {
                       }}
                     />
                   </Form.Item>
-                </div>
+                </div> 
+
+                
+                <div className="lg:mb-[15px]">
+                  <label
+                    style={{ display: "block", marginBottom: "5px" }}
+                    htmlFor=""
+                  >
+                    Client Type
+                  </label>
+                  <Form.Item
+                    name="client_type"
+                    style={{ marginBottom: 0 }}
+                    rules={[
+                      { required: true, message: "This field is required" },
+                    ]}
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Enter your Business address"
+                      style={{
+                        border: "1px solid #E0E4EC",
+                        height: "52px",
+                        background: "white",
+                        borderRadius: "8px",
+                        outline: "none",
+                      }} 
+                      readOnly
+                    />
+                  </Form.Item>
+                </div> 
+
+                <div className="lg:mb-[15px]">
+                  <label
+                    style={{ display: "block", marginBottom: "5px" }}
+                    htmlFor=""
+                  >
+                   Tier Name
+                  </label>
+                  <Form.Item
+                    name="tier_type"
+                    style={{ marginBottom: 0 }}
+                    rules={[
+                      { required: true, message: "This field is required" },
+                    ]} 
+                  
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Enter your Business address"
+                      style={{
+                        border: "1px solid #E0E4EC",
+                        height: "52px",
+                        background: "white",
+                        borderRadius: "8px",
+                        outline: "none",
+                      }} 
+                      readOnly
+                    />
+                  </Form.Item>
+                </div> 
+
+
               </div>
 
               <div

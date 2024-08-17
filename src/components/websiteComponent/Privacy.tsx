@@ -6,7 +6,7 @@ const Privacy = () => {
   const { data } = useGetPrivacyQuery(undefined);
 
   return (
-    <div className=" container  my-12 h-[calc(100vh-520px)]">
+    <div className=" container  my-12">
       <h1 className=" text-[#C738BD] text-2xl mb-3">Privacy & Policy</h1>
 
       <div>

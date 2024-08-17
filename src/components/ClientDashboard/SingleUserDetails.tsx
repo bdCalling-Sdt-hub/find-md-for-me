@@ -12,7 +12,7 @@ const SingleUserDetails: React.FC<IMyTeam> = ({
   setViewModal,
   singleValue,
 }) => {
-  console.log(singleValue);
+
   const handleCancel = () => {
     setViewModal(false);
   };

@@ -9,14 +9,13 @@ import { useGetPriceQuery } from "@/redux/apiSlices/WebPagesSlices";
 const PricingTabs = () => {
   const [pricingType, setPricingType] = useState("Monthly");
   const { data, refetch } = useGetPriceQuery(pricingType);
-  console.log(data?.data);
 
   useEffect(() => {
     refetch();
   }, [pricingType]);
 
   const handleValue = (value: any) => {
-    console.log(value);
+
     setPricingType(value);
   };
 
@@ -49,7 +48,7 @@ const PricingTabs = () => {
           <TabsList className="  w-[200px]">
             <TabsTrigger value="Monthly">Monthly</TabsTrigger>
             <TabsTrigger value="yearly">
-              <Popover content={"10% Discount"} open>
+              <Popover content={ <p className=" p-2   rounded-lg font-semibold">10% Discount </p>} open>
                 {" "}
                 Yearly{" "}
               </Popover>
@@ -96,8 +95,9 @@ const PricingTabs = () => {
                       {value?.title3}
                     </p>
                     <p className=" text-[12px] text-[#252B42] pb-2">
-                      {value?.type}
-                    </p>
+                    Billed  {value?.type}
+                    </p> 
+                    <p className="text-[14px] font-[500] pb-1">Services Covered:</p>
                   </div>
 
                   <div className="h-full flex-1 overflow-y-auto ">

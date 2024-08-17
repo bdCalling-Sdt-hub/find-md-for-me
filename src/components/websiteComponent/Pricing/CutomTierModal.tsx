@@ -25,9 +25,9 @@ const CutomTierModal = ({
   const [PostCustomTier] = usePostCustomTierMutation();
   const [form] = Form.useForm();
   const onFinish = async (values: any) => {
-    console.log(values);
+
     await PostCustomTier(values).then((res) => {
-      console.log(res);
+
       if (res?.data?.status === "200") {
         Swal.fire({
           icon: "success",
@@ -56,28 +56,14 @@ const CutomTierModal = ({
           <Form.Item
             name="email"
             label={<p className="text-[18px] text-gray-500 "> Your Email</p>}
-            rules={[
-              {
-                type: "email",
-                message: "The input is not valid E-mail!",
-              },
-              {
-                required: true,
-                message: "Please input your E-mail!",
-              },
-            ]}
+         
           >
             <Input className=" h-[40px]" />
           </Form.Item>
           <Form.Item
             name="trial"
-            label={<p className="text-[18px] text-gray-500 ">Your Tier </p>}
-            rules={[
-              {
-                required: true,
-                message: "Please input your E-mail!",
-              },
-            ]}
+            label={<p className="text-[18px] text-gray-500 ">List the type of business you are opening and services you are requesting MD oversight for </p>}
+           
           >
             <Input.TextArea rows={5} />
           </Form.Item>

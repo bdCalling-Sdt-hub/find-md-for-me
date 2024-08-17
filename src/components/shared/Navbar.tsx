@@ -1,15 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Dropdown, Menu, Space } from "antd";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathName = usePathname();
-  console.log(pathName);
 
   const values = [
     {
@@ -44,55 +42,52 @@ const Navbar = () => {
     },
   ];
 
-  const menu = (
-    <Menu>
-      <div className=" bg-white z-50 px-6 py-3 rounded  ">
-        {" "}
-        <div className="  ">
-          {values?.map((value) => (
-            <p key={value?.key} className=" text-[16px] py-2 ">
-              {" "}
-              <Link
-                href={value?.path}
-                className={
-                  pathName == value?.path ? " text-[#1D75F2]" : " text-black"
-                }
-              >
-                {" "}
-                {value.name}{" "}
-              </Link>{" "}
-            </p>
-          ))}
-        </div>
-        <div className=" flex-wrap  gap-2  mb-2">
-          <div className="mb-3">
-            <Link href="/documents">
-              <Button variant="default">Client Protal</Button>
-            </Link>
-          </div>
+  const menuItems = [
+    ...values.map((value) => ({
+      key: value.key,
+      label: (
+        <Link
+          href={value.path}
+          className={pathName === value.path ? "text-[#1D75F2] font-medium" : "text-black font-medium"}
+        >
+          {value.name}
+        </Link>
+      ),
+    })),
+    {
+      type: "divider",
+    },
+    {
+      key: "client-portal",
+      label: (
+        <Link href="/login">
+          <Button variant="default">Client Portal</Button>
+        </Link>
+      ),
+    },
+    {
+      key: "get-started",
+      label: (
+        <Link href="/intake-info-first">
+          <Button variant="btn2">Get Started</Button>
+        </Link>
+      ),
+    },
+  ];
 
-          <div>
-            <Link href="/intake-info-first">
-              <Button variant="btn2">Get Started</Button>
-            </Link>
-          </div>
-        </div>{" "}
-      </div>
-    </Menu>
-  );
   return (
     <div className="container py-5 border-b border-[#C1D3FF]">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className=" text-[#1DA1F2] lg:text-xl text-lg  font-bold ">
-            {" "}
+          <h1 className="text-[#1DA1F2] lg:text-xl text-lg font-bold">
             Find a MD 4 Me
           </h1>
         </div>
 
-        {/* mobile device  */}
-        <div className=" lg:hidden block">
-          <Dropdown overlay={menu}>
+        {/* Mobile device */}
+        <div className="lg:hidden block"> 
+          {/* @ts-ignore  */}
+          <Dropdown menu={{ items: menuItems }}>
             <a onClick={(e) => e.preventDefault()}>
               <Space>
                 <RxHamburgerMenu size={20} />
@@ -101,26 +96,24 @@ const Navbar = () => {
           </Dropdown>
         </div>
 
-        <div className=" hidden lg:flex gap-[21px] items-center text-[16px] text-[#737373]">
-          {values?.map((value) => (
-            <p key={value?.key}>
-              {" "}
+        <div className="hidden lg:flex gap-[21px] items-center text-[16px] text-[#737373]">
+          {values.map((value) => (
+            <p key={value.key}>
               <Link
-                href={value?.path}
+                href={value.path}
                 className={
-                  pathName == value?.path ? " text-[#1D75F2]" : " text-black"
+                  pathName === value.path ? "text-[#1D75F2]" : "text-black"
                 }
               >
-                {" "}
-                {value.name}{" "}
-              </Link>{" "}
+                {value.name}
+              </Link>
             </p>
           ))}
         </div>
 
-        <div className=" hidden lg:flex gap-2">
+        <div className="hidden lg:flex gap-2">
           <Link href="/login">
-            <Button variant="default2">Client Protal</Button>
+            <Button variant="default2">Client Portal</Button>
           </Link>
 
           <Link href="/intake-info-first">

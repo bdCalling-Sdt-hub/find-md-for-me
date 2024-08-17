@@ -1,55 +1,65 @@
 "use client";
-import { Button, Steps } from "antd";
+import {  Steps } from "antd";
 import React, { useEffect, useState } from "react";
-import DocumentsComponent from "./DocumentsComponent";
 import AgreeMents from "./AgreeMents";
 import DocumentsSubmit from "./DocumentsSubmit";
 import MeetingSchedule from "./MeetingSchedule";
 import AcceptClient from "./AcceptClient";
+import dynamic from "next/dynamic";
+  
 
-const steps = [
-  {
-    title: "Uploaded Documents",
-    content: <DocumentsComponent />,
-  },
-  {
-    title: "Signed/Uploaded Agreements",
-    content: <AgreeMents />,
-  },
-  {
-    title: "Waiting for Approval",
-    content: <DocumentsSubmit />,
-  },
-  {
-    title: "Scheduled Start Up Call",
-    content: <MeetingSchedule />,
-  },
-  {
-    title: "Ready to Accept Clients",
-    content: <AcceptClient />,
-  },
-];
+const  DocumentsComponent = dynamic(()=>import("./DocumentsComponent"),{ssr:false , loading:()=><h2>loading....</h2>})
 
 const Documents = () => {
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(0); 
+  const [isNextDisabled, setIsNextDisabled] = useState(true); 
+
+  const steps = [
+    {
+      title: "Uploaded Documents",
+      content: <DocumentsComponent current={current} setCurrent={setCurrent}  />,
+    },
+    {
+      title: "Signed/Uploaded Agreements",
+      content: <AgreeMents current={current} setCurrent={setCurrent} />,
+    },
+    {
+      title: "Waiting for Approval",
+      content: <DocumentsSubmit current={current} setCurrent={setCurrent}  setIsNextDisabled={setIsNextDisabled}   />,
+    },
+    {
+      title: "Scheduled Start Up Call",
+      content: <MeetingSchedule current={current} setCurrent={setCurrent} />,
+    },
+    {
+      title: "Ready to Accept Clients",
+      content: <AcceptClient />,
+    },
+  ];  
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const initialStep = parseInt(params.get("step") || "0", 10);
-    setCurrent(initialStep);
+    if (!isNaN(initialStep) && initialStep !== current) {
+      setCurrent(initialStep);
+    }
   }, []);
 
-  const handleStepChange = (step: any) => {
-    setCurrent(step);
 
-    const params = new URLSearchParams(window.location.search);
-    params.set("step", step.toString());
-    window.history.pushState(null, "", `?${params.toString()}`);
+  const handleStepChange = (step: any) => {
+    if (step < current || !isNextDisabled) {
+      setCurrent(step);
+
+      const params = new URLSearchParams(window.location.search);
+      params.set("step", step.toString());
+      window.history.pushState(null, "", `?${params.toString()}`);
+    }
   };
 
-  const items = steps.map((item) => ({
+  const items = steps.map((item , index) => ({
     key: item.title,
-    title: item.title,
+    title: item.title, 
+    disabled: index > current && isNextDisabled,
   }));
 
   const contentStyle = {

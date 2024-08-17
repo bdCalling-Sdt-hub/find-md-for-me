@@ -7,46 +7,7 @@ import { useGetStateQuery } from "@/redux/apiSlices/WebPagesSlices";
 
 const Counties = () => {
   const { data } = useGetStateQuery(undefined);
-  console.log(data?.data);
 
-  // const counties = [
-  //   "Alabama",
-  //   " Arizona",
-  //   "Colorado ",
-  //   "Connecticut",
-  //   "District of Colombia ",
-  //   "Deleware ",
-  //   "Florida",
-  //   "Idaho ",
-  //   "Illinois ",
-  //   "Iowa",
-  //   "Indiana",
-  //   "Kentucky ",
-  //   "Louisiana ",
-  //   "Maine",
-  //   " Mississippi",
-  //   " Montana",
-  //   " Maryland ",
-  //   "Michigan ",
-  //   "Minnesota ",
-  //   "Nebraska ",
-  //   " Nevada",
-  //   " New Jersey",
-  //   " North Dakota",
-  //   "New Hampshire ",
-  //   "South Carolina",
-  //   "Ohio ",
-  //   "Oklahoma",
-  //   "Tennessee ",
-  //   "Texas ",
-  //   "Utah ",
-  //   "Virginia ",
-  //   "Vermont ",
-  //   " Washington",
-  //   " West Virginia",
-  //   " Wyoming",
-  //   "Wisconsin ",
-  // ];
   return (
     <div className="container">
       <div className=" text-center">

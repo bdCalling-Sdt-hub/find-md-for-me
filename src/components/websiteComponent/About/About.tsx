@@ -6,8 +6,8 @@ import person2 from "@/assests/person2.png";
 import { useGetAboutQuery } from "@/redux/apiSlices/WebPagesSlices";
 
 const About = () => {
-  const { data } = useGetAboutQuery(undefined);
-  console.log(data?.data?.description);
+  const { data } = useGetAboutQuery(undefined); 
+  console.log(data);
   const personInfo = [
     {
       image: <Image src={person1} width={250} height={100} alt="" />,
@@ -28,18 +28,17 @@ const About = () => {
         Aesthetic and Healthcare Providers for Success
       </h1>
 
-      <div>
-        <p className=" text-[16px] text-black pb-3  tracking-wide ">
-          {" "}
-          {data?.data?.description}{" "}
-        </p>
-      </div>
+      <div
+          className=" text-[16px] text-black pb-3  tracking-wide "
+          dangerouslySetInnerHTML={{ __html: data?.data?.description }}
+        ></div>
 
       <div className="">
         <h1 className=" text-[#C738BD] text-3xl font-bold tracking-wide text-center py-3">
           {" "}
           Meet the team
-        </h1>
+        </h1> 
+        
         <div className=" lg:flex flex-wrap items-center justify-center  mx-auto  gap-12 ">
           {personInfo?.map((data, index) => (
             <div key={index} className="">

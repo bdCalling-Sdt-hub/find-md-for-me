@@ -1,5 +1,5 @@
 import React from "react";
-import IntakeSubmitting from "@/components/websiteComponent/IntakeSubmitting/IntakeSubmitting";
+import                                      IntakeSubmitting from "@/components/websiteComponent/IntakeSubmitting/IntakeSubmitting";
 
 const page = () => {
   return (

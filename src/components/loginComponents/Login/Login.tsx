@@ -9,19 +9,17 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 
 const Login = () => {
-  const [login, { error, data }] = useLoginMutation();
+  const [login, { error}] = useLoginMutation();
   const router = useRouter();
-  console.log(data?.data?.id);
-  const id = data?.data?.id;
 
   const onFinish = async (values: any) => {
-    console.log(values);
+
     const data = {
       email: values.email,
       password: values.password,
     };
     await login(data).then((res) => {
-      console.log(res?.data);
+
       if (res?.data?.status === 200) {
         Swal.fire({
           title: "Login Successful",
@@ -30,7 +28,7 @@ const Login = () => {
           timer: 1500,
         }).then(() => {
           SetLocalStorage("findMdToken", res?.data?.token);
-          router.push(`/documents/${id}`);
+          router.push("/profile");
         });
       } else {
         Swal.fire({

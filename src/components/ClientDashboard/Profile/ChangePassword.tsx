@@ -6,11 +6,10 @@ import { useChangePassMutation } from "@/redux/apiSlices/AuthSlices";
 import Swal from "sweetalert2";
 
 const ChangePassword = () => {
-  const [changePass] = useChangePassMutation();
+  const [changePass ,{error}] = useChangePassMutation(); 
+  const [form]= Form.useForm()
   const handleChangePassword = async (values: any) => {
-    console.log(values);
     await changePass(values).then((res) => {
-      console.log(res);
       if (res?.data?.status === 200) {
         Swal.fire({
           position: "center",
@@ -19,11 +18,13 @@ const ChangePassword = () => {
           confirmButtonColor: "#C738BD",
           timer: 1500,
         });
+          form.resetFields()
+      
       } else {
         Swal.fire({
           title: "Oops",
           // @ts-ignore
-          text: error?.data?.message,
+          text: res?.error?.data?.message,
           icon: "error",
           timer: 1500,
           showConfirmButton: false,
@@ -37,7 +38,8 @@ const ChangePassword = () => {
       {" "}
       <div className="h-[53vh]">
         <div>
-          <Form
+          <Form 
+          form={form}
             name="normal_login"
             className="login-form lg:ms-[50px] pe-[30px] mt-[30px] "
             initialValues={{

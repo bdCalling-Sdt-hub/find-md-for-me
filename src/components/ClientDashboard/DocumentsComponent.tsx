@@ -5,8 +5,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import DashboardTitle from "../shared/DashboardTitle";
 import { usePostDocumentMutation } from "@/redux/apiSlices/ClientDashboardSlices";
 import DataAlerts from "../shared/DataAlerts";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
-const DocumentsComponent = () => {
+const DocumentsComponent = ({current, setCurrent}:any) => {
   const documents = [
     {
       title: "RESUME",
@@ -48,24 +50,45 @@ const DocumentsComponent = () => {
 
   const [document, setDocument] = useState<{ [key: string]: File }>({});
   const [userId, setUserId] = useState(null);
-  console.log(userId);
-  const [postDocument, { isError, isSuccess, error }] =
-    usePostDocumentMutation();
-  const path = `/documents/${userId}?step=1`;
-  console.log(document);
+  const [postDocument] = usePostDocumentMutation(); 
+  const router = useRouter()
 
-  const onFinish = async (values: any) => {
-    console.log(values);
+  const onFinish = async () => {
     const formdata = new FormData();
-
+  
     Object.entries(document).forEach(([key, value]) => {
       formdata.append(key, value);
     });
-
-    await postDocument(formdata).then((res) => {
-      setUserId(res?.data?.data?.id);
-    });
+  
+    try {
+      const response = await postDocument(formdata); 
+      console.log(response);
+  
+      if (response?.data?.status === 200) {
+        localStorage.setItem("upload_id", response?.data?.data?.id)
+        const nextStep = current + 1;
+        setCurrent(nextStep);
+  
+        const params = new URLSearchParams(window.location.search);
+        params.set("step", nextStep.toString());
+        window.history.pushState(null, "", `?${params.toString()}`);
+      } else {
+        Swal.fire({ 
+          // @ts-ignore
+          text: response?.error?.data?.message || "An error occurred",
+          icon: "error",
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        text: "An unexpected error occurred",
+        icon: "error",
+        timer: 1500,
+      });
+    }
   };
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -138,7 +161,7 @@ const DocumentsComponent = () => {
               ))}
 
               <Form.Item className="text-end">
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" style={{height:"45px" , width:"120px" , fontSize:"20px"}}>
                   {" "}
                   Next
                 </Button>
@@ -147,12 +170,6 @@ const DocumentsComponent = () => {
           </div>
         </div>
       </div>
-      <DataAlerts
-        isShow={isSuccess}
-        path={path}
-        isError={isError}
-        showMSG={error}
-      />
     </div>
   );
 };

@@ -3,18 +3,19 @@ import SubTitle from "@/components/shared/SubTitle";
 import Title from "@/components/shared/Title";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
 import { usePostAppointmentMutation } from "@/redux/apiSlices/ClientDashboardSlices";
 import moment from "moment";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
-const MeetingSchedule = () => {
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
+const MeetingSchedule = ({current , setCurrent}: any) => {
+  const [date, setDate] = React.useState<Date | undefined>(new Date()); 
+const document_id = localStorage.getItem("upload_id")
   const [clickBtn, setClickBtn] = useState(null);
   const [postAppointment] = usePostAppointmentMutation();
-  const params = useParams();
-  const router = useRouter();
+
 
   const TimeValues = [
     "09:00 AM",
@@ -41,14 +42,16 @@ const MeetingSchedule = () => {
 
   const handleSubmit = async () => {
     const data = {
-      id: params?.userId,
+      id: document_id ,
       time: clickBtn,
       date: newDate,
-    };
+    }; 
 
+  
     await postAppointment(data).then((res) => {
       if (res?.data?.status === 200) {
-        router.push(`/documents/${params?.userId}?step=4`);
+        const nextStep = current + 1;
+        setCurrent(nextStep); 
       } else {
         Swal.fire({
           title: "Failed to Submit",
@@ -64,25 +67,16 @@ const MeetingSchedule = () => {
     <div>
       <div className="p-5">
         <Title>Schedule Your Appointment </Title>
-        <p className="text-[#737373] lg:text-[19px] text-[16px]  text-center mx-auto mb-5 ">
-          {" "}
-          Thank you for visiting{" "}
-          <span className="text-[#1DA1F2]"> Find a MD 4 Me </span> . We look
-          forward to connecting with you for your business!
-        </p>
+      
 
         <SubTitle className=" ">
           {" "}
-          Please select the best date + time to schedule your introduction
-          meeting!
+          Please select the best date + time to schedule your appointment for meeting with our staff.
         </SubTitle>
-        <p className=" text-[#1D75F2]  text-[16px] text-center ">
-          {" "}
-          Please Provide Your Business Information.{" "}
-        </p>
+     
       </div>
 
-      <div onClick={handleSubmit}>
+      <div>
         <div className=" lg:flex gap-4 mt-16 items-center px-8">
           <div>
             <Calendar
@@ -94,7 +88,7 @@ const MeetingSchedule = () => {
           </div>
 
           <div className="w-full mt-10 lg:mt-1">
-            <div className="  w-[80%] mx-auto  ">
+            <div className="  lg:w-[80%] mx-auto  ">
               <p className=" text-center text-lg text-[#737373] pb-3 w-2/3 mx-auto tracking-wide ">
                 All appointments are scheduled in Central Standard Time zone
                 (CST).
@@ -120,9 +114,9 @@ const MeetingSchedule = () => {
           </div>
         </div>
         <div className="text-center my-10">
-          {/* <Link href="/intake-submitting">  */}
-          <Button variant="getStarted"> Submit </Button>
-          {/* </Link>  */}
+         
+          <Button variant="getStarted"  onClick={handleSubmit} > Submit </Button>
+         
         </div>
       </div>
     </div>

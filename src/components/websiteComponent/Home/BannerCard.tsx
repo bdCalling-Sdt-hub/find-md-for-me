@@ -16,23 +16,22 @@ const BannerCard = () => {
     {
       title: "Clearence",
       detail:
-        "Are you a Nurse, Nurse Practitioner, Physician Assistant, Esthetician or Entrepreneur looking to open your own business and need to connect with a Medical Director?",
+        "Do you have a upcoming cosmetic surgery and need to connect with healthcare providers in your area to obtain a clearance?",
       image: <Image src={img2} width={60} height={30} alt="" />,
     },
     {
       title: "Good Faith Exams",
-      detail:
-        "Are you a Nurse, Nurse Practitioner, Physician Assistant, Esthetician or Entrepreneur looking to open your own business and need to connect with a Medical Director?",
+      detail:"Are you looking for a mid-level provider who is knowledgable and can assist you with providing GFE to your existing clients?" ,
       image: <Image src={img3} width={60} height={30} alt="" />,
     },
   ];
   return (
     <div className="lg:container">
-      <div className=" flex lg:flex-row flex-col justify-between items-center gap-8   ">
+      <div className=" flex lg:flex-row flex-col justify-between items-center gap-8    ">
         {values?.map((value, index) => (
           <div
             key={index}
-            className=" p-5 px-8 rounded-lg lg:leading-loose shadow-xl lg:w-[420px]  bg-white  lg:mb-1 mb-8 "
+            className=" p-5 px-8 rounded-lg lg:leading-loose shadow-xl lg:w-[420px] lg:h-[350px]  h-full  bg-white  lg:mb-1 mb-8 "
           >
             <p className=" mb-3"> {value?.image}</p>
             <p className=" text-[#C738BD] text-[16px] font-semibold mb-3">

@@ -10,7 +10,6 @@ const ForgetPassword = () => {
   const [forgetpass, { error }] = useForgetpassMutation();
   const onFinish = async (values: any) => {
     await forgetpass({ email: values?.email }).then((res) => {
-      console.log(res);
       if (res?.data?.status === 200) {
         Swal.fire({
           text: res?.data?.message,

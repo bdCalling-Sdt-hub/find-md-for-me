@@ -13,7 +13,7 @@ const IntakeSchedule = () => {
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [clickBtn, setClickBtn] = useState(null);
   const params = useParams();
-  const path = "/intake-submitting";
+  
   const formatter = new Intl.DateTimeFormat("en-US", {
     day: "2-digit",
     month: "2-digit",
@@ -37,7 +37,7 @@ const IntakeSchedule = () => {
     "10:00 PM",
     "11:00 PM",
   ];
-  const router = useRouter();
+  const router = useRouter(); 
 
   const handleClick = (time: any) => {
     setClickBtn(time);
@@ -49,8 +49,8 @@ const IntakeSchedule = () => {
       date: formattedDate,
       time: clickBtn,
     };
-    console.log(data);
-    await postAppointmentSchedule(data).then((res) => {
+
+    await postAppointmentSchedule(data).then((res) => { 
       if (res?.data?.status === 200) {
         router.push("/intake-submitting");
       }
@@ -79,7 +79,7 @@ const IntakeSchedule = () => {
         </p>
       </div>
 
-      <div onClick={handleSubmit}>
+      <div>
         <div className=" lg:flex gap-10 mt-16 items-center">
           <div>
             <Calendar
@@ -91,7 +91,7 @@ const IntakeSchedule = () => {
           </div>
 
           <div className="w-full mt-10 lg:mt-1">
-            <div className="  w-[80%] mx-auto  ">
+            <div className="  lg:w-[80%] mx-auto  ">
               <p className=" text-center text-lg text-[#737373] pb-3 w-2/3 mx-auto tracking-wide ">
                 All appointments are scheduled in Central Standard Time zone
                 (CST).
@@ -116,7 +116,7 @@ const IntakeSchedule = () => {
             </div>
           </div>
         </div>
-        <div className="text-center my-10">
+        <div className="text-center my-10"  onClick={handleSubmit}>
           {/* <Link href="/intake-submitting">  */}
           <Button variant="getStarted"> Submit </Button>
           {/* </Link>  */}

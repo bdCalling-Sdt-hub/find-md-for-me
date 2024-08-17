@@ -22,7 +22,12 @@ const dashboardApi = api.injectEndpoints({
           body: value,
         };
       },
-    }),
+    }), 
+
+    // waiting For approval  
+    getApproval: builder.query({
+    query:()=>"/check-document-status"
+    }) ,
 
     // appointment
     postAppointment: builder.mutation({
@@ -31,7 +36,12 @@ const dashboardApi = api.injectEndpoints({
         method: "POST",
         body: value,
       }),
-    }),
+    }),  
+
+    // business resources  
+   businessResources: builder.query({
+    query:()=>"/client-tiear"
+   }) ,
 
     // good faith exam
     getFaith: builder.query({
@@ -81,7 +91,12 @@ const dashboardApi = api.injectEndpoints({
         url: `/delete-teame/${id}`,
         method: "DELETE",
       }),
-    }),
+    }), 
+
+    // QA  
+    getQA:builder.query({
+      query:()=>"/qa-client"
+    }) ,
 
     // Billing
     postBilling: builder.mutation({
@@ -98,8 +113,10 @@ const dashboardApi = api.injectEndpoints({
 
 export const {
   usePostDocumentMutation,
-  usePostAgreementMutation,
-  usePostAppointmentMutation,
+  usePostAgreementMutation, 
+  useGetApprovalQuery ,
+  usePostAppointmentMutation,  
+  useBusinessResourcesQuery ,
   useGetFaithQuery,
   useGetEHRQuery,
   useVendorDataQuery,
@@ -107,5 +124,6 @@ export const {
   useGetTeamQuery,
   useCreateTeamMutation,
   useDeleteTeamMutation,
-  usePostBillingMutation,
+  usePostBillingMutation,  
+  useGetQAQuery
 } = dashboardApi;

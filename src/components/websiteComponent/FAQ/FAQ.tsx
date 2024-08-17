@@ -14,13 +14,13 @@ const FAQ = () => {
   const { data } = useGetFAQQuery(undefined);
 
   return (
-    <div className="mb-10   h-[calc(100vh-520px)] ">
+    <div className="mb-10   ">
       <Title>FREQUENTLY ASKED QUESTIONS</Title>
       <div className=" mb-10">
         <p className=" text-[#737373] text-[20px] lg:w-[700px] text-center mx-auto">
           Please reach us{" "}
           <Link
-            href="/about"
+            href="/contact"
             className=" underline font-semibold text-[#1D75F2]"
           >
             {" "}

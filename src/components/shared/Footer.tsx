@@ -41,11 +41,7 @@ const Footer = () => {
   ];
 
   const values2 = [
-    {
-      key: 2,
-      name: "(480) 555-0103",
-      icon: <FaPhone />,
-    },
+
     {
       key: 3,
       name: "7075 FM 1960 RD W STE 1010G Houston, Texas 77069",
@@ -88,7 +84,7 @@ const Footer = () => {
 
         <div className="mb-8 lg:mb-1 ">
           <h1 className=" font-semibold text-lg mb-3 ">Info</h1>
-          <h1 className=" text-[16px]  font-medium">
+          <h1 className=" text-[16px]  font-[300]">
             {values?.map((value) => (
               <p key={value.key} className="mb-3">
                 {" "}
@@ -101,11 +97,11 @@ const Footer = () => {
         <div className="mb-8 lg:mb-1 ">
           {" "}
           <h1 className=" font-semibold text-lg pb-3 ">Contact Us</h1>
-          <h1 className=" text-[16px]  font-medium ">
+          <h1 className=" text-[16px]  font-[300] ">
             {values2?.map((value) => (
               <p
                 key={value?.key}
-                className=" flex gap-2 mb-3 leading-6 items-center"
+                className=" flex gap-2 mb-3 leading-6 items-center w-2/3"
               >
                 {" "}
                 <span> {value?.icon} </span> <span> {value?.name}</span>

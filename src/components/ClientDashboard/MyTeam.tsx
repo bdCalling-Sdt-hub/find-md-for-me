@@ -17,7 +17,6 @@ import Swal from "sweetalert2";
 const MyTeam = () => {
   const [form] = Form.useForm();
   const { data: teamData, refetch } = useGetTeamQuery(undefined);
-  console.log(teamData);
   const [deleteTeam, { error }] = useDeleteTeamMutation(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [viewModal, setViewModal] = useState(false);
@@ -106,7 +105,6 @@ const MyTeam = () => {
   };
 
   const handleDelete = async (id: any) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       icon: "warning",
@@ -118,7 +116,6 @@ const MyTeam = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteTeam(id).then((res) => {
-          console.log(res);
           if (res?.data?.status === 200) {
             Swal.fire({
               title: "Deleted!",
@@ -167,7 +164,10 @@ const MyTeam = () => {
           <Table
             columns={columns}
             dataSource={data}
-            className="lg:text-center lg:w-[100%] w-[90%]"
+            className="lg:text-center lg:w-[100%] w-[100%]" 
+            scroll={{
+              x: 800,
+            }}
             pagination={{
               pageSize: 10,
             }}
@@ -177,7 +177,8 @@ const MyTeam = () => {
       <MyTeamModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        form={form}
+        form={form} 
+        refetch={refetch}
       />
       <SingleUserDetails
         viewModal={viewModal}

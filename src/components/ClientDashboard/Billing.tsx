@@ -6,7 +6,9 @@ import { UploadOutlined } from "@ant-design/icons";
 import DashboardTitle from "../shared/DashboardTitle";
 import moment from "moment";
 import { usePostBillingMutation } from "@/redux/apiSlices/ClientDashboardSlices";
-import DataAlerts from "../shared/DataAlerts";
+import { useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const Billing = () => {
   const documents = [
@@ -25,30 +27,43 @@ const Billing = () => {
   ];
 
   const [postBilling, { isSuccess, isError, error }] = usePostBillingMutation();
-  const [document, setDocument] = useState<{ [key: string]: File }>({});
-  const path = "/documents";
-  console.log(document);
+  const [document, setDocument] = useState<{ [key: string]: File }>({}); 
+  const { data } = useGetProfileQuery(undefined);
+  const id = data?.user?.id; 
+  const router = useRouter()
+
 
   const onFinish = async (values: any) => {
     const formData = new FormData();
-    console.log(values);
 
-    const newDate = moment(values?.payment_date).format("L");
-    formData.append("payment_date", newDate);
 
     Object.entries(document).forEach(([key, value]) => {
       formData.append(key, value);
     });
 
-    await postBilling(formData).then((res) => {
-      console.log(res);
+    await postBilling(formData).then((response) => {
+     if (response?.data?.status === 200) {
+        Swal.fire({
+          text: response?.data?.message || "Your file uploaded successfully",
+          icon: "success",
+          timer: 1500,
+        })
+      } else {
+        Swal.fire({ 
+          // @ts-ignore
+          text: response?.error?.data?.message || "An error occurred",
+          icon: "error",
+          timer: 1500,
+        });
+      }
     });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setDocument((prev: any) => ({
-        ...prev,
+        ...prev, 
+        //@ts-ignore
         [e.target.name]: e?.target?.files[0],
       }));
     }
@@ -70,7 +85,7 @@ const Billing = () => {
                 onFinish={onFinish}
                 layout="vertical"
               >
-                <div className=" grid grid-cols-2 w-full  gap-20">
+                <div className="  w-full  gap-20">
                   <div className="">
                     {documents?.map((data: any, index: number) => (
                       <div key={index}>
@@ -122,22 +137,7 @@ const Billing = () => {
                     ))}
                   </div>
 
-                  <div className="text-end">
-                    <Form.Item
-                      name="payment_date"
-                      rules={[
-                        { required: true, message: " This field is required " },
-                      ]}
-                      className=""
-                      label={
-                        <p className="text-lg  text-[#737373] font-semibold ">
-                          Payment Date:
-                        </p>
-                      }
-                    >
-                      <DatePicker className=" w-full h-[40px]" />
-                    </Form.Item>
-                  </div>
+        <div></div>
                 </div>
 
                 <Form.Item className="text-end">
@@ -155,7 +155,7 @@ const Billing = () => {
                       width: "150px",
                     }}
                   >
-                    Next
+                  Submit
                   </Button>
                 </Form.Item>
               </Form>
@@ -163,12 +163,7 @@ const Billing = () => {
           </div>
         </div>
       </div>
-      <DataAlerts
-        isShow={isSuccess}
-        path={path}
-        isError={isError}
-        showMSG={error}
-      />
+
     </div>
   );
 };

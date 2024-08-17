@@ -11,7 +11,7 @@ const ResetPassword = () => {
   const param = useParams<{ email: string | string[] }>();
   const encodedEmail = param.email as string;
   const decodedEmail = decodeURIComponent(encodedEmail);
-  console.log(decodedEmail);
+
 
   const onFinish = async (values: any) => {
     const data = {
@@ -20,7 +20,7 @@ const ResetPassword = () => {
       password_confirmation: values?.password_confirmation,
     };
     await resetPass(data).then((res) => {
-      console.log(res);
+    
       if (res?.data?.status === 200) {
         Swal.fire({
           title: "Login Successful",
@@ -29,7 +29,7 @@ const ResetPassword = () => {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          router.push(`/documents/${res?.data?.data?.id}`);
+          router.push(`/profile`);
         });
       } else {
         Swal.fire({

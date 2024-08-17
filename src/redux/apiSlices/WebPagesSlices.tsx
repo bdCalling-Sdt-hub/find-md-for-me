@@ -79,7 +79,7 @@ const pagesApi = api.injectEndpoints({
 
     // get tier
     getTier: builder.query({
-      query: () => "/show-tiear",
+      query: () => "/show-tiear-price",
     }),
 
     // IntakeSchedule

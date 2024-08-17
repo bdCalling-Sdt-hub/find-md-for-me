@@ -8,13 +8,15 @@ import Swal from "sweetalert2";
 interface IMyTeam {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  form: any;
+  form: any; 
+  refetch:any
 }
 
 const MyTeamModal: React.FC<IMyTeam> = ({
   isModalOpen,
   setIsModalOpen,
-  form,
+  form, 
+  refetch
 }) => {
   const documents = [
     {
@@ -32,7 +34,8 @@ const MyTeamModal: React.FC<IMyTeam> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setDocument((prev: any) => ({
-        ...prev,
+        ...prev, 
+              //@ts-ignore
         [e.target.name]: e?.target?.files[0],
       }));
     }
@@ -59,25 +62,26 @@ const MyTeamModal: React.FC<IMyTeam> = ({
     });
 
     Object.entries(otherValues).forEach(([key, value]) => {
-      // todo
+      // todo 
+      //@ts-ignore
       formData.append(key, value);
     });
 
     await createTeam(formData).then((res) => {
-      console.log(res);
       if (res?.data?.status === 200) {
         Swal.fire({
           text: res?.data?.message,
           icon: "success",
           timer: 1500,
-        }).then(() => {
+        }).then(() => { 
+          refetch()
           setIsModalOpen(false);
         });
       } else {
         Swal.fire({
-          title: "Failed to Login",
+        
           // @ts-ignore
-          text: error?.data?.message,
+          text: "Something Went Wrong!",
           icon: "error",
         });
       }

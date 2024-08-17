@@ -11,8 +11,8 @@ const DataAlerts = ({ isShow, path, showMSG, isError }) => {
         text: "Intake form submited succesfully!",
         icon: "success",
         timer: 1500,
-      });
-      router.push(path);
+      }).then(()=> {router.push(path)})
+     
     }
   }, [isShow, path, router]);
 

@@ -8,19 +8,30 @@ import {
   usePostVendorFormMutation,
   useVendorDataQuery,
 } from "@/redux/apiSlices/ClientDashboardSlices";
-import DataAlerts from "../shared/DataAlerts";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const Vendors = () => {
   const { data } = useVendorDataQuery(undefined);
-  console.log(data?.data);
-  const [postVendorForm, { isSuccess, isError, error }] =
-    usePostVendorFormMutation();
+  const [postVendorForm, { error }] =
+    usePostVendorFormMutation();  
+    const router = useRouter()
 
   const shipping = ["Overnight", "Expedited", "Standard"];
-  const path = "/document-submit";
   const onFinish = async (values: any) => {
-    console.log(values);
-    await postVendorForm(values).then((res) => console.log(res));
+    await postVendorForm(values).then((res)=>{ 
+      console.log(res);
+      if(res?.data?.status === "200"){
+        router.push("/vendor-confirmation")
+       } else{
+        Swal.fire({
+          // @ts-ignore
+          text: error?.data?.message,
+          icon: "error",
+        });
+       }
+      
+    })
   };
 
   return (
@@ -333,12 +344,6 @@ const Vendors = () => {
           </div>
         </Form>
       </div>
-      <DataAlerts
-        isShow={isSuccess}
-        path={path}
-        isError={isError}
-        showMSG={error}
-      />
     </div>
   );
 };
