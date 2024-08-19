@@ -55,7 +55,7 @@ const BusinessResources = () => {
                 <p className="lg:text-lg text-[#252B42] py-2">View Protocols Document</p> 
                 {
                   resources?.map((values:any , index:number)=> 
-                    <div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px]">
+                    <div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px] mb-3">
                   <a className="flex text-[#1D75F2] items-center gap-2"  href={`${baseUrl}${values?.protocol_image}`}
           download="Protocols.pdf" 
                target="_blank"  

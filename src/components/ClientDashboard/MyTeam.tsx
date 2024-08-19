@@ -16,7 +16,8 @@ import Swal from "sweetalert2";
 
 const MyTeam = () => {
   const [form] = Form.useForm();
-  const { data: teamData, refetch } = useGetTeamQuery(undefined);
+  const { data: teamData, refetch } = useGetTeamQuery(undefined); 
+  console.log(teamData);
   const [deleteTeam, { error }] = useDeleteTeamMutation(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [viewModal, setViewModal] = useState(false);
@@ -27,7 +28,8 @@ const MyTeam = () => {
     name: value?.first_name,
     lastName: value?.last_name,
     email: value?.email,
-    role: value?.Role,
+    role: value?.Role, 
+    status:value?.status ,
     license_certificate_number: value?.license_certificate_number,
     addisional_certificate: value?.addisional_certificate,
     phone: value?.phone,
@@ -72,6 +74,12 @@ const MyTeam = () => {
       title: "Role",
       dataIndex: "role",
       key: "role",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status", 
+      render:(status:any)=><p className={`${status==="approved" ? "text-green-600" : status==="pending" ? "text-blue-600" : status==="rejected" ? "text-red-600" :"text-black"}`}>{status}</p>
     },
 
     {

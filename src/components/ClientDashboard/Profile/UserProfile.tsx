@@ -340,9 +340,7 @@ formData.append(key ,value)
                   <Form.Item
                     name="client_type"
                     style={{ marginBottom: 0 }}
-                    rules={[
-                      { required: true, message: "This field is required" },
-                    ]}
+                  
                   >
                     <Input
                       type="text"
@@ -369,9 +367,7 @@ formData.append(key ,value)
                   <Form.Item
                     name="tier_type"
                     style={{ marginBottom: 0 }}
-                    rules={[
-                      { required: true, message: "This field is required" },
-                    ]} 
+                   
                   
                   >
                     <Input
