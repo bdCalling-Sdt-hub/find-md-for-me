@@ -7,8 +7,8 @@ import { baseUrl } from "@/redux/api/apiSlice";
 
 const BusinessResources = () => { 
   const {data} = useBusinessResourcesQuery(undefined)  
-  const resources = data?.data 
-  // console.log(resources); 
+  const resources = data?.data  
+  console.log(resources);  
   // const content = ["Protocols", "Standing Order", "Policies", "Consents"]; 
   return (
     <div className=" shadow-lg lg:my-4  lg:h-[85vh] h-screen relative">
@@ -54,20 +54,24 @@ const BusinessResources = () => {
                 </p> 
                 <p className="lg:text-lg text-[#252B42] py-2">View Protocols Document</p> 
                 {
-                  resources?.map((values:any , index:number)=> 
-                    <div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px] mb-3">
-                  <a className="flex text-[#1D75F2] items-center gap-2"  href={`${baseUrl}${values?.protocol_image}`}
-          download="Protocols.pdf" 
-               target="_blank"  
-                >
-                    {" "}
-                    <span>
-                      {" "}
-                      <FaRegFileAlt />{" "}
-                    </span>{" "}
-                    <span>Protocols Info's</span>
-                  </a>
-                </div>
+                  resources?.map((values:any , index:number)=>  <div key={index} > 
+                    {
+                      values?.protocol_image?.map((value:any , index:number)=><div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px] mb-3">
+                      <a className="flex text-[#1D75F2] items-center gap-2"  href={`${baseUrl}${value}`}
+              download={`Protocols.pdf ${index+1}`}
+                   target="_blank"  
+                    >
+                        {" "}
+                        <span>
+                          {" "}
+                          <FaRegFileAlt />{" "}
+                        </span>{" "}
+                        <span>Protocols Info {index+1}</span>
+                      </a>
+                    </div>)
+                    }
+                  </div>
+                    
                   )
                 }
           
@@ -86,19 +90,26 @@ const BusinessResources = () => {
                 </p> 
                 <p className="lg:text-lg text-[#252B42] py-2">View  Standing Order Document</p> 
                 {
-                  resources?.map((value:any , index:number)=>  <div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px]"> 
-                  <a
-                    className="flex text-[#1D75F2] items-center gap-2"
-                    href={`${baseUrl}${value?.standing_image}`}
-                    download="Standing.pdf" 
-                    target="_blank"
-                  >
-    <span>
-      <FaRegFileAlt />
-    </span>
-    <span>Standing Order Info's</span>
-  </a>
-                  </div>)
+                  resources?.map((values:any , index:number)=> <div key={index}>
+                      {
+                        values?.standing_image?.map((value:any , index:number)=> { 
+                         
+                        return(<div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px] mb-2"> 
+                        <a
+                          className="flex text-[#1D75F2] items-center gap-2"
+                          href={`${baseUrl}${value}`}
+                          download={`Standing Order Info ${index+1}.pdf`}
+                          target="_blank"
+                        >
+          <span>
+            <FaRegFileAlt />
+          </span>
+          <span>Standing Order Info {index+1}</span>
+        </a>
+                        </div>)
+       })
+                      }
+                  </div> )
                 }
               
               </div> 
@@ -115,15 +126,22 @@ const BusinessResources = () => {
                 </p> 
                 <p className="lg:text-lg text-[#252B42] py-2">View Policies Document</p>
                 {
-                   resources?.map((value:any , index:number)=>  <div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px]">
-                   <a className="flex text-[#1D75F2] items-center gap-2"  href={`${baseUrl}${value?.policy_image}`} download="Policies.pdf"
+                   resources?.map((values:any , index:number)=> <div key={index}> 
+{
+values?.policy_image?.map((value:any , index:number)=><div > 
+ <div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px] mb-2">
+                   <a className="flex text-[#1D75F2] items-center gap-2"  href={`${baseUrl}${value}`} download={`Policies Info ${index+1}.pdf `}
                     target="_blank" >
                      <span>
                        <FaRegFileAlt />{" "}
                      </span>{" "}
-                     <span>Policies Info's</span>
+                     <span>Policies Info {index+1}</span>
                    </a>
-                 </div>)
+                 </div>
+</div>)
+}
+                   </div> 
+                  )
                 }
               
               </div> 
@@ -140,17 +158,21 @@ const BusinessResources = () => {
                 </p> 
                 <p className="lg:text-lg text-[#252B42] py-2">View Consents Document</p> 
                 {
-                   resources?.map((value:any , index:number)=><div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px]">
-                   <a className="flex text-[#1D75F2] items-center gap-2"  href={`${baseUrl}${value?.constant_image}`} download="Consents.pdf"
-               target="_blank" >
-                     {" "}
-                     <span>
-                       {" "}
-                       <FaRegFileAlt />{" "}
-                     </span>{" "}
-                     <span>Consents Info's</span>
-                   </a>
-                 </div> )
+                   resources?.map((values:any , index:number)=><div key={index}> 
+                   {
+                   values?.constant_image?.map((value:any , index:number)=> 
+                    <div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px] mb-2">
+                                      <a className="flex text-[#1D75F2] items-center gap-2"  href={`${baseUrl}${value}`} download={`Consents Info ${index+1}.pdf `} 
+                                       target="_blank" >
+                                        <span>
+                                          <FaRegFileAlt />{" "}
+                                        </span>{" "}
+                                        <span>Consents Info {index+1}</span>
+                                      </a>
+                                    </div>
+                  )
+                   }
+                                      </div>  )
                 }
                 
               </div> 

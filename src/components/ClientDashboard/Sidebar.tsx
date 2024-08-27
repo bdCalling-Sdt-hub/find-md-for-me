@@ -13,12 +13,19 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { GrMoney, GrVend } from "react-icons/gr";
 import { FaHandHoldingMedical } from "react-icons/fa6";
 import { useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
-import { MenuProps } from "antd";
+import { MenuProps } from "antd"; 
+import logo from "@/assests/logo.png"
+import Image from "next/image";
+import { useBusinessResourcesQuery } from "@/redux/apiSlices/ClientDashboardSlices";
 
 const Sidebar = () => {
   const { data } = useGetProfileQuery(undefined);
-  const userId = data?.user?.id;
-  const pathname = usePathname();
+  const userId = data?.user?.id; 
+
+  const {data:business} = useBusinessResourcesQuery(undefined)  
+  const resources = business?.document_status   
+  console.log(resources);
+  const pathname = usePathname(); 
 
   interface ItemType {
     title: string;
@@ -79,20 +86,27 @@ const Sidebar = () => {
     },
   ];
 
-  const menuItems: MenuProps["items"] = linkItems.map((item, index) => ({
-    key: index,
-    label: (
-      <Link
-        href={item.path}
-        className={`flex w-full ${
-          item.path === pathname ? "bg-[#68a2f3] text-white" : "bg-transparent text-black"
-        } items-center gap-[14px] px-3 py-2 rounded-[5px] font-normal`}
-      >
-        <div className="h-[24px]">{item.icon}</div>
-        <div className="text-[16px]">{item.title}</div>
-      </Link>
-    ),
-  }));
+  const menuItems: MenuProps["items"] = linkItems.map((item, index) => {
+    const isBusinessResources = item.path === "/business-resources";
+    const isBusinessResourcesEnabled = resources === "approved";
+  
+    return {
+      key: index,
+      label: (
+        <Link
+          href={isBusinessResources && !isBusinessResourcesEnabled ? "#" : item.path}
+          className={`flex w-full ${
+            item.path === pathname ? "bg-[#68a2f3] text-white" : "bg-transparent text-black"
+          } items-center gap-[14px] px-3 py-2 rounded-[5px] font-normal ${
+            isBusinessResources && !isBusinessResourcesEnabled ? "cursor-not-allowed pointer-events-none" : "cursor-pointer"
+          }`}
+        >
+          <div className="h-[24px]">{item.icon}</div>
+          <div className="text-[16px]">{item.title}</div>
+        </Link>
+      ),
+    };
+  });
 
   return (
     <div>
@@ -107,11 +121,9 @@ const Sidebar = () => {
       >
         <div className="logo flex items-center justify-between lg:justify-center gap-2 lg:mt-[30px] lg:mb-[20px] mt-[10px] mx-3  border-b-2 py-3 lg:border-none">
           <div>
-            <Link href="/">
-              <h1 className="text-[#1DA1F2] text-xl font-semibold text-center lg:pt-4">
-                Find a MD 4 Me
-              </h1>
-            </Link>
+          <Link href="/"> 
+          <Image src={logo} alt="" height={10} width={170} />
+          </Link>
           </div>
 
           <div className="lg:hidden block">
@@ -135,9 +147,14 @@ const Sidebar = () => {
               marginTop: 0,
             }}
           >
-            {linkItems.map((item, index) => (
-              <li
-                key={index}
+            {linkItems.map((item, index) => {   
+                const isBusinessResources = item.path === "/business-resources";
+                const isBusinessResourcesEnabled = resources === "approved";
+
+              return( 
+                <li
+                key={index} 
+            
                 style={{
                   width: "100%",
                   height: "34px",
@@ -145,11 +162,13 @@ const Sidebar = () => {
                   marginBottom: "10px",
                   paddingLeft: "30px",
                   display: "flex",
-                  alignItems: "center",
-                }}
+                  alignItems: "center", 
+                 
+          }}
+               
               >
-                <Link
-                  href={item.path}
+                <Link 
+                  href={isBusinessResources && !isBusinessResourcesEnabled ? "#" : item.path}
                   style={{
                     display: "flex",
                     width: "100%",
@@ -161,7 +180,9 @@ const Sidebar = () => {
                     gap: "14px",
                     padding: "7px 14px 7px",
                     borderRadius: "5px",
-                    fontWeight: "400",
+                    fontWeight: "400", 
+                    pointerEvents: isBusinessResources && !isBusinessResourcesEnabled ? "none" : "auto",
+                    cursor: isBusinessResources && !isBusinessResourcesEnabled ? "not-allowed" : "pointer",
                   }}
                 >
                   <div style={{ height: "24px" }}>{item.icon}</div>
@@ -175,7 +196,9 @@ const Sidebar = () => {
                   </div>
                 </Link>
               </li>
-            ))}
+              )
+            
+})}
           </ul>
         </div>
       </div>

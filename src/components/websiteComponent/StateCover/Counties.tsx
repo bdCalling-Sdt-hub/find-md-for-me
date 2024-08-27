@@ -11,13 +11,13 @@ const Counties = () => {
   return (
     <div className="container">
       <div className=" text-center">
-        <Title> States we cover </Title>
+        <Title> States We Cover </Title>
 
         <div className=" flex justify-center items-center mb-10">
           <p className=" text-[#737373] text-[20px] lg:w-[700px]">
             {" "}
             Below you will find the states where we are able to provide MD
-            oversight. New states will be provided continue to come and check
+            oversight. New states will be provided, continue to come and check
             here.
           </p>
         </div>

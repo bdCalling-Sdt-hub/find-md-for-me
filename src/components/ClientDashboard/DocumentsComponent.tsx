@@ -1,9 +1,9 @@
 "use client";
 import { Button, Form, Input, Upload } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import DashboardTitle from "../shared/DashboardTitle";
-import { usePostDocumentMutation } from "@/redux/apiSlices/ClientDashboardSlices";
+import { useGetDocumentQuery, usePostDocumentMutation } from "@/redux/apiSlices/ClientDashboardSlices";
 import DataAlerts from "../shared/DataAlerts";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -48,10 +48,26 @@ const DocumentsComponent = ({current, setCurrent}:any) => {
     },
   ];
 
-  const [document, setDocument] = useState<{ [key: string]: File }>({});
+  const [document, setDocument] = useState<{ [key: string]: File }>({}); 
+  const {data:documentData} =  useGetDocumentQuery(undefined) 
+  console.log(documentData);
   const [userId, setUserId] = useState(null);
   const [postDocument] = usePostDocumentMutation(); 
-  const router = useRouter()
+  const router = useRouter() 
+
+  useEffect(() => {
+    if (documentData?.status === 200 && documentData.data) {
+      const initialDocuments: { [key: string]: File | null } = {};
+      documents.forEach((doc) => {
+        const fileName = documentData.data[doc.value]?.split("/").pop();
+        if (fileName) {
+          initialDocuments[doc.value] = new File([], fileName); // Use file name from the fetched data
+        }
+      }); 
+      // @ts-ignore
+      setDocument(initialDocuments);
+    }
+  }, [documentData]);
 
   const onFinish = async () => {
     const formdata = new FormData();

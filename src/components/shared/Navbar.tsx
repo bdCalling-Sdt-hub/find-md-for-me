@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Dropdown, Menu, Space } from "antd";
-import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation"; 
+import logo from "@/assests/logo.png"
+import Image from "next/image";
 
 const Navbar = () => {
   const pathName = usePathname();
@@ -78,10 +80,11 @@ const Navbar = () => {
   return (
     <div className="container py-5 border-b border-[#C1D3FF]">
       <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-[#1DA1F2] lg:text-xl text-lg font-bold">
-            Find a MD 4 Me
-          </h1>
+        <div> 
+          <Link href="/"> 
+          <Image src={logo} alt="" height={10} width={200} />
+          </Link>
+    
         </div>
 
         {/* Mobile device */}

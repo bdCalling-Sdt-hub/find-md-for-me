@@ -1,9 +1,10 @@
 "use client";
 import { Button, Form, Input, Upload } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {  UploadOutlined } from "@ant-design/icons";
 import DashboardTitle from "../shared/DashboardTitle";
 import {
+  useGetDocumentQuery,
   usePostAgreementMutation,
 } from "@/redux/apiSlices/ClientDashboardSlices";
 import Swal from "sweetalert2";
@@ -34,10 +35,26 @@ const AgreeMents = ({current ,setCurrent}:any) => {
   ];
 
   const [document, setDocument] = useState<{ [key: string]: File }>({});
-  const [postAgreement] = usePostAgreementMutation();
+  const [postAgreement] = usePostAgreementMutation(); 
+  const {data:documentData} =  useGetDocumentQuery(undefined) 
+  console.log(documentData);
   const uploadId = localStorage.getItem("upload_id") 
   // console.log(uploadId); 
   // console.log(document); 
+
+  useEffect(() => {
+    if (documentData?.status === 200 && documentData.data) {
+      const initialDocuments: { [key: string]: File | null } = {};
+      documents.forEach((doc) => {
+        const fileName = documentData.data[doc.value]?.split("/").pop();
+        if (fileName) {
+          initialDocuments[doc.value] = new File([], fileName); // Use file name from the fetched data
+        }
+      }); 
+      // @ts-ignore
+      setDocument(initialDocuments);
+    }
+  }, [documentData]); 
 
   const onFinish = async (values: any) => {
     const formdata = new FormData();

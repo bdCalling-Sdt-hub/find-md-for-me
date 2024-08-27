@@ -11,7 +11,11 @@ const dashboardApi = api.injectEndpoints({
           body: value,
         };
       },
-    }),
+    }), 
+
+    getDocument:builder.query({
+      query:()=>"/auth-user-document"
+    }) ,
 
     // agreement
     postAgreement: builder.mutation({
@@ -125,5 +129,6 @@ export const {
   useCreateTeamMutation,
   useDeleteTeamMutation,
   usePostBillingMutation,  
-  useGetQAQuery
+  useGetQAQuery , 
+  useGetDocumentQuery
 } = dashboardApi;
