@@ -1,5 +1,6 @@
 "use client";
-import { useGetStateQuery } from "@/redux/apiSlices/WebPagesSlices";
+import { useGetStateQuery } from "@/redux/apiSlices/WebPagesSlices"; 
+import CountUp from 'react-countup';
 import React from "react";
 
 const TotalCustomer = () => {
@@ -13,7 +14,7 @@ const TotalCustomer = () => {
       title: "Happy Customers",
     },
     {
-      total: "150K",
+      total: "150000",
       title: "Monthly Visitors",
     },
     {
@@ -21,7 +22,7 @@ const TotalCustomer = () => {
       title: "States",
     },
     {
-      total: "6",
+      total: 6,
       title: "Top Partners",
     },
   ];
@@ -31,8 +32,16 @@ const TotalCustomer = () => {
         {values?.map((value, index) => (
           <div key={index} className="text-center  mb-6 lg:mb-1">
             <p className=" lg:text-5xl text-3xl font-bold text-[#C738BD] mb-3">
-              {" "}
-              {value?.total}
+              {" "} 
+              <CountUp start={0} end={value?.total} delay={0}  duration={4}
+                formattingFn={(value) => {
+    if (value >= 1000) {
+      const formattedValue = (value / 1000).toFixed(1);
+      return formattedValue.endsWith('.0') ? formattedValue.slice(0, -2) + 'k' : formattedValue + 'k';
+    }
+    return value.toString();
+  }}/>
+              
             </p>
             <p className="text-black  font-semibold"> {value?.title}</p>
           </div>

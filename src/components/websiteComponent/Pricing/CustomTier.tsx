@@ -21,7 +21,7 @@ const CustomTier = () => {
         Let's discuss building your custom tier here{" "}
       </p>
       <div>
-        <Button type="primary" onClick={() => setIsModalOpen(true)}>
+        <Button type="primary" onClick={() => setIsModalOpen(true)} style={{height:"42px" , fontWeight:500 }}>
           {" "}
           Custom Tier
         </Button>

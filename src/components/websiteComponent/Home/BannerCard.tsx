@@ -1,11 +1,17 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";  
+import AOS from "aos" ;
+import "aos/dist/aos.css";
 import img1 from "../../../assests/circle1.png";
 import img2 from "@/assests/circle2.png";
 import img3 from "@/assests/circle3.png";
 
-const BannerCard = () => {
+const BannerCard = () => { 
+
+  useEffect(()=>{
+    AOS.init({})
+  },[])
   const values = [
     {
       title: "Collaboration",
@@ -27,7 +33,7 @@ const BannerCard = () => {
   ];
   return (
     <div className="lg:container">
-      <div className=" flex lg:flex-row flex-col justify-between items-center gap-8    ">
+      <div className=" flex lg:flex-row flex-col justify-between items-center gap-8 " data-aos="fade-up" data-aos-duration="1000">
         {values?.map((value, index) => (
           <div
             key={index}

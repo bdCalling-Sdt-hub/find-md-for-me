@@ -1,8 +1,15 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react"; 
+import AOS from "aos" ;
+import "aos/dist/aos.css";
 
-const OversightPricing = () => {
+const OversightPricing = () => { 
+  useEffect(()=>{
+    AOS.init()
+  },[])
   return (
-    <div>
+    <div data-aos="fade-down"
+    data-aos-easing="linear"  data-aos-duration="500">
       <h1 className=" text-[#C738BD]  text-[32px]  py-4">
         {" "}
         Oversight Pricing For Individuals and Businesses

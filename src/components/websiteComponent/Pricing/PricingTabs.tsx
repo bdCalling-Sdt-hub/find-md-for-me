@@ -4,11 +4,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import Link from "next/link";
 import { Popover } from "antd";
-import { useGetPriceQuery } from "@/redux/apiSlices/WebPagesSlices";
+import { useGetPriceQuery } from "@/redux/apiSlices/WebPagesSlices"; 
+import AOS from "aos" ;
+import "aos/dist/aos.css";
 
 const PricingTabs = () => {
   const [pricingType, setPricingType] = useState("Monthly");
-  const { data, refetch } = useGetPriceQuery(pricingType);
+  const { data, refetch } = useGetPriceQuery(undefined);   
+  console.log(data);
+
+  useEffect(()=>{
+    AOS.init()
+  },[])
 
   useEffect(() => {
     refetch();
@@ -29,14 +36,15 @@ const PricingTabs = () => {
 
   const yearlyValues = data?.data.map((value: any) => ({
     title: value?.tyer_name,
-    title2: `$${value?.price[0]?.price_1}-I`,
-    title3: `$${value?.price[0]?.price_2}-B`,
+    title2: `$${Math.ceil((parseInt(value?.price[0]?.price_1)*12)* 0.9)}-I`,
+    title3: `$${Math.ceil((parseInt(value?.price[0]?.price_2)*12)*0.9)}-B`,
     type: value?.price[0]?.pricing_type,
     sevice: value?.price[0]?.service,
   }));
 
   return (
-    <div>
+    <div  data-aos="fade-up"
+    data-aos-easing="linear"  data-aos-duration="500">
       <Tabs
         defaultValue="Monthly"
         value={pricingType}
@@ -50,7 +58,7 @@ const PricingTabs = () => {
             <TabsTrigger value="yearly">
               <Popover content={ <p className=" p-2   rounded-lg font-semibold">10% Discount </p>} open>
                 {" "}
-                Yearly{" "}
+                Annually{" "}
               </Popover>
             </TabsTrigger>
           </TabsList>
@@ -95,7 +103,7 @@ const PricingTabs = () => {
                       {value?.title3}
                     </p>
                     <p className=" text-[12px] text-[#252B42] pb-2">
-                    Billed  {value?.type}
+                    Billed  Monthly
                     </p> 
                     <p className="text-[14px] font-[500] pb-1">Services Covered:</p>
                   </div>
@@ -168,9 +176,13 @@ const PricingTabs = () => {
                       {" "}
                       {value?.title3}
                     </p>
-                    <p className=" text-[12px] text-[#252B42] pb-2">
-                      {value?.type}
+                    <p className=" text-[13px] text-[#252B42] pb-1 font-[500]">
+                    Monthly breakdown
                     </p>
+                    <p className=" text-[13px] text-[#252B42] pb-2">
+                  Billed Annually
+                    </p>  
+                    <p className="text-[14px] font-[500] pb-1">Services Covered:</p>
                   </div>
 
                   <div className="h-full flex-1 overflow-y-auto ">
@@ -191,7 +203,7 @@ const PricingTabs = () => {
                   <div className="  flex justify-center items-center  ">
                     <Link href="/intake-info-first" className=" ">
                       {" "}
-                      <button className=" w-full bg-[#c738bd] px-3 py-2  rounded-lg text-white">
+                      <button className=" w-full bg-[#c738bd]  rounded-lg text-white px-3 py-2" >
                         {" "}
                         Get Started{" "}
                       </button>

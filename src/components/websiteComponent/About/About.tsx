@@ -1,12 +1,18 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react"; 
+import AOS from "aos" ;
+import "aos/dist/aos.css";
 import person1 from "@/assests/person1.png";
 import person2 from "@/assests/person2.png";
 import { useGetAboutQuery } from "@/redux/apiSlices/WebPagesSlices";
 
 const About = () => {
-  const { data } = useGetAboutQuery(undefined); 
+  const { data } = useGetAboutQuery(undefined);  
+
+  useEffect(()=>{
+    AOS.init()
+  },[])
   // console.log(data); 
   const personInfo = [
     {
@@ -21,7 +27,9 @@ const About = () => {
     },
   ];
   return (
-    <div className=" container  my-12">
+    <div className=" container  lg:my-12 my-6"     data-aos="fade-down"
+    data-aos-easing="linear"  data-aos-duration="500"
+  >
       <h1 className=" text-[#C738BD] text-2xl mb-3">
         {" "}
         <span className=" font-semibold "> Our Journey: </span> Empowering
@@ -29,9 +37,10 @@ const About = () => {
       </h1>
 
       <div
-          className=" text-[16px] text-black pb-3  tracking-wide "
+          className=" text-[16px] text-black pb-2  tracking-wide "
           dangerouslySetInnerHTML={{ __html: data?.data?.description }}
-        ></div>
+      
+        />
 
       <div className="">
         <h1 className=" text-[#C738BD] text-3xl font-bold tracking-wide text-center py-3">

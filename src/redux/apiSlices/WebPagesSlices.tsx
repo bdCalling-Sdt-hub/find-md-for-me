@@ -29,8 +29,8 @@ const pagesApi = api.injectEndpoints({
 
     // pricing
     getPrice: builder.query({
-      query: (type) => ({
-        url: `/pricing?pricing_type=${type}`,
+      query: () => ({
+        url: '/pricing',
       }),
     }),
 

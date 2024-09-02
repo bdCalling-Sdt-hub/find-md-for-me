@@ -123,7 +123,10 @@ const IntakeInfoFirstPage: React.FC = () => {
               </p>
             }
           >
-            <DatePicker className=" w-full h-[40px]" />
+            <DatePicker className=" w-full h-[40px]"  format={{
+        format: 'MMM DD YYYY',
+        type: 'mask',
+      }} />
           </Form.Item>
 
           <Form.Item

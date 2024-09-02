@@ -63,7 +63,7 @@ const Navbar = () => {
       key: "client-portal",
       label: (
         <Link href="/login">
-          <Button variant="default">Client Portal</Button>
+          <Button variant="btn2">Client Portal</Button>
         </Link>
       ),
     },
@@ -71,7 +71,7 @@ const Navbar = () => {
       key: "get-started",
       label: (
         <Link href="/intake-info-first">
-          <Button variant="btn2">Get Started</Button>
+          <Button variant="default">Get Started</Button>
         </Link>
       ),
     },

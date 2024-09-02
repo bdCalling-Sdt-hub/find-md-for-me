@@ -2,7 +2,7 @@
 import Title from "@/components/shared/Title";
 import styles from "./Contact.module.css";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { MdPhoneInTalk } from "react-icons/md";
 import { IoMdMail } from "react-icons/io";
 import { FaLocationDot } from "react-icons/fa6";
@@ -10,12 +10,19 @@ import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import SubTitle from "@/components/shared/SubTitle";
 import { Button, Form, Input, Radio } from "antd";
-import { usePostContactMutation } from "@/redux/apiSlices/WebPagesSlices";
+import { usePostContactMutation } from "@/redux/apiSlices/WebPagesSlices"; 
+import AOS from "aos" ;
+import "aos/dist/aos.css";
 import Swal from "sweetalert2";
 
 const Contact = () => {
   const [postContact] = usePostContactMutation();
-  const [form] = Form.useForm();
+  const [form] = Form.useForm(); 
+
+useEffect(()=>{ 
+AOS.init()
+},[])
+
   const values = [
     {
       icon: <MdPhoneInTalk size={24} />,
@@ -45,8 +52,9 @@ const Contact = () => {
     });
   };
   return (
-    <div>
-      <div>
+    <div >
+      <div  data-aos="fade-down"
+    data-aos-easing="linear"  data-aos-duration="500">
         <Title> Contact Us</Title>
         <SubTitle className="">
           {" "}
@@ -55,18 +63,19 @@ const Contact = () => {
         <p className=" text-[#737373] text-[20px] lg:w-[700px] text-center mx-auto mb-10"></p>
       </div>
 
-      <div>
+      <div data-aos="fade-up"
+    data-aos-easing="linear"  data-aos-duration="500">
         <div className="grid lg:grid-cols-12  mb-10 items-center gap-12  bg-[#FAFAFA] lg:p-10 p-5 rounded-lg z-0">
           <div className={` lg:col-span-4 ${styles.bgImg} `}>
             <div>
-              <h1 className=" text-white font-semibold text-3xl text-center  my-10">
+              <h1 className=" text-white font-semibold lg:text-3xl text-2xl text-center  my-10">
                 {" "}
                 Contact Information{" "}
               </h1>
 
-              <div className="px-10 py-24 ">
+              <div className="lg:px-10 px-6 lg:py-24 py-14 ">
                 {values?.map((data, index) => (
-                  <p key={index} className="flex gap-4 items-center mb-10 ">
+                  <p key={index} className="flex gap-4 items-center lg:mb-10 mb-8 ">
                     {" "}
                     <span className="text-[#C738BD]">{data?.icon} </span>{" "}
                     <span className="text-white">{data?.data} </span>{" "}
@@ -232,7 +241,9 @@ const Contact = () => {
               </Form.Item>
 
               <Form.Item className="text-end mt-10">
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" style={{ 
+                  height:"42px" , fontWeight:500
+                }}>
                   Submit
                 </Button>
               </Form.Item>
