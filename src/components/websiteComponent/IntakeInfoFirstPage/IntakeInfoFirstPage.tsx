@@ -17,8 +17,6 @@ const IntakeInfoFirstPage: React.FC = () => {
   const [postPersonalInfo, { error, data: postData }] = usePostPersonalInfoMutation();
 
 
-
-
   const counties = data?.data?.map((state: any) => ({
     label: state?.state_name,
     value: state?.state_name,
@@ -26,7 +24,8 @@ const IntakeInfoFirstPage: React.FC = () => {
 
   const router = useRouter();
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: any) => { 
+    console.log(values?.state_license_certificate);
     const { birthDate, ...otherValues } = values;
     const formattedDate = moment(birthDate).format("L");
     const data = {
@@ -208,10 +207,11 @@ const IntakeInfoFirstPage: React.FC = () => {
             }
           >
             {/* <div className=" flex gap-5 items-center w-full ">   */}
-            <Select
+            <Select 
+             mode="multiple"
               className="h-[40px] w-[80%]"
               options={counties}
-              // onChange={handleChange}
+              // onChange={handleChange} 
             />
           </Form.Item>
 

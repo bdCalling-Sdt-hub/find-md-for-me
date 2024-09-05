@@ -10,7 +10,7 @@ import {
 } from "@/redux/apiSlices/AuthSlices";
 
 import { useForm } from "antd/lib/form/Form";
-import { baseUrl } from "@/redux/api/apiSlice"; 
+import { baseUrl } from "@/redux/api/apiSlice";  
 import person from "@/assests/person.png"
 const UserProfile = () => {
   const [form] = useForm();
@@ -30,7 +30,7 @@ const UserProfile = () => {
       const imageUrl = data?.user?.image
         ? data?.user?.image.startsWith('https')
           ? data?.user?.image
-          : data?.user?.image === null ? `${baseUrl}/${data?.user?.image}` :  `${baseUrl}${data?.user?.image}`
+          : data?.user?.image === null ? person :  `${baseUrl}${data?.user?.image}`
         : person ; 
   
       setImgURL(imageUrl);

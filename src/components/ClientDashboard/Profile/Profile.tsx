@@ -1,13 +1,20 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import ChangePassword from "./ChangePassword";
-import UserProfile from "./UserProfile";
-import { Tabs } from "antd";
+import UserProfile from "./UserProfile"; 
 
-const Profile = () => {
+import { Tabs } from "antd";
+import { useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
+
+const Profile = () => { 
+  const { data , refetch } = useGetProfileQuery(undefined);
   const onChange = (key: any) => {
     // console.log(key); 
-  };
+  }; 
+
+  useEffect(()=>{
+    refetch()
+  },[data])
 
   const items = [
     {

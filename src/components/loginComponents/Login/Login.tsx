@@ -1,6 +1,6 @@
 "use client";
 
-import { useLoginMutation } from "@/redux/apiSlices/AuthSlices";
+import { useGetProfileQuery, useLoginMutation } from "@/redux/apiSlices/AuthSlices";
 import { SetLocalStorage } from "@/util/LocalStorage";
 import { Button, Form, Input } from "antd";
 import Link from "next/link";
@@ -9,7 +9,8 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 
 const Login = () => {
-  const [login, { error}] = useLoginMutation();
+  const [login, { error}] = useLoginMutation(); 
+  const { data:profile , refetch } = useGetProfileQuery(undefined);
   const router = useRouter();
 
   const onFinish = async (values: any) => {
@@ -28,7 +29,8 @@ const Login = () => {
           timer: 1500,
         }).then(() => {
           SetLocalStorage("findMdToken", res?.data?.token);
-          router.push("/profile");
+          router.push("/profile"); 
+          refetch()
         });
       } else {
         Swal.fire({
