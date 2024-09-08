@@ -19,7 +19,7 @@ const PricingTabs = () => {
 
   useEffect(() => {
     refetch();
-  }, [pricingType]);
+  }, [pricingType , refetch]);
 
   const handleValue = (value: any) => {
 

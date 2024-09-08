@@ -78,11 +78,11 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="container py-5 border-b border-[#C1D3FF]">
+    <div className="container py-4 border-b border-[#C1D3FF]">
       <div className="flex justify-between items-center">
         <div> 
           <Link href="/"> 
-          <Image src={logo} alt="" height={10} width={200} />
+          <Image src={logo} alt="" height={8} width={170} />
           </Link>
     
         </div>

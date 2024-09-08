@@ -14,7 +14,7 @@ const Profile = () => {
 
   useEffect(()=>{
     refetch()
-  },[data])
+  },[data , refetch])
 
   const items = [
     {

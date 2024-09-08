@@ -3,7 +3,7 @@ import SubTitle from "@/components/shared/SubTitle";
 import Title from "@/components/shared/Title";
 import React, { useEffect, useState } from "react";
 import { Button, DatePicker, Form, Input, Radio, Select } from "antd";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 import {
   useGetStateQuery,
   usePostPersonalInfoMutation,
@@ -24,8 +24,8 @@ const IntakeInfoFirstPage: React.FC = () => {
 
   const router = useRouter();
 
-  const onFinish = async (values: any) => { 
-    console.log(values?.state_license_certificate);
+  const onFinish = async (values: any) => {  
+    console.log(values);
     const { birthDate, ...otherValues } = values;
     const formattedDate = moment(birthDate).format("L");
     const data = {
@@ -33,7 +33,8 @@ const IntakeInfoFirstPage: React.FC = () => {
       ...otherValues,
     };
 
-    await postPersonalInfo(data).then((res: any) => {
+    await postPersonalInfo(data).then((res: any) => { 
+      console.log(res);
       if (res?.data?.status === 200) {
         const newIntakeId = res?.data?.data?.id;
         SetLocalStorage("intakeId", newIntakeId);
@@ -233,8 +234,8 @@ const IntakeInfoFirstPage: React.FC = () => {
             <div className=" flex gap-5 items-center w-full ">
               <Input
                 className=" w-full h-[40px] "
-                placeholder="652479254"
-                type="number"
+                placeholder="652479254 , 779809854"
+               
               />
               {/* 
               <div className="  ">

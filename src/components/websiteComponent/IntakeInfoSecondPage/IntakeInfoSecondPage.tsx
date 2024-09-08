@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button,  Form, Input, Popover, Radio, Select, Space } from "antd";
 import Title from "@/components/shared/Title";
 import SubTitle from "@/components/shared/SubTitle";
-import {  useRouter,} from "next/navigation";
+import { useRouter } from 'next/navigation'
 import {
   useGetPriceQuery,
   useGetStateQuery,
@@ -49,24 +49,24 @@ const IntakeInfo: React.FC = () => {
  
 
   const onFinish = async (values: React.FormEvent) => {
-    // console.log("Success:", values);
     const data = { 
       parsonal_id:IntakeId , 
       ...values,
     };  
+    console.log(data); 
 
 
-    await postBussinessInfo(data).then((res) => {  
+    await postBussinessInfo(JSON.stringify(data)).then((res) => {   
+      console.log(res);
      if(res?.data?.status === 200){
       router.push(`/intake-schedule/${IntakeId}`) 
      } else{
       Swal.fire({
         // @ts-ignore
-        text: error?.data?.message,
+        text: error?.data?.message || "An error occurred while submitting the form.",
         icon: "error",
       });
      }
-    
     });
   };
   return (
@@ -254,7 +254,7 @@ const IntakeInfo: React.FC = () => {
               </p>
             }
           >
-            <Select className="h-[40px] w-[80%]" options={counties} />
+            <Select  mode="multiple" className="h-[40px] w-[80%]" options={counties} />
           </Form.Item>
 
           <Form.Item
@@ -391,7 +391,7 @@ const IntakeInfo: React.FC = () => {
               </p>
             }
           >
-            <Select className="h-[40px] w-[80%]" options={counties} />
+            <Select mode="multiple" className="h-[40px] w-[80%]" options={counties} />
           </Form.Item>
 
           <Form.Item

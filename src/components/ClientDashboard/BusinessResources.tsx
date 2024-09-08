@@ -128,8 +128,8 @@ const BusinessResources = () => {
                 {
                    resources?.map((values:any , index:number)=> <div key={index}> 
 {
-values?.policy_image?.map((value:any , index:number)=><div > 
- <div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px] mb-2">
+values?.policy_image?.map((value:any , index:number)=><div  key={index}> 
+ <div className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px] mb-2">
                    <a className="flex text-[#1D75F2] items-center gap-2"  href={`${baseUrl}${value}`} download={`Policies Info ${index+1}.pdf `}
                     target="_blank" >
                      <span>

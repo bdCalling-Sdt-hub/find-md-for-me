@@ -1,6 +1,6 @@
 "use client";
 import { Button, Form, Input, Upload } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import DashboardTitle from "../shared/DashboardTitle";
 import { useGetDocumentQuery, usePostDocumentMutation } from "@/redux/apiSlices/ClientDashboardSlices";
@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
 const DocumentsComponent = ({current, setCurrent}:any) => {
-  const documents = [
+  const documents = useMemo(() => [
     {
       title: "RESUME",
       value: "resume",
@@ -46,7 +46,7 @@ const DocumentsComponent = ({current, setCurrent}:any) => {
       title: "TRAININGS (ex: HIPAA, OSHA, etc.)",
       value: "training_hipaa_osha",
     },
-  ];
+  ], []);
 
   const [document, setDocument] = useState<{ [key: string]: File }>({}); 
   const {data:documentData} =  useGetDocumentQuery(undefined) 
@@ -67,7 +67,7 @@ const DocumentsComponent = ({current, setCurrent}:any) => {
       // @ts-ignore
       setDocument(initialDocuments);
     }
-  }, [documentData]);
+  }, [documentData , documents]);
 
   const onFinish = async () => {
     const formdata = new FormData();

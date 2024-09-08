@@ -2,7 +2,7 @@
 import SubTitle from "@/components/shared/SubTitle";
 import Title from "@/components/shared/Title";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from "react";
 
 const IntakeSchedule = () => {

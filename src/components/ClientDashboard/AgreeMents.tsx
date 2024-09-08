@@ -1,6 +1,6 @@
 "use client";
 import { Button, Form, Input, Upload } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {  UploadOutlined } from "@ant-design/icons";
 import DashboardTitle from "../shared/DashboardTitle";
 import {
@@ -10,7 +10,7 @@ import {
 import Swal from "sweetalert2";
 
 const AgreeMents = ({current ,setCurrent}:any) => {
-  const documents = [
+  const documents = useMemo(() => [
     {
       title:
         "MANAGEMENT SERVICE AGREEMENT/collaborative practice agreement + Joint Protocol",
@@ -32,7 +32,7 @@ const AgreeMents = ({current ,setCurrent}:any) => {
       title: "MEMBERSHIP CONTRACT",
       value: "member_ship_contact",
     },
-  ];
+  ], []);
 
   const [document, setDocument] = useState<{ [key: string]: File }>({});
   const [postAgreement] = usePostAgreementMutation(); 
@@ -48,13 +48,13 @@ const AgreeMents = ({current ,setCurrent}:any) => {
       documents.forEach((doc) => {
         const fileName = documentData.data[doc.value]?.split("/").pop();
         if (fileName) {
-          initialDocuments[doc.value] = new File([], fileName); // Use file name from the fetched data
+          initialDocuments[doc.value] = new File([], fileName);
         }
       }); 
       // @ts-ignore
       setDocument(initialDocuments);
     }
-  }, [documentData]); 
+  }, [documentData , documents]); 
 
   const onFinish = async (values: any) => {
     const formdata = new FormData();

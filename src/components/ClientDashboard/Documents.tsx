@@ -43,7 +43,7 @@ const Documents = () => {
     if (!isNaN(initialStep) && initialStep !== current) {
       setCurrent(initialStep);
     }
-  }, []);
+  }, [current]);
 
 
   const handleStepChange = (step: any) => {

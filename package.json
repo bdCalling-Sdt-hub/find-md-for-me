@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -H 192.168.10.211 -p 3000",
+    "dev": "next dev -H 159.65.14.5 -p 3000",
     "build": "next build",
-    "start": "next start -H 192.168.10.211 -p 3000",
+    "start": "next start -H 159.65.14.5 -p 3000",
     "lint": "next lint"
   },
   "dependencies": {
@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",
+    "@types/next": "^9.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

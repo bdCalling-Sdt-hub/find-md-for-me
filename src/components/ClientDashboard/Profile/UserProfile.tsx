@@ -16,7 +16,8 @@ const UserProfile = () => {
   const [form] = useForm();
   const [image, setImage] = useState("");
   const [imgURL, setImgURL] = useState(image);
-  const { data } = useGetProfileQuery(undefined);
+  const { data } = useGetProfileQuery(undefined); 
+  console.log(data);
   const [postProfile] = usePostProfileMutation(); 
   // console.log(data); 
 
