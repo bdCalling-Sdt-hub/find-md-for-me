@@ -42,7 +42,7 @@ const IntakeInfoFirstPage: React.FC = () => {
       } else {
         Swal.fire({ 
           // @ts-ignore
-          text: error?.data?.message || "An error occurred",
+          text: res?.error?.data?.message || "An error occurred",
           icon: "error",
         });
       }

@@ -20,7 +20,7 @@ const IntakeInfo: React.FC = () => {
   const [companyType, setCompanyType] = useState(null);
 
   const { data } = useGetStateQuery(undefined);
-  const [postBussinessInfo, {  error,}] =
+  const [postBussinessInfo, {error,}] =
     usePostBussinessInfoMutation();
   const [selectedValue, setSelectedValue] = useState("employee"); 
   const [inputValues, setInputValues] = useState(null); 
@@ -45,18 +45,24 @@ const IntakeInfo: React.FC = () => {
     setCompanyType(e.target.value);
   }; 
   const IntakeId = GetLocalStorage("intakeId")  
-  // console.log(IntakeId); 
+  console.log(`IntakeId: ${IntakeId}`);  
  
 
-  const onFinish = async (values: React.FormEvent) => {
+  const onFinish = async (values: any) => {  
+    const anticipate_state = JSON.stringify(values?.what_state_anicipate_service) 
+    const business_state = JSON.stringify(values?.what_state_your_business_registered) 
+    const {what_state_anicipate_service , what_state_your_business_registered , ...otherValue} = values 
     const data = { 
-      parsonal_id:IntakeId , 
-      ...values,
-    };  
+      parsonal_id:IntakeId ,  
+      what_state_anicipate_service:anticipate_state , 
+      what_state_your_business_registered:business_state , 
+      ...otherValue,
+    };   
+
     console.log(data); 
 
 
-    await postBussinessInfo(JSON.stringify(data)).then((res) => {   
+    await postBussinessInfo(data).then((res) => {   
       console.log(res);
      if(res?.data?.status === 200){
       router.push(`/intake-schedule/${IntakeId}`) 

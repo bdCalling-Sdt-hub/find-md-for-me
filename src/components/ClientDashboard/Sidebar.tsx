@@ -20,11 +20,13 @@ import { useBusinessResourcesQuery } from "@/redux/apiSlices/ClientDashboardSlic
 
 const Sidebar = () => {
   const { data } = useGetProfileQuery(undefined);
-  const userId = data?.user?.id; 
-
+  const userId = data?.user?.id;  
+  const businessStatus = data?.user?.another_status
+ 
+  console.log(`user Info: ${businessStatus}`);
   const {data:business} = useBusinessResourcesQuery(undefined)  
   const resources = business?.document_status   
-  console.log(resources);
+  console.log(`resources: ${resources}`);
   const pathname = usePathname(); 
 
   interface ItemType {
@@ -149,7 +151,7 @@ const Sidebar = () => {
           >
             {linkItems.map((item, index) => {   
                 const isBusinessResources = item.path === "/business-resources";
-                const isBusinessResourcesEnabled = resources === "approved";
+                const isBusinessResourcesEnabled = businessStatus === "enable";
 
               return( 
                 <li
@@ -182,7 +184,7 @@ const Sidebar = () => {
                     borderRadius: "5px",
                     fontWeight: "400", 
                     pointerEvents: isBusinessResources && !isBusinessResourcesEnabled ? "none" : "auto",
-                    cursor: isBusinessResources && !isBusinessResourcesEnabled ? "not-allowed" : "pointer",
+                    cursor: isBusinessResources && !isBusinessResourcesEnabled ? "none" : "pointer",
                   }}
                 >
                   <div style={{ height: "24px" }}>{item.icon}</div>
