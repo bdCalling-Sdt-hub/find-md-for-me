@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 const MyTeam = () => {
   const [form] = Form.useForm();
   const { data: teamData, refetch } = useGetTeamQuery(undefined); 
-  console.log(teamData);
+  // console.log(teamData); 
   const [deleteTeam, { error }] = useDeleteTeamMutation(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [viewModal, setViewModal] = useState(false);

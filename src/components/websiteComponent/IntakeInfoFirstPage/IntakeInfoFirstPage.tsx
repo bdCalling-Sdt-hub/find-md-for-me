@@ -25,7 +25,7 @@ const IntakeInfoFirstPage: React.FC = () => {
   const router = useRouter();
 
   const onFinish = async (values: any) => {  
-    console.log(values);
+    // console.log(values); 
     const { birthDate, ...otherValues } = values;
     const formattedDate = moment(birthDate).format("L");
     const data = {
@@ -34,7 +34,7 @@ const IntakeInfoFirstPage: React.FC = () => {
     };
 
     await postPersonalInfo(data).then((res: any) => { 
-      console.log(res);
+      // console.log(res); 
       if (res?.data?.status === 200) {
         const newIntakeId = res?.data?.data?.id;
         SetLocalStorage("intakeId", newIntakeId);

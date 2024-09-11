@@ -37,7 +37,7 @@ const AgreeMents = ({current ,setCurrent}:any) => {
   const [document, setDocument] = useState<{ [key: string]: File }>({});
   const [postAgreement] = usePostAgreementMutation(); 
   const {data:documentData} =  useGetDocumentQuery(undefined) 
-  console.log(documentData);
+  // console.log(documentData); 
   const uploadId = localStorage.getItem("upload_id") 
   // console.log(uploadId); 
   // console.log(document); 

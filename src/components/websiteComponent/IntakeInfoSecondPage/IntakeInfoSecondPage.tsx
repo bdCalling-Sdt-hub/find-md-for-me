@@ -26,7 +26,8 @@ const IntakeInfo: React.FC = () => {
   const [inputValues, setInputValues] = useState(null); 
   const router = useRouter() 
   // @ts-ignore 
-  const { data: tierData } = useGetPriceQuery("Monthly"); 
+  const { data: tierData } = useGetPriceQuery("Monthly");  
+  // console.log(tierData); 
   
   const handleRadioChange = (e: any) => {
     setSelectedValue(e.target.value);
@@ -45,10 +46,10 @@ const IntakeInfo: React.FC = () => {
     setCompanyType(e.target.value);
   }; 
   const IntakeId = GetLocalStorage("intakeId")  
-  console.log(`IntakeId: ${IntakeId}`);  
+  // console.log(`IntakeId: ${IntakeId}`);   
  
 
-  const onFinish = async (values: any) => {  
+  const onFinish = async (values: any) => {   
     const anticipate_state = JSON.stringify(values?.what_state_anicipate_service) 
     const business_state = JSON.stringify(values?.what_state_your_business_registered) 
     const {what_state_anicipate_service , what_state_your_business_registered , ...otherValue} = values 
@@ -58,14 +59,14 @@ const IntakeInfo: React.FC = () => {
       what_state_your_business_registered:business_state , 
       ...otherValue,
     };   
-
-    console.log(data); 
+    // console.log(data);  
+   
 
 
     await postBussinessInfo(data).then((res) => {   
-      console.log(res);
+      // console.log(res); 
      if(res?.data?.status === 200){
-      router.push(`/intake-schedule/${IntakeId}`) 
+      router.push(`/intake-schedule/${IntakeId}`)  
      } else{
       Swal.fire({
         // @ts-ignore
@@ -420,7 +421,7 @@ const IntakeInfo: React.FC = () => {
                    <Popover  key={index} content={<TierDetails value={value} />} trigger="hover">  
                         <Radio
                    
-                    value={value?.id}
+                    value={value?.tyer_name}
                     className=" text-xl my-2"
                   >
                     {" "}

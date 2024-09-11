@@ -69,7 +69,7 @@ const pagesApi = api.injectEndpoints({
     // Intake information (business info)
     postBussinessInfo: builder.mutation({
       query: (value) => { 
-        console.log(`business:${value}`);
+        // console.log(`business:${value}`); 
         return {
           url: "/buisness-info", 
           method: "POST",

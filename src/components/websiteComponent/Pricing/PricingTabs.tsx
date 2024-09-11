@@ -11,7 +11,7 @@ import "aos/dist/aos.css";
 const PricingTabs = () => {
   const [pricingType, setPricingType] = useState("Monthly");
   const { data, refetch } = useGetPriceQuery(undefined);   
-  console.log(data);
+  // console.log(data); 
 
   useEffect(()=>{
     AOS.init()

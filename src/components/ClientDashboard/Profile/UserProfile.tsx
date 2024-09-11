@@ -17,7 +17,7 @@ const UserProfile = () => {
   const [image, setImage] = useState("");
   const [imgURL, setImgURL] = useState(image);
   const { data } = useGetProfileQuery(undefined); 
-  console.log(data);
+  // console.log(data); 
   const [postProfile] = usePostProfileMutation(); 
   // console.log(data); 
 
@@ -93,7 +93,7 @@ formData.append(key ,value)
         buisnes_name: data?.user?.buisness_name,
         buisness_address: data?.user?.buisness_address, 
         client_type: data?.BisnessInfo?.client_type , 
-        tier_type: data?.Tier?.tyer_name
+        tier_type: data?.Tier[0]?.tyer_name
       });
     }
   }, [data, form]);
@@ -246,7 +246,8 @@ formData.append(key ,value)
                         background: "white",
                         borderRadius: "8px",
                         outline: "none",
-                      }}
+                      }} 
+                      readOnly
                     />
                   </Form.Item>
                 </div>

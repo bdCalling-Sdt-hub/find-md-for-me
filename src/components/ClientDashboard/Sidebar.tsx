@@ -23,10 +23,10 @@ const Sidebar = () => {
   const userId = data?.user?.id;  
   const businessStatus = data?.user?.another_status
  
-  console.log(`user Info: ${businessStatus}`);
+  // console.log(`user Info: ${businessStatus}`); 
   const {data:business} = useBusinessResourcesQuery(undefined)  
   const resources = business?.document_status   
-  console.log(`resources: ${resources}`);
+  // console.log(`resources: ${resources}`); 
   const pathname = usePathname(); 
 
   interface ItemType {
