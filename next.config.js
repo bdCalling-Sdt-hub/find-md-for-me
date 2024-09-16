@@ -6,6 +6,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: "159.65.14.5"
               },
+            {
+                protocol: 'https',
+                hostname: "server.findamd4me"
+              },
          ]}
 };
 
