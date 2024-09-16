@@ -4,11 +4,11 @@ const token = GetLocalStorage("findMdToken");
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://159.65.14.5:8000/api",
+    baseUrl: "https://159.65.14.5:8000/api",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }),
   endpoints: () => ({}),
 });
-export const baseUrl = "http://159.65.14.5:8000";
+export const baseUrl = "https://159.65.14.5:8000";
