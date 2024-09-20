@@ -6,7 +6,7 @@ const WebsiteLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <Navbar />
-      <div>{children}</div>
+      <div className="min-h-screen">{children}</div>
       <Footer />
     </div>
   );

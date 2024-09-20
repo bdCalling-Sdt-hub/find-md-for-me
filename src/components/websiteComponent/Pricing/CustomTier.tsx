@@ -1,14 +1,13 @@
 "use client";
 import React, { useState } from "react";
-// import CustomModal from "./CutomTierModal";
-import dynamic from "next/dynamic";
 import { Button } from "antd";
+import CutomTierModal from "./CutomTierModal";
 
 const CustomTier = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const DynamicCustomModel = dynamic(() => import("./CutomTierModal"), {
-    ssr: false,
-  });
+  // const DynamicCustomModel = dynamic(() => import("./CutomTierModal"), {
+  //   ssr: false,
+  // });
   return (
     <div className=" text-center  my-10">
       <p className=" mx-auto text-[#737373] text-[20px] pb-2">
@@ -26,7 +25,7 @@ const CustomTier = () => {
           Custom Tier
         </Button>
       </div>
-      <DynamicCustomModel
+      <CutomTierModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
