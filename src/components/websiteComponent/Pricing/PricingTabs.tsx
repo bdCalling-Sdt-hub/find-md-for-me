@@ -56,7 +56,7 @@ const PricingTabs = () => {
           <TabsList className="  w-[200px]">
             <TabsTrigger value="Monthly">Monthly</TabsTrigger>
             <TabsTrigger value="yearly">
-              <Popover content={ <p className=" p-2   rounded-lg font-semibold">10% Discount </p>} open>
+              <Popover content={ <p className=" p-2   rounded-lg font-semibold z-0">10% Discount </p>} open>
                 {" "}
                 Annually{" "}
               </Popover>
@@ -124,7 +124,7 @@ const PricingTabs = () => {
                   </div>
 
                   <div className="  flex justify-center items-center  ">
-                    <Link href="/intake-info-first" className=" ">
+                    <Link href="/intake" className=" ">
                       {" "}
                       <button className=" w-full bg-[#c738bd] px-3 py-2  rounded-lg text-white">
                         {" "}
@@ -201,7 +201,7 @@ const PricingTabs = () => {
                   </div>
 
                   <div className="  flex justify-center items-center  ">
-                    <Link href="/intake-info-first" className=" ">
+                    <Link href="/intake" className=" ">
                       {" "}
                       <button className=" w-full bg-[#c738bd]  rounded-lg text-white px-3 py-2" >
                         {" "}

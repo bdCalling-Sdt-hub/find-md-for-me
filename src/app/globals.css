@@ -85,7 +85,7 @@ body {
   color: #1d75f2 !important;
 }
 
-:where(.css-dev-only-do-not-override-f7vrd6).ant-upload-wrapper
+.ant-upload-wrapper
   .ant-upload-list
   .ant-upload-list-item-error
   .ant-upload-list-item-name {
@@ -94,8 +94,8 @@ body {
   font-size: large;
 }
 
-:where(.css-dev-only-do-not-override-f7vrd6).ant-btn-primary {
-  background: #c738bd !important;
+.ant-btn-primary {
+  background: #c738bd !important; 
 }
 
 

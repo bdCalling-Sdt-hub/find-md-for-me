@@ -84,9 +84,17 @@ AOS.init()
               </div>
 
               <p className=" flex items-center gap-4  text-[#C738BD] px-10 pb-9 ">
-                <FaFacebook size={28} />
-                <RiInstagramFill size={28} />
-                <FaGoogle size={28} />
+              <a href="https://www.facebook.com/FindaMD4Me"  target="_blank">
+              {" "}
+              <FaFacebook size={28} />{" "}
+            </a>
+            <a href="https://www.instagram.com/findamd4me/" target="_blank">
+              {" "}
+              <RiInstagramFill size={28} />{" "}
+            </a>
+            <a href="https://g.page/r/CVsHB42KIGz5EAE/review" target="_blank">
+              <FaGoogle size={28} />{" "}
+            </a>
               </p>
             </div>
           </div>
@@ -109,7 +117,7 @@ AOS.init()
                   ]}
                 >
                   <Input
-                    placeholder="Naziya Sultana"
+                
                     className="h-[45px] mt-2"
                   />
                 </Form.Item>
@@ -129,7 +137,7 @@ AOS.init()
                     },
                   ]}
                 >
-                  <Input placeholder="Mithila" className="h-[45px] mt-2" />
+                  <Input className="h-[45px] mt-2" />
                 </Form.Item>
               </div>
 
@@ -155,7 +163,7 @@ AOS.init()
                 >
                   <Input
                     type="email"
-                    placeholder="Naziya@gmail.com"
+             
                     className="h-[45px] mt-2"
                   />
                 </Form.Item>
@@ -176,8 +184,8 @@ AOS.init()
                   ]}
                 >
                   <Input
-                    type="number"
-                    placeholder="+0888798345326"
+                  
+                    placeholder="(###)-###-#### "
                     className="h-[45px] mt-2"
                   />
                 </Form.Item>
@@ -235,18 +243,13 @@ AOS.init()
               >
                 <Input.TextArea
                   rows={3}
-                  placeholder="Write your message.."
                   className="mt-2"
                 />
               </Form.Item>
+ <div className="flex items-center justify-center ">
 
-              <Form.Item className="text-end mt-10">
-                <Button type="primary" htmlType="submit" style={{ 
-                  height:"42px" , fontWeight:500
-                }}>
-                  Submit
-                </Button>
-              </Form.Item>
+           <button type="submit" style={{ height:45 , width:120 , backgroundColor:"#c738bd" , borderRadius:8 , color:"white" , fontWeight:500 }}>Submit</button>
+ </div>
             </Form>
           </div>
         </div>

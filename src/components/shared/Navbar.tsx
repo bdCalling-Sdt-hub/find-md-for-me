@@ -30,7 +30,7 @@ const Navbar = () => {
     {
       key: 4,
       name: "States Covered",
-      path: "/state-cover",
+      path: "/states-covered",
     },
     {
       key: 5,
@@ -70,7 +70,7 @@ const Navbar = () => {
     {
       key: "get-started",
       label: (
-        <Link href="/intake-info-first">
+        <Link href="/intake">
           <Button variant="default">Get Started</Button>
         </Link>
       ),
@@ -116,10 +116,10 @@ const Navbar = () => {
 
         <div className="hidden lg:flex gap-2">
           <Link href="/login">
-            <Button variant="default2">Client Portal</Button>
+          <button className=" h-[48px]  px-3 rounded border  border-[#C738BD] hover:bg-[#C738BD] hover:text-white   text-[#C738BD] bg-transparent font-medium ">Client Portal</button>
           </Link>
 
-          <Link href="/intake-info-first">
+          <Link href="/intake">
             <Button variant="btn3">Get Started</Button>
           </Link>
         </div>

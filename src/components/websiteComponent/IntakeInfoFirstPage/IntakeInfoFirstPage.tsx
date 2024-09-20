@@ -5,24 +5,95 @@ import React, { useEffect, useState } from "react";
 import { Button, DatePicker, Form, Input, Radio, Select } from "antd";
 import { useRouter } from 'next/navigation'
 import {
-  useGetStateQuery,
+
   usePostPersonalInfoMutation,
 } from "@/redux/apiSlices/WebPagesSlices";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { SetLocalStorage } from "@/util/LocalStorage";
+import { GetLocalStorage, SetLocalStorage } from "@/util/LocalStorage";
 
 const IntakeInfoFirstPage: React.FC = () => {
-  const { data } = useGetStateQuery("");
-  const [postPersonalInfo, { error, data: postData }] = usePostPersonalInfoMutation();
+ const [form] = Form.useForm()
+  const [postPersonalInfo, { error, data: postData , isLoading}] = usePostPersonalInfoMutation(); 
+  const personalInfo = GetLocalStorage("personalData") 
+  console.log(personalInfo); 
 
+  useEffect(() => {
+  if(personalInfo){
+     form.setFieldsValue({
+      completed_training_certificate_service:personalInfo?.completed_training_certificate_service , 
+      birthDate: moment(personalInfo.birthDate), 
+email:personalInfo?.email , 
+first_name: personalInfo?.first_name , 
+last_name :personalInfo?.last_name , 
+license_certificate_no:personalInfo?.license_certificate_no,
+mailing_address:personalInfo?.mailing_address , 
+occupation : personalInfo?.occupation ,
+phone : personalInfo?.phone ,
+state_license_certificate : JSON.parse(personalInfo?.state_license_certificate) , 
+     })
+  }
+  }, [personalInfo , form ])
+  
+ 
+  const stateData = [  
+    "Alabama" ,
+    "Alaska" ,
+    "Arizona" ,
+    "Arkansas" ,
+    "California" ,
+    "Colorado" ,
+    "Connecticut" ,
+    "Delaware",
+    "Florida",
+    "Georgia" ,
+    "Hawaii",
+    "Idaho" ,
+    "Illinois" ,
+    "Indiana" ,
+    "Iowa" ,
+    "Kansas" ,
+    "Kentucky" ,
+    "Louisiana" ,
+    "Maine" ,
+    "Maryland" ,
+    "Massachusetts" ,
+    "Michigan" ,
+    "Minnesota" ,
+    "Mississippi" ,
+    "Missouri" ,
+    "Montana" ,
+    "Nebraska" ,
+    "Nevada" ,
+    "New Hampshire" ,
+    "New Jersey" ,
+    "New Mexico" ,
+    "New York" ,
+    "North Carolina",
+    "North Dakota",
+    "Ohio",
+    "Oklahoma",
+    "Oregon" ,
+    "Pennsylvania",
+    "Rhode Island" ,
+    "South Carolina",
+    "South Dakota",
+    "Tennessee",
+    "Texas",
+    "Utah",
+    "Vermont",
+    "Virginia",
+    "Washington",
+    "West Virginia" ,
+    "Wisconsin" ,
+    "Wyoming" ]
 
-  const counties = data?.data?.map((state: any) => ({
-    label: state?.state_name,
-    value: state?.state_name,
+  const counties = stateData.map((state: any) => ({
+    label: state,
+    value: state,
   }));
 
-  const router = useRouter();
+  const router = useRouter(); 
 
   const onFinish = async (values: any) => {  
     // console.log(values); 
@@ -34,11 +105,13 @@ const IntakeInfoFirstPage: React.FC = () => {
     };
 
     await postPersonalInfo(data).then((res: any) => { 
-      // console.log(res); 
+      console.log(res); 
       if (res?.data?.status === 200) {
         const newIntakeId = res?.data?.data?.id;
-        SetLocalStorage("intakeId", newIntakeId);
-        router.push(`/intake-info-second/${newIntakeId}`);
+        SetLocalStorage("intakeId", newIntakeId); 
+        SetLocalStorage("personalData" ,res?.data?.data)
+        router.push(`/intake-info-second/${newIntakeId}`);  
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         Swal.fire({ 
           // @ts-ignore
@@ -69,7 +142,8 @@ const IntakeInfoFirstPage: React.FC = () => {
           name="basic"
           onFinish={onFinish}
           className=" w-[100%]   "
-          layout="vertical"
+          layout="vertical" 
+          form={form}
         >
           <Form.Item
             name="first_name"
@@ -87,7 +161,7 @@ const IntakeInfoFirstPage: React.FC = () => {
           >
             <Input
               className=" w-full h-[40px] "
-              placeholder=" Naziya Sultana"
+            
             />
           </Form.Item>
 
@@ -105,7 +179,7 @@ const IntakeInfoFirstPage: React.FC = () => {
               </p>
             }
           >
-            <Input className=" w-full h-[40px] " placeholder="Mithila" />
+            <Input className=" w-full h-[40px] "  />
           </Form.Item>
 
           <Form.Item
@@ -147,7 +221,7 @@ const IntakeInfoFirstPage: React.FC = () => {
           >
             <Input
               className=" w-full h-[40px] "
-              placeholder="mithila@gmail.com"
+             
             />
           </Form.Item>
 
@@ -167,8 +241,8 @@ const IntakeInfoFirstPage: React.FC = () => {
           >
             <Input
               className=" w-full h-[40px] "
-              placeholder="+880181234324"
-              type="number"
+              placeholder="(###)-###-####"
+
             />
           </Form.Item>
 
@@ -188,7 +262,7 @@ const IntakeInfoFirstPage: React.FC = () => {
           >
             <Input
               className=" w-full h-[40px] "
-              placeholder="Ex: NP, Nurse, Esthetician"
+        
               type="text"
             />
           </Form.Item>
@@ -215,14 +289,14 @@ const IntakeInfoFirstPage: React.FC = () => {
               // onChange={handleChange} 
             />
           </Form.Item>
+ 
 
           <Form.Item
-            name="license_certificate_no"
+           name="license_certificate_no"
             rules={[
               {
                 required: true,
-                message:
-                  "Please enter your license(s)/certificate(s) number(s)!",
+                message: "Please enter your license(s)/certificate(s) number(s)!",
               },
             ]}
             label={
@@ -231,18 +305,14 @@ const IntakeInfoFirstPage: React.FC = () => {
               </p>
             }
           >
-            <div className=" flex gap-5 items-center w-full ">
-              <Input
-                className=" w-full h-[40px] "
-                placeholder="652479254 , 779809854"
-               
-              />
-              {/* 
-              <div className="  ">
-                <Radio value="na"> N/A </Radio>
-              </div> */}
-            </div>
-          </Form.Item>
+            <Input
+              className=" w-full h-[40px] "
+        
+              type="text"
+            />
+          </Form.Item> 
+
+    
 
           <Form.Item
             name="mailing_address"
@@ -260,44 +330,42 @@ const IntakeInfoFirstPage: React.FC = () => {
           >
             <Input
               className=" w-full h-[40px] "
-              placeholder="Apt. 738 2086 Marianne Parks, Stammhaven, NE 66454-8886"
+      
             />
           </Form.Item>
 
           <Form.Item
-            name="completed_training_certificate_service"
-            rules={[
-              {
-                required: true,
-                message: "Please enter your opinion!",
-              },
-            ]}
-            label={
-              <p className="text-lg  text-[#737373] font-semibold ">
-                Have you completed training/certification for the service(s) you
-                would like to offer?
-              </p>
-            }
-          >
-            <div className=" flex-col gap-4">
-              <Radio.Group>
-                <Radio value="yes" className=" text-xl my-2">
-                  {" "}
-                  <span className=" text-lg font-medium ">Yes </span>{" "}
-                </Radio>{" "}
-                <Radio value="No" className=" text-xl my-2">
-                  {" "}
-                  <span className=" text-lg font-medium ">No </span>{" "}
-                </Radio>{" "}
-              </Radio.Group>
-            </div>
-          </Form.Item>
+  name="completed_training_certificate_service"
+  rules={[
+    {
+      required: true,
+      message: "Please enter your opinion!",
+    },
+  ]}
+  label={
+    <p className="text-lg text-[#737373] font-semibold">
+      Have you completed training/certification for the service(s) you would like to offer?
+    </p>
+  }
+  initialValue={personalInfo?.completed_training_certificate_service || "No"}  // Set initial value
+>
+  <div className="flex-col gap-4">
+    <Radio.Group>
+      <Radio value="yes" className="text-xl my-2">
+        <span className="text-lg font-medium">Yes</span>
+      </Radio>
+      <Radio value="No" className="text-xl my-2">
+        <span className="text-lg font-medium">No</span>
+      </Radio>
+    </Radio.Group>
+  </div>
+</Form.Item>
+ 
+          <div className="text-end ">
 
-          <Form.Item className="text-end ">
-            <Button type="primary" htmlType="submit">
-              Next
-            </Button>
-          </Form.Item>
+      <button type="submit" style={{ height:45 , width:100 , backgroundColor:"#c738bd" , borderRadius:8 , color:"white" , fontWeight:500 }}> {isLoading ? <p style={{cursor:"wait"}}>loading..</p> : "Next"} </button>
+</div> 
+
         </Form>
       </div>
   

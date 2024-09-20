@@ -7,7 +7,7 @@ import {
   IoPeopleOutline,
   IoVideocamOutline,
 } from "react-icons/io5";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Dropdown, Space, Menu } from "antd";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GrMoney, GrVend } from "react-icons/gr";
@@ -26,8 +26,14 @@ const Sidebar = () => {
   // console.log(`user Info: ${businessStatus}`); 
   const {data:business} = useBusinessResourcesQuery(undefined)  
   const resources = business?.document_status   
-  // console.log(`resources: ${resources}`); 
-  const pathname = usePathname(); 
+  // console.log(`resources: ${resources}`);  
+  const router = useRouter()
+  const pathname = usePathname();  
+    
+  setTimeout(() => { 
+    router.push("/login")  
+    localStorage.removeItem("findMdToken")
+  }, 30*60*1000);
 
   interface ItemType {
     title: string;

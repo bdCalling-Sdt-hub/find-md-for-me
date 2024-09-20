@@ -21,7 +21,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
 
         btn2: "bg-[#C738BD] text-white h-12   ",
-        btn3: "bg-[#1D75F2] text-white h-12 hover:border  hover:border-[#1D75F2] hover:text-[#1D75F2] hover:bg-transparent   ",
+        btn3: "border  border-[#1D75F2] bg-[#1D75F2] text-white h-12  hover:text-[#1D75F2] hover:bg-transparent   ",
         getStarted: " bg-[#C738BD] text-white w-[240px]   h-10 ",
         getStarted2: " bg-[#1D75F2] text-white w-[240px]   h-10 ",
       },

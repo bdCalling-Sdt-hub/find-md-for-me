@@ -29,7 +29,7 @@ const CutomTierModal = ({
     });
   };
   return (
-    <div className="">
+    <div className=" z-40">
       <Modal
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}

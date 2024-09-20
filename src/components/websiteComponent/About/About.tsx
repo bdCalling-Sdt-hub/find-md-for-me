@@ -45,7 +45,7 @@ const About = () => {
       <div className="">
         <h1 className=" text-[#C738BD] text-3xl font-bold tracking-wide text-center py-3">
           {" "}
-          Meet the team
+          Meet the Team
         </h1> 
         
         <div className=" lg:flex flex-wrap items-center justify-center  mx-auto  gap-12 ">

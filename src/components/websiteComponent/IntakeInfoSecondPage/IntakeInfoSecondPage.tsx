@@ -14,7 +14,6 @@ import TierDetails from "./TierDetails";
 import Link from "next/link";
 import { GetLocalStorage } from "@/util/LocalStorage";
 
-
 const { TextArea } = Input;
 const IntakeInfo: React.FC = () => {
   const [companyType, setCompanyType] = useState(null);
@@ -27,7 +26,8 @@ const IntakeInfo: React.FC = () => {
   const router = useRouter() 
   // @ts-ignore 
   const { data: tierData } = useGetPriceQuery("Monthly");  
-  // console.log(tierData); 
+  // console.log(tierData);  
+
   
   const handleRadioChange = (e: any) => {
     setSelectedValue(e.target.value);
@@ -37,9 +37,61 @@ const IntakeInfo: React.FC = () => {
     setInputValues(value);
   };
 
-  const counties = data?.data?.map((data: any) => ({
-    label: data?.state_name,
-    value: data?.state_name,
+  const stateData = [  
+    "Alabama" ,
+    "Alaska" ,
+    "Arizona" ,
+    "Arkansas" ,
+    "California" ,
+    "Colorado" ,
+    "Connecticut" ,
+    "Delaware",
+    "Florida",
+    "Georgia" ,
+    "Hawaii",
+    "Idaho" ,
+    "Illinois" ,
+    "Indiana" ,
+    "Iowa" ,
+    "Kansas" ,
+    "Kentucky" ,
+    "Louisiana" ,
+    "Maine" ,
+    "Maryland" ,
+    "Massachusetts" ,
+    "Michigan" ,
+    "Minnesota" ,
+    "Mississippi" ,
+    "Missouri" ,
+    "Montana" ,
+    "Nebraska" ,
+    "Nevada" ,
+    "New Hampshire" ,
+    "New Jersey" ,
+    "New Mexico" ,
+    "New York" ,
+    "North Carolina",
+    "North Dakota",
+    "Ohio",
+    "Oklahoma",
+    "Oregon" ,
+    "Pennsylvania",
+    "Rhode Island" ,
+    "South Carolina",
+    "South Dakota",
+    "Tennessee",
+    "Texas",
+    "Utah",
+    "Vermont",
+    "Virginia",
+    "Washington",
+    "West Virginia" ,
+    "Wisconsin" ,
+    "Wyoming" ]
+
+  const counties = stateData.map((state: any) => ({
+    label: state,
+    value: state,
   }));
 
   const onChange = (e: any) => {
@@ -66,7 +118,8 @@ const IntakeInfo: React.FC = () => {
     await postBussinessInfo(data).then((res) => {   
       // console.log(res); 
      if(res?.data?.status === 200){
-      router.push(`/intake-schedule/${IntakeId}`)  
+      router.push(`/intake-schedule/${IntakeId}`)   
+      localStorage.removeItem("personalData")
      } else{
       Swal.fire({
         // @ts-ignore
@@ -114,7 +167,7 @@ const IntakeInfo: React.FC = () => {
           >
             <Input
               className=" w-full h-[40px] "
-              placeholder=" Lab Aid Clinic "
+          
             />
           </Form.Item>
 
@@ -134,7 +187,6 @@ const IntakeInfo: React.FC = () => {
           >
             <Input
               className=" w-full h-[40px] "
-              placeholder="Apt. 738 2086 Marianne Parks, Stammhaven, NE 66454-8886"
             />
           </Form.Item>
 
@@ -500,14 +552,13 @@ const IntakeInfo: React.FC = () => {
           >
             <TextArea
               rows={4}
-              placeholder="Write your additional questions here..."
               className=""
             />
           </Form.Item>
  
 
  <div className=" flex items-center justify-end gap-4">  
-  <Link  href="/intake-info-first"> 
+  <Link  href="/intake"> 
   <Button className="w-20 h-11 border border-[#C738BD] text-[#C738BD] text-[16px] font-medium  px-2 py-2 rounded-lg"> Previous</Button> 
   </Link>
  

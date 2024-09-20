@@ -29,9 +29,9 @@ const Banner = () => {
               </p>
 
               <div className=" flex gap-4 " >
-                <Link href="/intake-info-first">
+                <Link href="/intake">
                   {" "}
-                  <Button variant="btn3">Get Started Now</Button>{" "}
+                  <button className=" h-[48px]  px-3 rounded border  border-[#1D75F2] bg-[#1D75F2] text-white hover:text-[#1D75F2] hover:bg-transparent ">Get Started Now</button>{" "}
                 </Link>
                 <Link href="/about">
                   <Button variant="default">Learn More</Button>
