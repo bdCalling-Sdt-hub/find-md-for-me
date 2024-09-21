@@ -40,7 +40,7 @@ const TierDetails = ({value}:any) => {
                      ${value?.price[0]?.price_2}-B
                     </p>
                     <p className=" text-[12px] text-[#252B42] pb-1">
-                    Billed  {value?.price[0]?.pricing_type}
+                    Billed Monthly
                     </p> 
                     <p className="text-[12px] font-[500] pb-1">Services Covered:</p>
                   </div>
