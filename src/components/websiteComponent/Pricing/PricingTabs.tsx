@@ -6,7 +6,8 @@ import Link from "next/link";
 import { Popover } from "antd";
 import { useGetPriceQuery } from "@/redux/apiSlices/WebPagesSlices"; 
 import AOS from "aos" ;
-import "aos/dist/aos.css";
+import "aos/dist/aos.css"; 
+import { BiDownArrow, BiSolidDownArrow } from "react-icons/bi";
 
 const PricingTabs = () => {
   const [pricingType, setPricingType] = useState("Monthly");
@@ -44,7 +45,7 @@ const PricingTabs = () => {
 
   return (
     <div  data-aos="fade-up"
-    data-aos-easing="linear"  data-aos-duration="500">
+    data-aos-easing="linear"  data-aos-duration="500" >
       <Tabs
         defaultValue="Monthly"
         value={pricingType}
@@ -54,13 +55,17 @@ const PricingTabs = () => {
       >
         <div className="flex items-center justify-center ">
           <TabsList className="  w-[200px]">
-            <TabsTrigger value="Monthly">Monthly</TabsTrigger>
+            <TabsTrigger value="Monthly">Monthly</TabsTrigger> 
+            <div className="relative inline-block">
             <TabsTrigger value="yearly">
-              <Popover content={ <p className=" p-2   rounded-lg font-semibold z-0">10% Discount </p>} open>
-                {" "}
-                Annually{" "}
-              </Popover>
+            <div className=" "> Annually  </div>
+      <div className="absolute -top-12 left-0 bg-gray-200   rounded-lg  p-2 font-semibold z-50 text-gray-700 text-[12px] mb-4 shadow-xl">
+        10% Discount  
+        <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 text-gray-300   "> <BiSolidDownArrow /> </div>
+      </div>
             </TabsTrigger>
+
+            </div>
           </TabsList>
         </div>
 
@@ -177,7 +182,7 @@ const PricingTabs = () => {
                       {value?.title3}
                     </p>
                     <p className=" text-[13px] text-[#252B42] pb-1 font-[500]">
-                    Monthly breakdown
+                    Monthly Breakdown
                     </p>
                     <p className=" text-[13px] text-[#252B42] pb-2">
                   Billed Annually

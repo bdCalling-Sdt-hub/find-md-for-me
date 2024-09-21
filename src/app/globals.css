@@ -97,12 +97,20 @@ body {
 .ant-btn-primary {
   background: #c738bd !important; 
 }
-
+ 
+.ant-popover { 
+  position: fixed !important;
+}
 
 .ant-tooltip .ant-tooltip-inner {
   display: none !important;
 } 
 
 .ant-popover .ant-popover-inner {
-  padding: 2px !important;
+  padding: 2px !important; 
+ 
+} 
+
+.ant-popover .ant-popover-content {  
+  /* position: fixed !important;  */
 }

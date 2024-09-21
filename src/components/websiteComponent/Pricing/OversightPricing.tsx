@@ -26,7 +26,7 @@ const OversightPricing = () => {
         up to two staff members (within scope at the same location)
       </p>
 
-      <p className=" text-[20px]">
+      <p className=" text-[20px] pb-3">
         {" "}
         There is a one time onboarding fee of{" "}
         <span className=" text-[#C738BD]"> $2,000 </span> for individuals or{" "}
