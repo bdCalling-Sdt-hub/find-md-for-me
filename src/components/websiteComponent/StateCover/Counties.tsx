@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect } from "react";
-import mapImg from "@/assests/map.png";
-import Image from "next/image"; 
+// import mapImg from "@/assests/map.png"; 
+// import Image from "next/image";  
 import AOS from "aos" ;
 import "aos/dist/aos.css";
 import Title from "@/components/shared/Title";
 import { useGetStateQuery } from "@/redux/apiSlices/WebPagesSlices";
 
 const Counties = () => {
-  const { data } = useGetStateQuery(undefined);  
+  const { data } = useGetStateQuery(undefined);   
+  console.log(data);
 
   useEffect(()=>{
     AOS.init({})
@@ -43,7 +44,7 @@ const Counties = () => {
         </div>
       </div>
 
-      <div className=" flex justify-center items-center my-16" >
+      {/* <div className=" flex justify-center items-center my-16" >
         <Image
           src={mapImg}
           width={800}
@@ -51,7 +52,7 @@ const Counties = () => {
           alt=" "
           style={{ width: "100%", height: "auto" }}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -16,7 +16,7 @@ const UserProfile = () => {
   const [form] = useForm();
   const [image, setImage] = useState("");
   const [imgURL, setImgURL] = useState(image);
-  const { data } = useGetProfileQuery(undefined); 
+  const { data , refetch } = useGetProfileQuery(undefined); 
   // console.log(data); 
   const [postProfile] = usePostProfileMutation(); 
   // console.log(data); 
@@ -27,7 +27,7 @@ const UserProfile = () => {
 
 
   useEffect(() => {
-   
+
       const imageUrl = data?.user?.image
         ? data?.user?.image.startsWith('https')
           ? data?.user?.image
@@ -35,8 +35,7 @@ const UserProfile = () => {
         : person ; 
   
       setImgURL(imageUrl);
-  
-  }, [data]);
+  }, [data , ]);
 
 
   const handleSubmit = async (values: any) => { 

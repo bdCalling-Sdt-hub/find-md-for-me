@@ -29,7 +29,7 @@ const Login = () => {
           timer: 1500,
         }).then(() => {
           SetLocalStorage("findMdToken", res?.data?.token);
-          router.push("/profile"); 
+          router.push("/profile");  
           refetch()
         });
       } else {
