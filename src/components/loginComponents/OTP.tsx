@@ -46,7 +46,8 @@ const OTP = () => {
   };
 
   const handleVerifyOtp = async () => {
-    await postOTP({ otp: otp }).then((res) => {
+    await postOTP({ otp: otp }).then((res) => { 
+      // console.log(res); 
       if (res?.data?.status === 200) {
         Swal.fire({
           title: "Password Reset",
@@ -61,7 +62,7 @@ const OTP = () => {
         Swal.fire({
           title: "Oops",
           // @ts-ignore
-          text: error1?.data?.message,
+          text: res?.error?.data?.message,
           icon: "error",
           timer: 1500,
           showConfirmButton: false,

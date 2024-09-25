@@ -9,7 +9,7 @@ import { useGetStateQuery } from "@/redux/apiSlices/WebPagesSlices";
 
 const Counties = () => {
   const { data } = useGetStateQuery(undefined);   
-  console.log(data);
+
 
   useEffect(()=>{
     AOS.init({})
@@ -34,7 +34,7 @@ const Counties = () => {
       <div className="  " data-aos="fade-up"
     data-aos-easing="linear"  data-aos-duration="500">
         <div className="flex  flex-wrap  lg:gap-9 gap-2 mb-10 ">
-          {data?.data?.map((value: any, index: number) => (
+          {data?.map((value: any, index: number) => (
             <div key={index} className="lg:mx-auto">
               <p className=" text-[#737373] lg:text-[20px] text-[16px] text-center ">
                 {value?.state_name}

@@ -16,7 +16,7 @@ const IntakeInfoFirstPage: React.FC = () => {
  const [form] = Form.useForm()
   const [postPersonalInfo, { error, data: postData , isLoading}] = usePostPersonalInfoMutation(); 
   const personalInfo = GetLocalStorage("personalData") 
-  console.log(personalInfo); 
+  // console.log(personalInfo);  
 
   useEffect(() => {
   if(personalInfo){
@@ -105,7 +105,7 @@ state_license_certificate : JSON.parse(personalInfo?.state_license_certificate) 
     };
 
     await postPersonalInfo(data).then((res: any) => { 
-      console.log(res); 
+      // console.log(res);  
       if (res?.data?.status === 200) {
         const newIntakeId = res?.data?.data?.id;
         SetLocalStorage("intakeId", newIntakeId); 

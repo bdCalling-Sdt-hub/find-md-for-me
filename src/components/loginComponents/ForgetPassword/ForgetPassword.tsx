@@ -9,7 +9,8 @@ const ForgetPassword = () => {
   const router = useRouter();
   const [forgetpass, { error }] = useForgetpassMutation();
   const onFinish = async (values: any) => {
-    await forgetpass({ email: values?.email }).then((res) => {
+    await forgetpass({ email: values?.email }).then((res) => { 
+    
       if (res?.data?.status === 200) {
         Swal.fire({
           text: res?.data?.message,
@@ -20,9 +21,9 @@ const ForgetPassword = () => {
         });
       } else {
         Swal.fire({
-          title: "Failed to Login",
+       
           // @ts-ignore
-          text: error?.data?.message,
+          text: res?.error?.data?.error,
           icon: "error",
         });
       }
