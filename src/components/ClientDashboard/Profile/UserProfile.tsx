@@ -44,7 +44,7 @@ const UserProfile = () => {
   
       setImgURL(imageUrl); 
       // window.location.reload();   
-  }, [data , window]);
+  }, [data]);
 
 
   const handleSubmit = async (values: any) => { 
