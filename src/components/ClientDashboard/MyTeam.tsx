@@ -127,7 +127,7 @@ const MyTeam = () => {
           if (res?.data?.status === 200) {
             Swal.fire({
               title: "Deleted!",
-              text: res?.data?.message,
+              text: "Team Record Delete Successfully ",
               icon: "success",
               showConfirmButton: false,
               timer: 1500,

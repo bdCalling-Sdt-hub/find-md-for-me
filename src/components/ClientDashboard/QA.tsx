@@ -14,7 +14,7 @@ const QA = () => {
             <DashboardTitle>QA</DashboardTitle>  
             <div className='flex justify-center items-center'>
             <div className='flex gap-2 w-5/6'>
-                <p className='text-2xl text-[#C738BD] mt-1'> <GoQuestion /></p> 
+                <p className='text-xl text-[#C738BD] mt-1 font-semibold'> 1.</p> 
                 <div className=' w-full '>
                     <p className=' w-full py-2 ps-2 bg-[#F9F9F9] shadow-md mb-3'>{QAData?.title}</p>  
                     {

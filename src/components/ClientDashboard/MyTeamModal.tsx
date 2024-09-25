@@ -70,12 +70,14 @@ const MyTeamModal: React.FC<IMyTeam> = ({
     await createTeam(formData).then((res) => {
       if (res?.data?.status === 200) {
         Swal.fire({
-          text: res?.data?.message,
+          text: "Successfully Team Added",
           icon: "success",
           timer: 1500,
         }).then(() => { 
           refetch()
-          setIsModalOpen(false);
+          setIsModalOpen(false); 
+          form.resetFields(); 
+          setDocument({});
         });
       } else {
         Swal.fire({
@@ -91,7 +93,7 @@ const MyTeamModal: React.FC<IMyTeam> = ({
   return (
     <Modal
       open={isModalOpen}
-      onCancel={handleCancel}
+      onCancel={()=>{setIsModalOpen(false) }}
       footer={false}
       className="lg:w-[600px] w-[100%]"
     >
@@ -111,7 +113,7 @@ const MyTeamModal: React.FC<IMyTeam> = ({
             </p>
           }
         >
-          <Input className=" w-full h-[40px] " placeholder=" Naziya Sultana" />
+          <Input className=" w-full h-[40px] "  />
         </Form.Item>
 
         <Form.Item
@@ -123,7 +125,7 @@ const MyTeamModal: React.FC<IMyTeam> = ({
             </p>
           }
         >
-          <Input className=" w-full h-[40px] " placeholder="Mithila" />
+          <Input className=" w-full h-[40px] " />
         </Form.Item>
 
         <Form.Item
@@ -136,7 +138,11 @@ const MyTeamModal: React.FC<IMyTeam> = ({
             </p>
           }
         >
-          <DatePicker className=" w-full h-[40px]" />
+          <DatePicker className=" w-full h-[40px]" format={{
+        format: 'MMM DD YYYY',
+        type: 'mask',
+      }} 
+       />
         </Form.Item>
 
         <Form.Item
@@ -148,7 +154,7 @@ const MyTeamModal: React.FC<IMyTeam> = ({
         >
           <Input
             className=" w-full h-[40px] "
-            placeholder="mithila@gmail.com"
+         
           />
         </Form.Item>
 
@@ -163,7 +169,7 @@ const MyTeamModal: React.FC<IMyTeam> = ({
         >
           <Input
             className=" w-full h-[40px] "
-            placeholder="+880181234324"
+            placeholder="(###)-###-####"
             type="number"
           />
         </Form.Item>
@@ -175,7 +181,7 @@ const MyTeamModal: React.FC<IMyTeam> = ({
             <p className="text-lg  text-[#737373] font-semibold ">Role :</p>
           }
         >
-          <Input className=" w-full h-[40px] " placeholder="Doctor" />
+          <Input className=" w-full h-[40px] " />
         </Form.Item>
         <div>
           {documents?.map((data: any, index: number) => (

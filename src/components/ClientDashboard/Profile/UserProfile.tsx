@@ -25,6 +25,14 @@ const UserProfile = () => {
   // console.log(image);  
   // console.log(imgURL);   
 
+  useEffect(() => {
+    if (localStorage.getItem('hasReloaded')) { 
+      window.location.reload()
+      localStorage.removeItem('hasReloaded');
+    }
+  }, []);  
+  
+
 
   useEffect(() => {
 
@@ -34,8 +42,9 @@ const UserProfile = () => {
           : data?.user?.image === null ? person :  `${baseUrl}${data?.user?.image}`
         : person ; 
   
-      setImgURL(imageUrl);
-  }, [data , ]);
+      setImgURL(imageUrl); 
+      // window.location.reload();   
+  }, [data , window]);
 
 
   const handleSubmit = async (values: any) => { 

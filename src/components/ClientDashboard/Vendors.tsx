@@ -64,7 +64,7 @@ const Vendors = () => {
                 name="first_name"
                 rules={[{ required: true, message: "This field is required" }]}
               >
-                <Input placeholder="Naziya Sultana" className="h-[45px] mt-2" />
+                <Input  className="h-[45px] mt-2" />
               </Form.Item>
 
               <Form.Item
@@ -78,7 +78,7 @@ const Vendors = () => {
                 name="last_name"
                 rules={[{ required: true, message: "This field is required" }]}
               >
-                <Input placeholder="Mithila " className="h-[45px] mt-2" />
+                <Input  className="h-[45px] mt-2" />
               </Form.Item>
             </div>
 
@@ -95,7 +95,7 @@ const Vendors = () => {
               >
                 <Input
                   type="email"
-                  placeholder="Naziya@gmail.com"
+                 
                   className="h-[45px] mt-2"
                 />
               </Form.Item>
@@ -112,7 +112,7 @@ const Vendors = () => {
               >
                 <Input
                   type="number"
-                  placeholder="+0888798345326 "
+                  placeholder="(###)-###-####"
                   className="h-[45px] mt-2"
                 />
               </Form.Item>
@@ -146,7 +146,7 @@ const Vendors = () => {
                 >
                   <Input
                     type="text"
-                    placeholder="City/State/Province/Region"
+                    placeholder="City, State, Zip Code, Unit/Suite/Apt number"
                     className="h-[45px] "
                   />
                 </Form.Item>
@@ -164,7 +164,7 @@ const Vendors = () => {
               >
                 <Input.TextArea
                   rows={4}
-                  placeholder=" Description of Products "
+             
                   className=" mt-2"
                 />
               </Form.Item>
@@ -183,7 +183,7 @@ const Vendors = () => {
               >
                 <Input
                   type="number"
-                  placeholder="9879074"
+             
                   className="h-[45px] mt-2"
                 />
               </Form.Item>
@@ -200,7 +200,7 @@ const Vendors = () => {
               >
                 <Input
                   type="number"
-                  placeholder="$787"
+               
                   className="h-[45px] mt-2"
                 />
               </Form.Item>
@@ -219,7 +219,7 @@ const Vendors = () => {
               >
                 <Input
                   type="number"
-                  placeholder="9"
+              
                   className="h-[45px] mt-2"
                 />
               </Form.Item>
@@ -261,7 +261,7 @@ const Vendors = () => {
               >
                 <Input.TextArea
                   rows={5}
-                  placeholder="write here... "
+              
                   className=" mt-2"
                 />
               </Form.Item>
@@ -306,7 +306,7 @@ const Vendors = () => {
                 >
                   <Input
                     type="text"
-                    placeholder="Warren Buffett"
+                   
                     className="h-[45px] "
                   />
                 </Form.Item>

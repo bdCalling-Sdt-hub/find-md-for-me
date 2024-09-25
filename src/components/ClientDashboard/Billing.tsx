@@ -5,7 +5,7 @@ import { UploadOutlined } from "@ant-design/icons";
 
 import DashboardTitle from "../shared/DashboardTitle";
 import moment from "moment";
-import { usePostBillingMutation } from "@/redux/apiSlices/ClientDashboardSlices";
+import { useGetBillingQuery, usePostBillingMutation } from "@/redux/apiSlices/ClientDashboardSlices";
 import { useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -26,12 +26,11 @@ const Billing = () => {
     },
   ];
 
-  const [postBilling, { isSuccess, isError, error }] = usePostBillingMutation();
-  const [document, setDocument] = useState<{ [key: string]: File }>({}); 
-  const { data } = useGetProfileQuery(undefined);
-  const id = data?.user?.id; 
-  const router = useRouter()
-
+  const [postBilling, { isSuccess, isError, error  , isLoading}] = usePostBillingMutation(); 
+  const {data:billings} = useGetBillingQuery(undefined)
+  const [document, setDocument] = useState<{ [key: string]: File }>({});  
+  console.log(billings); 
+  
 
   const onFinish = async (values: any) => {
     const formData = new FormData();
@@ -140,24 +139,10 @@ const Billing = () => {
         <div></div>
                 </div>
 
-                <Form.Item className="text-end">
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    block
-                    style={{
-                      border: "none",
-                      height: "41px",
-                      background: "#1D75F2",
-                      color: "white",
-                      borderRadius: "8px",
-                      outline: "none",
-                      width: "150px",
-                    }}
-                  >
-                  Submit
-                  </Button>
-                </Form.Item>
+                <div className="text-end">
+                  <button type="submit" style={{ height:45 , width:150 , backgroundColor:"#c738bd" , borderRadius:8 , color:"white" , fontWeight:500 }}> {isLoading ? <p style={{cursor:"wait"}}>loading..</p> : "Submit"} </button>
+                </div> 
+                
               </Form>
             </div>
           </div>

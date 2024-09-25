@@ -102,7 +102,12 @@ const dashboardApi = api.injectEndpoints({
       query:()=>"/qa-client"
     }) ,
 
-    // Billing
+    // Billing 
+
+ getBilling:builder.query({
+  query:()=>"/get-billing"
+ }) , 
+
     postBilling: builder.mutation({
       query: (value) => {
         return {
@@ -130,5 +135,6 @@ export const {
   useDeleteTeamMutation,
   usePostBillingMutation,  
   useGetQAQuery , 
-  useGetDocumentQuery
+  useGetDocumentQuery , 
+  useGetBillingQuery
 } = dashboardApi;

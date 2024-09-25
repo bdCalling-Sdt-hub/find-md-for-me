@@ -5,11 +5,12 @@ import { SetLocalStorage } from "@/util/LocalStorage";
 import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 import Swal from "sweetalert2";
 
 const Login = () => {
-  const [login, { error}] = useLoginMutation(); 
+  const [login, { error , }] = useLoginMutation(); 
   const { data:profile , refetch } = useGetProfileQuery(undefined);
   const router = useRouter();
 
@@ -27,12 +28,13 @@ const Login = () => {
           text: "Welcome to Find a MD 4 Me",
           icon: "success",
           timer: 1500,
-        }).then(() => {
-          SetLocalStorage("findMdToken", res?.data?.token);
-          router.push("/profile");  
-          refetch()
+        }).then(async () => {
+          SetLocalStorage("findMdToken", res?.data?.token); 
+          localStorage.setItem('hasReloaded', 'true');
+          router.push("/profile"); 
+        
         });
-      } else {
+      }  else {
         Swal.fire({
           title: "Failed to Login",
           // @ts-ignore
@@ -41,7 +43,10 @@ const Login = () => {
         });
       }
     });
-  };
+  }; 
+
+
+
   return (
     <div>
       <>

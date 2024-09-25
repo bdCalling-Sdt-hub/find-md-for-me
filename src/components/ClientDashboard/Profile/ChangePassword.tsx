@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import { Button, Form, Input } from "antd";
 import { useChangePassMutation } from "@/redux/apiSlices/AuthSlices";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const ChangePassword = () => {
   const [changePass ,{error}] = useChangePassMutation(); 
-  const [form]= Form.useForm()
+  const [form]= Form.useForm() 
+  const router  = useRouter()
   const handleChangePassword = async (values: any) => {
     await changePass(values).then((res) => {
       if (res?.data?.status === 200) {
@@ -16,9 +18,13 @@ const ChangePassword = () => {
           title: res?.data?.message,
           showConfirmButton: true,
           confirmButtonColor: "#C738BD",
-          timer: 1500,
-        });
-          form.resetFields()
+          timer: 1500, 
+       
+        }).then(()=>{
+
+          form.resetFields() 
+          router.push("/login")
+        })
       
       } else {
         Swal.fire({
@@ -87,13 +93,28 @@ const ChangePassword = () => {
                 New Password
               </label>
               <Form.Item
-                name="new_password"
+                name="new_password" 
+                dependencies={["current_password"]}
+                hasFeedback
                 rules={[
                   {
                     required: true,
-                    message: "Please input your new Password!",
+                    message: "Please confirm your password!",
                   },
-                ]}
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("current_password") === value) {                     
+                        return Promise.reject(
+                          new Error(
+                           "The new password and current password do not match!"
+                          )
+                        );
+                      }
+                      return Promise.resolve(); 
+                    },
+                  }),
+                ]} 
+
                 style={{ marginBottom: 0 }}
               >
                 <Input.Password

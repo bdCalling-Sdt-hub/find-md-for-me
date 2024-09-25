@@ -119,7 +119,7 @@ const AgreeMents = ({current ,setCurrent}:any) => {
                     name={data?.value}
                     label={
                       <p className="text-[16px]  text-[#737373] font-semibold flex items-center gap-1">
-                        <span> {index + 1} </span>.<span>{data?.title} </span>
+                        <span> {index + 1} </span>.<span className="uppercase">{data?.title} </span>
                       </p>
                     }
                     
