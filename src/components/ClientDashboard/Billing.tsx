@@ -30,28 +30,37 @@ const Billing = () => {
   const [postBilling, { isSuccess, isError, error  , isLoading}] = usePostBillingMutation(); 
   const {data:documentData , isLoading:loading} = useGetBillingQuery(undefined)
   const [document, setDocument] = useState<{ [key: string]: File }>({});  
-  // console.log(documentData);      
- 
+
+//  console.log(documentData);
 
   
-  useEffect(() => {
-    if (documentData?.status === 200 && documentData.billings) {
-      const initialDocuments: { [key: string]: File | null } = {};
-      documents.forEach((doc) => {
-        const fileName = documentData.billings[doc.value];
-        if (fileName) {
-          initialDocuments[doc.value] = new File([], fileName);
-        }
-      }); 
-      // @ts-ignore
-      setDocument(initialDocuments);
-    }
-  }, [documentData]);  
+//   useEffect(() => {
+//     if (documentData?.status === 200 && documentData.billings) {
+//       const initialDocuments: { [key: string]: File | null } = {};
+      
+//       documents.forEach((doc) => {
+//         const billingItem = documentData.billings.find((billing:any) => billing[doc.value]); 
+//   console.log(billingItem[doc.value]);
+//         if (billingItem) {
+//           const filePath = billingItem[doc.value];
+//           const fileName = filePath?.split("/").pop(); // Extract file name from the path
+  
+//           if (fileName) {
+
+//             initialDocuments[doc.value] = new File([], fileName);
+//           }
+//         }
+//       });
+  
+//       // @ts-ignore
+//       setDocument(initialDocuments);
+//     }
+//   }, [documentData]);
 
 
   const onFinish = async (values: any) => {
     const formData = new FormData();
-
+ console.log(document);
 
     Object.entries(document).forEach(([key, value]) => {
       formData.append(key, value);

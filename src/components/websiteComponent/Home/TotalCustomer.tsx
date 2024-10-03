@@ -5,8 +5,9 @@ import React from "react";
 
 const TotalCustomer = () => {
   const { data } = useGetStateQuery(undefined);
-  const stateData = data?.data;
-  const stateDataLength = stateData?.length;
+  const stateData = data;
+  const stateDataLength = stateData?.length; 
+
 
   const values = [
     {

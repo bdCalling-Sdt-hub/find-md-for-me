@@ -22,9 +22,9 @@ export default function RootLayout({
       <body className={inter.className} suppressHydrationWarning={true}>
         <ClientProvider>
           {" "}
-          {/* <AntdRegistry>    */}
+      
             {children}  
-            {/* </AntdRegistry>   */}
+         
         </ClientProvider>
       </body>
     </html>

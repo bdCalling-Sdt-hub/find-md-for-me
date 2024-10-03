@@ -9,7 +9,7 @@ import { RiInstagramFill } from "react-icons/ri";
 
 const Footer = () => {
   const { data } = useGetStateQuery(undefined);
-  const stateData = data?.data;
+  const stateData = data;
   const stateDataLength = stateData?.length;
 
   const values = [
