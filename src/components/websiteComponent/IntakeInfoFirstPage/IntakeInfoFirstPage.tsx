@@ -30,7 +30,7 @@ license_certificate_no:personalInfo?.license_certificate_no,
 mailing_address:personalInfo?.mailing_address , 
 occupation : personalInfo?.occupation ,
 phone : personalInfo?.phone ,
-state_license_certificate : JSON.parse(personalInfo?.state_license_certificate) , 
+state_license_certificate : personalInfo?.state_license_certificate ,  
      })
   }
   }, [personalInfo , form ])
@@ -97,15 +97,18 @@ state_license_certificate : JSON.parse(personalInfo?.state_license_certificate) 
 
   const onFinish = async (values: any) => {  
     // console.log(values); 
-    const { birthDate, ...otherValues } = values;
-    const formattedDate = moment(birthDate).format("L");
+    const { birthDate , state_license_certificate , ...otherValues } = values;
+    const formattedDate = moment(birthDate).format("YYYY-MM-d"); 
+    const state = JSON.stringify(state_license_certificate)  
     const data = {
-      dob: formattedDate,
+      dob: formattedDate, 
+      state_license_certificate:state ,   
       ...otherValues,
     };
 
+
     await postPersonalInfo(data).then((res: any) => { 
-      // console.log(res);  
+      // console.log(res);   
       if (res?.data?.status === 200) {
         const newIntakeId = res?.data?.data?.id;
         SetLocalStorage("intakeId", newIntakeId); 
@@ -143,7 +146,7 @@ state_license_certificate : JSON.parse(personalInfo?.state_license_certificate) 
           onFinish={onFinish}
           className=" w-[100%]   "
           layout="vertical" 
-          form={form}
+          form={form}  
         >
           <Form.Item
             name="first_name"
@@ -347,18 +350,13 @@ state_license_certificate : JSON.parse(personalInfo?.state_license_certificate) 
       Have you completed training/certification for the service(s) you would like to offer?
     </p>
   }
-  initialValue={personalInfo?.completed_training_certificate_service || "No"}  // Set initial value
+ 
 >
-  <div className="flex-col gap-4">
-    <Radio.Group>
-      <Radio value="yes" className="text-xl my-2">
-        <span className="text-lg font-medium">Yes</span>
-      </Radio>
-      <Radio value="No" className="text-xl my-2">
-        <span className="text-lg font-medium">No</span>
-      </Radio>
-    </Radio.Group>
-  </div>
+  <Radio.Group>
+                                    <Radio value="yes" className='text-lg'>Yes</Radio>
+                                    <Radio value="no" className='text-lg'>No</Radio>
+                                </Radio.Group>
+
 </Form.Item>
  
           <div className="text-end ">

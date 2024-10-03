@@ -1,7 +1,10 @@
-import Documents from "@/components/ClientDashboard/Documents";
+
+import dynamic from "next/dynamic";
 import React from "react";
 
-const page = () => {
+const  Documents = dynamic(()=>import("@/components/ClientDashboard/Documents"),{ssr:false , loading:()=><h2>loading....</h2>})
+const page = () => { 
+
   return (
     <div>
       <Documents />

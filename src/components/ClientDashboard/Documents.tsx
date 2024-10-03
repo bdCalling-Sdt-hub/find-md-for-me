@@ -6,9 +6,8 @@ import DocumentsSubmit from "./DocumentsSubmit";
 import MeetingSchedule from "./MeetingSchedule";
 import AcceptClient from "./AcceptClient";
 import dynamic from "next/dynamic";
+import DocumentsComponent from "./DocumentsComponent";
   
-
-const  DocumentsComponent = dynamic(()=>import("./DocumentsComponent"),{ssr:false , loading:()=><h2>loading....</h2>})
 
 const Documents = () => {
   const [current, setCurrent] = useState(0); 

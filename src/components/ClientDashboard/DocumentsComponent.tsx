@@ -6,7 +6,8 @@ import DashboardTitle from "../shared/DashboardTitle";
 import { useGetDocumentQuery, usePostDocumentMutation } from "@/redux/apiSlices/ClientDashboardSlices";
 import DataAlerts from "../shared/DataAlerts";
 import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; 
+import  "@/components/ClientDashboard/style.css"
 
 const DocumentsComponent = ({current, setCurrent}:any) => {
   const documents = useMemo(() => [
@@ -49,9 +50,9 @@ const DocumentsComponent = ({current, setCurrent}:any) => {
   ], []);
 
   const [document, setDocument] = useState<{ [key: string]: File }>({}); 
-  const {data:documentData} =  useGetDocumentQuery(undefined) 
-  console.log(documentData);
-  const [userId, setUserId] = useState(null);
+  const {data:documentData , isLoading} =  useGetDocumentQuery(undefined) 
+  // console.log(documentData); 
+
   const [postDocument] = usePostDocumentMutation(); 
   const router = useRouter() 
 
@@ -114,7 +115,11 @@ const DocumentsComponent = ({current, setCurrent}:any) => {
         [e.target.name]: e?.target?.files[0],
       }));
     }
-  };
+  }; 
+
+  if(isLoading){
+    return <p>Loading..</p>
+  }
 
   return (
     <div className=" w-full ">
@@ -123,67 +128,61 @@ const DocumentsComponent = ({current, setCurrent}:any) => {
           <DashboardTitle>Upload Documents</DashboardTitle>
 
           <div className="mt-4">
-            <Form
-              className="w-full lg:w-[60%] mt-4  "
-              onFinish={onFinish}
-              layout="vertical"
-            >
-              {documents?.map((data: any, index: number) => (
-                <div key={index}>
-                  <Form.Item
-                    name={data?.value}
-                    label={
-                      <p className="text-[16px]  text-[#737373] font-semibold flex items-center gap-1">
-                        <span> {index + 1} </span>.<span>{data?.title} </span>
-                      </p>
-                    }
-                    // rules={[
-                    //   {
-                    //     required: true,
-                    //     message: `Please upload your ${data?.title} file!`,
-                    //   },
-                    // ]}
-                    className=""
-                  >
-                    <Input
-                      name={data?.value}
-                      type="file"
-                      id={data?.value}
-                      onChange={handleChange}
-                      style={{
-                        display: "none",
-                      }}
-                    />
-                    <label
-                      htmlFor={data?.value}
-                      className=" flex items-center w-full gap-2 bg-[#E8F6FE] py-3 px-2 rounded-lg"
-                    >
-                      {" "}
-                      <span className=" h-[30px] w-[30px] bg-white rounded-full text-center my-1/2  text-xl text-[#737373]">
-                        <UploadOutlined />{" "}
-                      </span>{" "}
-                      <span className="  text-[16px] font-medium text-[#737373]">
-                        {document[data.value]?.name ? (
-                          <p className="text-[#1d75f2]">
-                            {document[data.value].name}{" "}
-                          </p>
-                        ) : (
-                          <p> Click to upload</p>
-                        )}
-                      </span>
-                    </label>
-                  </Form.Item>
-                </div>
-              ))}
+  <Form className="w-full lg:w-[60%] mt-4" onFinish={onFinish} layout="vertical">
+    {documents?.map((data: any, index: number) => (
+      <div key={index} className=" mb-6">
+        {/* Move the label outside the Form.Item */}
+        <p className="text-[16px] text-[#737373] font-semibold flex items-center gap-1">
+          <span>{index + 1}</span>.<span>{data?.title}</span>
+        </p>
 
-              <Form.Item className="text-end">
-                <Button type="primary" htmlType="submit" style={{height:"45px" , width:"120px" , fontSize:"20px"}}>
-                  {" "}
-                  Next
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
+        <Form.Item
+          name={data?.value}
+          className=""
+          // Uncomment the rules for validation
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: `Please upload your ${data?.title} file!`,
+          //   },
+          // ]}
+        >
+          {/* Keep only the Input inside Form.Item */}
+          <Input
+            name={data?.value}
+            type="file"
+            id={data?.value}
+            onChange={handleChange}
+            style={{ display: "none" }}
+          />
+        </Form.Item>
+
+        {/* Keep the label outside Form.Item */}
+        <label
+          htmlFor={data?.value}
+          className="flex items-center w-full gap-2 bg-[#E8F6FE] py-3 px-2 rounded-lg"
+        >
+          <span className="h-[30px] w-[30px] bg-white rounded-full text-center text-xl text-[#737373]">
+            <UploadOutlined />
+          </span>
+          <span className="text-[16px] font-medium text-[#737373]">
+            {document[data.value]?.name ? (
+              <p className="text-[#1d75f2]">{document[data.value].name}</p>
+            ) : (
+              <p>Click to upload</p>
+            )}
+          </span>
+        </label>
+      </div>
+    ))}
+
+    <Form.Item className="text-end">
+      <Button type="primary" htmlType="submit" style={{ height: "45px", width: "120px", fontSize: "20px" }}>
+        Next
+      </Button>
+    </Form.Item>
+  </Form>
+</div>
         </div>
       </div>
     </div>

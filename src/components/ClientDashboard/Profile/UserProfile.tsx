@@ -12,23 +12,26 @@ import {
 import { useForm } from "antd/lib/form/Form";
 import { baseUrl } from "@/redux/api/apiSlice";  
 import person from "@/assests/person.png"
-const UserProfile = () => {
+const UserProfile = ({isEdit}:{isEdit:boolean}) => { 
   const [form] = useForm();
   const [image, setImage] = useState("");
   const [imgURL, setImgURL] = useState(image);
-  const { data , refetch } = useGetProfileQuery(undefined); 
-  // console.log(data); 
+  const { data , refetch , isLoading } = useGetProfileQuery(undefined); 
+  // console.log(data);  
   const [postProfile] = usePostProfileMutation(); 
-  // console.log(data); 
+  // console.log(
+  // ); 
 
   // todo: get image
   // console.log(image);  
   // console.log(imgURL);   
 
   useEffect(() => {
-    if (localStorage.getItem('hasReloaded')) { 
-      window.location.reload()
-      localStorage.removeItem('hasReloaded');
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('hasReloaded')) { 
+        window.location.reload();
+        localStorage.removeItem('hasReloaded');
+      }
     }
   }, []);  
   
@@ -66,7 +69,7 @@ formData.append(key ,value)
           title: res?.data?.message,
           showConfirmButton: true,
           confirmButtonColor: "#C738BD",
-          timer: 1500,
+        
         });
       } else {
         Swal.fire({
@@ -74,7 +77,7 @@ formData.append(key ,value)
           // @ts-ignore
           text: error?.data?.message,
           icon: "error",
-          timer: 1500,
+       
           showConfirmButton: false,
         });
       }
@@ -97,18 +100,23 @@ formData.append(key ,value)
         first_name: data?.user?.first_name,
         last_name: data?.user?.last_name,
         email: data?.user?.email,
-        phone: data?.user?.phone,
-        buisnes_name: data?.user?.buisness_name,
-        buisness_address: data?.user?.buisness_address, 
+        phone: data?.personalInfo?.phone,
+        buisnes_name: data?.BisnessInfo?.buisness_name,
+        buisness_address: data?.BisnessInfo?.buisness_address, 
         client_type: data?.BisnessInfo?.client_type , 
         tier_type: data?.Tier ?  data?.Tier[0]?.tyer_name : ""
       });
     }
-  }, [data, form]);
+  }, [data, form]); 
+
+
+  if(isLoading){
+    return <p>Loading..</p>
+  }
   return (
     <div>
       {" "}
-      <div className="lg:h-[53vh]">
+      <div className="">
         <div className="">
           {/* image   */}
           <div
@@ -140,8 +148,9 @@ formData.append(key ,value)
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-            >
-              <div 
+            > 
+            {
+              isEdit ?   <div 
               className="absolute -right-4 bottom-0 "
                 style={{
                   background: "#E8F6FE",
@@ -157,7 +166,9 @@ formData.append(key ,value)
               >
                 <MdOutlineAddPhotoAlternate size={22} color="#1D75F2" />
                
-              </div>
+              </div> :""
+            }
+            
             </label>
           </div>
 
@@ -270,7 +281,7 @@ formData.append(key ,value)
                     ]}
                   >
                     <Input
-                      type="number"
+                      type="text"
                       placeholder="Enter Phone Number"
                       style={{
                         border: "1px solid #E0E4EC",
@@ -397,42 +408,44 @@ formData.append(key ,value)
 
 
               </div>
-
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  gap: "16px",
-                  alignItems: "center",
-                }}
-              >
-                <div
-                  style={{ width: "100%", position: "relative" }}
-                  className=" mt-5"
-                >
-                  <Form.Item>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      block
-                      style={{
-                        border: "none",
-                        height: "41px",
-                        background: "#1D75F2",
-                        color: "white",
-                        borderRadius: "8px",
-                        outline: "none",
-                        width: "150px",
-                        position: "absolute",
-                        right: "0px",
-                        bottom: "0px",
-                      }}
-                    >
-                      Save
-                    </Button>
-                  </Form.Item>
-                </div>
-              </div>
+ {
+  isEdit ? <div
+  style={{
+    width: "100%",
+    display: "flex",
+    gap: "16px",
+    alignItems: "center",
+  }}
+> 
+  <div
+    style={{ width: "100%", position: "relative" }}
+    className=" mt-5"
+  >
+    <Form.Item>
+      <Button
+        type="primary"
+        htmlType="submit"
+        block
+        style={{
+          border: "none",
+          height: "41px",
+          background: "#1D75F2",
+          color: "white",
+          borderRadius: "8px",
+          outline: "none",
+          width: "150px",
+          position: "absolute",
+          right: "0px",
+          bottom: "0px",
+        }}
+      >
+        Submit
+      </Button>
+    </Form.Item>
+  </div>
+</div> : ""
+ }
+              
             </Form>
           </div>
         </div>

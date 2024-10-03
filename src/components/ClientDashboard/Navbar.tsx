@@ -28,14 +28,15 @@ const Navbar = () => {
           <Image
             src={user? 
               user?.image?.startsWith('https') ? user?.image : user?.image === null ? `${baseUrl}/${user?.image}` : `${baseUrl}${user?.image}`
-              :person}
+              :person} 
+              alt=""
+              height={60}
+              width={50}
             style={{
               borderRadius: "100%", 
               border:"2px solid  #1D75F2" ,
             }}
-            alt=""
-            height={60}
-            width={50}
+          
           />
           <div>
             <p className="p-3 h-3 font-bold text-[#1D75F2]">{`${user?.first_name} ${user?.last_name}`} </p>

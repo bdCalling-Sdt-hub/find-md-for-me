@@ -10,7 +10,12 @@ import {
 import { useGetEHRQuery } from "@/redux/apiSlices/ClientDashboardSlices";
 
 const EHR = () => {
-  const { data } = useGetEHRQuery(undefined);
+  const { data , isLoading  } = useGetEHRQuery(undefined); 
+
+   if(isLoading){
+    return <p>Loading..</p>
+   } 
+   
   return (
     <div className="pt-3 ps-3">
       <DashboardTitle> EHR</DashboardTitle>
@@ -18,7 +23,7 @@ const EHR = () => {
       <div className="lg:mx-10 mx-3 lg:my-10 my-5">
         <div className="  lg:mx-auto  lg:px-10 px-5 bg-[#FDFDFD] py-5">
           <div>
-            {data?.data.map((value: any, index: number) => (
+            {data?.data?.map((value: any, index: number) => (
               <Accordion
                 key={index}
                 type="single"

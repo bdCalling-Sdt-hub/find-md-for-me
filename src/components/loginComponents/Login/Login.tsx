@@ -27,7 +27,7 @@ const Login = () => {
           title: "Login Successful",
           text: "Welcome to Find a MD 4 Me",
           icon: "success",
-          timer: 1500,
+        timer:1500
         }).then(async () => {
           SetLocalStorage("findMdToken", res?.data?.token); 
           localStorage.setItem('hasReloaded', 'true');

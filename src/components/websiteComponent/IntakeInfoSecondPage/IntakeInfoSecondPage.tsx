@@ -19,7 +19,7 @@ const IntakeInfo: React.FC = () => {
   const [companyType, setCompanyType] = useState(null);
 
   const { data } = useGetStateQuery(undefined);
-  const [postBussinessInfo, {error,}] =
+  const [postBussinessInfo, {error,isLoading}] =
     usePostBussinessInfoMutation();
   const [selectedValue, setSelectedValue] = useState("employee"); 
   const [inputValues, setInputValues] = useState(null); 
@@ -178,14 +178,16 @@ const IntakeInfo: React.FC = () => {
                 required: true,
                 message: "Please enter your Business Address!",
               },
-            ]}
+            ]} 
+            
             label={
               <p className="text-lg  text-[#737373] font-semibold ">
                 Business Address :
               </p>
             }
           >
-            <Input
+            <Input 
+            placeholder="Field 2/Box 2 Put City, State, Zip Code, Unit/Suite/Apt number"
               className=" w-full h-[40px] "
             />
           </Form.Item>
@@ -564,7 +566,7 @@ const IntakeInfo: React.FC = () => {
  
   <Form.Item className="mt-[16px] ">
             <Button  type="primary" htmlType="submit" style={{ width:"100px" , height:"45px" }}>
-              Next
+            {isLoading ? <p style={{cursor:"wait"}}>loading..</p> : "Next"}    
             </Button>
           </Form.Item>
  </div>

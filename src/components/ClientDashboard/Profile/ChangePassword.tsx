@@ -6,7 +6,7 @@ import { useChangePassMutation } from "@/redux/apiSlices/AuthSlices";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
-const ChangePassword = () => {
+const ChangePassword = ({isEdit}:{isEdit:boolean}) => {
   const [changePass ,{error}] = useChangePassMutation(); 
   const [form]= Form.useForm() 
   const router  = useRouter()
@@ -18,7 +18,7 @@ const ChangePassword = () => {
           title: res?.data?.message,
           showConfirmButton: true,
           confirmButtonColor: "#C738BD",
-          timer: 1500, 
+
        
         }).then(()=>{
 
@@ -42,11 +42,11 @@ const ChangePassword = () => {
   return (
     <div>
       {" "}
-      <div className="h-[53vh]">
+      <div className="">
         <div>
           <Form 
           form={form}
-            name="normal_login"
+          
             className="login-form lg:ms-[50px] pe-[30px] mt-[30px] "
             initialValues={{
               remember: true,
@@ -175,40 +175,42 @@ const ChangePassword = () => {
                 />
               </Form.Item>
             </div>
-
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                gap: "16px",
-                alignItems: "center",
-                marginBottom: "20px",
-              }}
-            >
-              <div style={{ width: "100%", position: "relative" }}>
-                <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    block
-                    style={{
-                      border: "none",
-                      height: "41px",
-                      background: "#1D75F2",
-                      color: "white",
-                      borderRadius: "8px",
-                      outline: "none",
-                      width: "150px",
-                      position: "absolute",
-                      right: "20px",
-                      bottom: "0px",
-                    }}
-                  >
-                    Save
-                  </Button>
-                </Form.Item>
-              </div>
-            </div>
+ {
+  isEdit ?      <div
+  style={{
+    width: "50%",
+    display: "flex",
+    gap: "16px",
+    alignItems: "center",
+    marginBottom: "20px",
+  }}
+>
+  <div style={{ width: "100%", position: "relative" }}>
+    <Form.Item>
+      <Button
+        type="primary"
+        htmlType="submit"
+        block
+        style={{
+          border: "none",
+          height: "41px",
+          background: "#1D75F2",
+          color: "white",
+          borderRadius: "8px",
+          outline: "none",
+          width: "150px",
+          position: "absolute",
+          right: "20px",
+          bottom: "0px",
+        }}
+      >
+        Submit
+      </Button>
+    </Form.Item>
+  </div>
+</div> : ""
+ }
+       
           </Form>
         </div>
       </div>

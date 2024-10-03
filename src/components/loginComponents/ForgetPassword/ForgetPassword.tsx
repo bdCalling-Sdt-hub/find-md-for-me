@@ -15,7 +15,7 @@ const ForgetPassword = () => {
         Swal.fire({
           text: res?.data?.message,
           icon: "success",
-          timer: 1500,
+ 
         }).then(() => {
           router.push(`/otp/${values?.email}`);
         });

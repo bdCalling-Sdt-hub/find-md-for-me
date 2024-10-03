@@ -1,16 +1,27 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ChangePassword from "./ChangePassword";
-import UserProfile from "./UserProfile"; 
+import UserProfile from "./UserProfile";  
+import { AiFillEdit } from "react-icons/ai";
 
 import { Tabs } from "antd";
 import { useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
+import { FaUserEdit } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const Profile = () => { 
   const { data , refetch } = useGetProfileQuery(undefined);
+  const [isEdit , setIsEdit] = useState(false) 
+  const router = useRouter()
   const onChange = (key: any) => {
     // console.log(key); 
-  }; 
+  };  
+
+  const handleEdit =()=>{
+   
+    router.push("/edit-profile") 
+    // setIsEdit(true)  
+  }
 
   useEffect(()=>{
     refetch()
@@ -20,12 +31,12 @@ const Profile = () => {
     {
       key: "1",
       label: "Edit Profile",
-      children: <UserProfile />,
+      children: <UserProfile isEdit={isEdit} />,
     },
     {
       key: "2",
       label: "Change Password ",
-      children: <ChangePassword />,
+      children: <ChangePassword isEdit={isEdit}   />,
     },
   ];
   return (
@@ -45,9 +56,14 @@ const Profile = () => {
       <div>
         <div
           style={{ marginBottom: "16px" }}
-          className=" mt-5 bg-white p-5 ps-0 px-10 rounded-xl "
-        >
-          <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+          className=" mt-5 bg-white rounded-xl "
+        > 
+        <div className=" flex w-full gap-3">
+          <Tabs defaultActiveKey="1" items={items} onChange={onChange} className="w-4/5"/> 
+          <div className="border-2 h-[45px] mt-4 rounded-full border-[#C738BD]  " onClick={handleEdit}>
+       <p className="text-[#C738BD]  p-2  text-2xl font-bold text-end "> <FaUserEdit /></p>
+          </div>
+        </div>
         </div>
       </div>
     </div>

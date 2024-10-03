@@ -4,7 +4,7 @@ import { Button, DatePicker, Form, Input, Modal, Upload } from "antd";
 import moment from "moment";
 import React, { FC, useState } from "react";
 import Swal from "sweetalert2";
-
+import  "@/components/ClientDashboard/style.css"
 interface IMyTeam {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -72,7 +72,7 @@ const MyTeamModal: React.FC<IMyTeam> = ({
         Swal.fire({
           text: "Successfully Team Added",
           icon: "success",
-          timer: 1500,
+      
         }).then(() => { 
           refetch()
           setIsModalOpen(false); 
@@ -186,50 +186,45 @@ const MyTeamModal: React.FC<IMyTeam> = ({
         <div>
           {documents?.map((data: any, index: number) => (
             <div key={index}>
-              <Form.Item
-                name={data?.value}
-                label={
-                  <p className="text-[16px]  text-[#737373] font-semibold flex items-center gap-1">
-                    <span> {index + 1} </span>.<span>{data?.title} </span>
-                  </p>
-                }
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: `Please upload your ${data?.title} file!`,
-                //   },
-                // ]}
-                className=""
-              >
-                <Input
-                  name={data?.value}
-                  type="file"
-                  id={data?.value}
-                  onChange={handleChange}
-                  style={{
-                    display: "none",
-                  }}
-                />
-                <label
-                  htmlFor={data?.value}
-                  className=" flex items-center w-full gap-2 bg-[#E8F6FE] py-3 px-2 rounded-lg"
-                >
-                  {" "}
-                  <span className=" h-[30px] w-[30px] bg-white rounded-full text-center my-1/2  text-xl text-[#737373]">
-                    <UploadOutlined />{" "}
-                  </span>{" "}
-                  <span className="  text-[16px] font-medium text-[#737373]">
-                    {document[data.value]?.name ? (
-                      <p className="text-[#1d75f2]">
-                        {document[data.value].name}{" "}
-                      </p>
-                    ) : (
-                      <p> Click to upload</p>
-                    )}
-                  </span>
-                </label>
-              </Form.Item>
-            </div>
+  <p className="text-[16px] text-[#737373] font-semibold flex items-center gap-1">
+    <span>{index + 1}</span>.<span>{data?.title}</span>
+  </p>
+
+  <Form.Item
+    name={data?.value}
+    // rules={[
+    //   {
+    //     required: true,
+    //     message: `Please upload your ${data?.title} file!`,
+    //   },
+    // ]}
+    className=""
+  >
+    <Input
+      name={data?.value}
+      type="file"
+      id={data?.value}
+      onChange={handleChange}
+      style={{ display: "none" }}
+    />
+  </Form.Item>
+
+  <label
+    htmlFor={data?.value}
+    className="flex items-center w-full gap-2 bg-[#E8F6FE] py-3 px-2 rounded-lg"
+  >
+    <span className="h-[30px] w-[30px] bg-white rounded-full text-center text-xl text-[#737373]">
+      <UploadOutlined />
+    </span>
+    <span className="text-[16px] font-medium text-[#737373]">
+      {document[data.value]?.name ? (
+        <p className="text-[#1d75f2]">{document[data.value].name}</p>
+      ) : (
+        <p>Click to upload</p>
+      )}
+    </span>
+  </label>
+</div>
           ))}
         </div>
 

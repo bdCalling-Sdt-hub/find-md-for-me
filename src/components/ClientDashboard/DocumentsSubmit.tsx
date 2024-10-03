@@ -6,7 +6,7 @@ import { Button } from "antd";
 import { useGetApprovalQuery } from "@/redux/apiSlices/ClientDashboardSlices";
 
 const DocumentsSubmit = ({current ,setCurrent , setIsNextDisabled}:any) => {  
-  const {data} = useGetApprovalQuery(null) 
+  const {data , isLoading} = useGetApprovalQuery(null) 
   // console.log(data); 
 
   useEffect(() => {
@@ -30,6 +30,10 @@ if (data === undefined) {
         window.history.pushState(null, "", `?${params.toString()}`);
 
 }
+  } 
+
+  if(isLoading){
+    return <p>Loading..</p>
   }
   return (
     <div className="lg:mb-32">

@@ -32,7 +32,7 @@ const OTP = () => {
         Swal.fire({
           text: res?.data?.message,
           icon: "success",
-          timer: 1500,
+  
         });
       } else {
         Swal.fire({
@@ -54,7 +54,7 @@ const OTP = () => {
           text: res?.data?.message,
           icon: "success",
           showConfirmButton: false,
-          timer: 1500,
+         
         }).then(() => {
           router.push(`/resetPassword/${decodedEmail}`);
         });

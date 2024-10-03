@@ -21,7 +21,7 @@ const CutomTierModal = ({
           icon: "success",
           title: res?.data?.message,
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1800,
         });
         setIsModalOpen(false);
         form.resetFields();

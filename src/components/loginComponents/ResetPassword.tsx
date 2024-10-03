@@ -27,7 +27,7 @@ const ResetPassword = () => {
           text: res?.data?.message,
           icon: "success",
           showConfirmButton: false,
-          timer: 1500,
+ 
         }).then(() => {
           router.push(`/profile`);
         });

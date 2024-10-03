@@ -17,7 +17,7 @@ const OversightPricing = () => {
 
       <p className="text-[20px]">
         {" "}
-        I- <span className="font-semibold"> Individuals: </span> one person/one Med
+        I- <span className="font-semibold"> Individuals: </span> One person/One Med
         Spa
       </p>
       <p className="text-[20px] pt-1 pb-3">

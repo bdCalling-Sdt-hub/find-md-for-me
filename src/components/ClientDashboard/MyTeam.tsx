@@ -130,7 +130,7 @@ const MyTeam = () => {
               text: "Team Record Delete Successfully ",
               icon: "success",
               showConfirmButton: false,
-              timer: 1500,
+            
             }).then(() => {
               refetch();
             });
