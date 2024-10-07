@@ -13,7 +13,6 @@ import {
 
 import { useForm } from "antd/lib/form/Form";
 import { baseUrl } from "@/redux/api/apiSlice";  
-import person from "@/assests/person.png"
 const UserProfile = ({isEdit}:{isEdit:boolean}) => { 
   const [form] = useForm();
   const [image, setImage] = useState("");
@@ -38,10 +37,18 @@ const UserProfile = ({isEdit}:{isEdit:boolean}) => {
     }
   }, []);  
   
+  useEffect(() => {
+    if (profileImage) {
+      const imageUrl =profileImage? 
+      profileImage?.profile_image.startsWith('http')
+      ? profileImage?.profile_image
+      : `${baseUrl}${profileImage?.profile_image}`
+                  :""
+  
+      setImgURL(imageUrl);
+    }
+  }, [profileImage, baseUrl]);
 
-  const imageUrl = imgURL ? imgURL : profileImage?.profile_image?.startsWith('http')
-    ? profileImage?.profile_image
-    : `${baseUrl}${profileImage?.profile_image}`
 
   const handleSubmit = async (values: any) => { 
     const formData= new FormData() 
@@ -148,7 +155,7 @@ await updateImage(formData).then((res)=>{
                 borderRadius: "18px",
                 border: "1px solid #1D75F2",
                 background: "white",
-                backgroundImage: `url(${imageUrl})`,
+                backgroundImage: `url(${imgURL})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
