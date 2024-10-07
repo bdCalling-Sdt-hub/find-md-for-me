@@ -37,7 +37,9 @@ const Navbar = () => {
               width={50}
             style={{
               borderRadius: "100%", 
-              border:"2px solid  #1D75F2" ,
+              border:"2px solid  #1D75F2" , 
+              height:"50px" ,
+              width:"50px"
             }}
           
           />

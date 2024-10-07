@@ -39,7 +39,7 @@ const UserProfile = ({isEdit}:{isEdit:boolean}) => {
   }, []);  
   
 
-  const imageUrl =  profileImage?.profile_image.startsWith('http')
+  const imageUrl = imgURL ? imgURL : profileImage?.profile_image?.startsWith('http')
     ? profileImage?.profile_image
     : `${baseUrl}${profileImage?.profile_image}`
 
@@ -81,11 +81,9 @@ formData.append(key ,value)
 
   const onChange = async(e: any) => {
     const file = e.target.files[0];
-    // console.log(file); 
     const imgUrl = URL.createObjectURL(file);
     setImgURL(imgUrl);
     setImage(file);  
-
 
 const formData = new FormData() 
 if(file){
