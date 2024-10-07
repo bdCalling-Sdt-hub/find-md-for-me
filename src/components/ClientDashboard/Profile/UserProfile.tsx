@@ -20,7 +20,8 @@ const UserProfile = ({isEdit}:{isEdit:boolean}) => {
   const { data , refetch , isLoading } = useGetProfileQuery(undefined); 
   const [postProfile] = usePostProfileMutation();  
   const [updateImage] = useUpdateImageMutation() 
-  const {data:profileImage , refetch:reFetch} = useGetProfileImageQuery(undefined) 
+  const {data:profileImage , refetch:reFetch} = useGetProfileImageQuery(undefined)  
+  console.log(profileImage);
   // console.log(
   // ); 
 
@@ -40,9 +41,9 @@ const UserProfile = ({isEdit}:{isEdit:boolean}) => {
   useEffect(() => {
     if (profileImage) {
       const imageUrl =profileImage? 
-      profileImage?.profile_image.startsWith('http')
+      profileImage?.profile_image.startsWith('https')
       ? profileImage?.profile_image
-      : `${baseUrl}${profileImage?.profile_image}`
+      : `${baseUrl}/${profileImage?.profile_image}`
                   :""
   
       setImgURL(imageUrl);

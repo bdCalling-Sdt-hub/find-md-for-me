@@ -30,7 +30,7 @@ const Navbar = () => {
             src={profileImage? 
   profileImage?.profile_image.startsWith('http')
   ? profileImage?.profile_image
-  : `${baseUrl}${profileImage?.profile_image}`
+  : `${baseUrl}/${profileImage?.profile_image}`
               :person} 
               alt=""
               height={60}
