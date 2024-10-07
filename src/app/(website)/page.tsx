@@ -10,7 +10,7 @@ export default function Home() {
           <Banner />
         </div>
 
-        <div className="lg:-mt-[270px] lg:px-0 px-6">
+        <div className="lg:-mt-[9%] lg:px-0 px-6">
           <BannerCard />
         </div>
         <TotalCustomer />

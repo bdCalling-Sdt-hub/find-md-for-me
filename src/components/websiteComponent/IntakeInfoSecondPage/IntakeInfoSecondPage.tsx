@@ -187,7 +187,7 @@ const IntakeInfo: React.FC = () => {
             }
           >
             <Input 
-            placeholder="Field 2/Box 2 Put City, State, Zip Code, Unit/Suite/Apt number"
+            placeholder="Street Address, City, State, Zip Code, Unit/Suite/Apt number"
               className=" w-full h-[40px] "
             />
           </Form.Item>

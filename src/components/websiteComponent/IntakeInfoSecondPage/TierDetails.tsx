@@ -13,7 +13,9 @@ const TierDetails = ({value}:any) => {
                     value?.tyer_name === "Tier 1" && "bg-[#FF31F7]"
                   } ${value?.tyer_name === "Tier 2" && "bg-[#F59E0B]"} 
                    ${value?.tyer_name === "Tier 3" && "bg-[#10B981]"} 
-                    ${value?.tyer_name === "Tier 4" && "bg-[#AA0BF5]"}  `}
+                    ${value?.tyer_name === "Tier 4" && "bg-[#AA0BF5]"} 
+                      ${value?.tyer_name === "Tier 5" && "bg-[#6082B6]"} 
+                    ${value?.tyer_name === "Tier 6" && "bg-[#8A9A5B]"}   `}
                   // style={{ backgroundColor: value?.tyer_nameColor }}
                 >
                   {" "}
@@ -26,7 +28,9 @@ const TierDetails = ({value}:any) => {
                         value?.tyer_name === "Tier 1" && "text-[#FF31F7]"
                       } ${value?.tyer_name === "Tier 2" && "text-[#F59E0B]"} 
                        ${value?.tyer_name === "Tier 3" && "text-[#10B981]"} 
-                        ${value?.tyer_name === "Tier 4" && "text-[#AA0BF5]"}  `}
+                        ${value?.tyer_name === "Tier 4" && "text-[#AA0BF5]"} 
+                          ${value?.tyer_name === "Tier 5" && "text-[#6082B6]"} 
+                    ${value?.tyer_name === "Tier 6" && "text-[#8A9A5B]"}   `}
                       // style={{ color: value?.tyer_nameColor }}
                     >
                       {value?.tyer_name}{" "}

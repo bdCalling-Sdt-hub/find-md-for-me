@@ -37,7 +37,7 @@ const BannerCard = () => {
         {values?.map((value, index) => (
           <div
             key={index}
-            className=" p-5 px-8 rounded-lg lg:leading-loose shadow-xl lg:w-[420px] lg:h-[350px]  h-full  bg-white  lg:mb-1 mb-8 "
+            className=" p-5 px-8 rounded-lg lg:leading-loose shadow-xl lg:w-[420px] lg:h-[370px]  h-full  bg-white  lg:mb-1 mb-8 "
           >
             <p className=" mb-3"> {value?.image}</p>
             <p className=" text-[#C738BD] text-[16px] font-semibold mb-3">

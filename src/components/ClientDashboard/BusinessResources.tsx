@@ -8,10 +8,10 @@ import { baseUrl } from "@/redux/api/apiSlice";
 const BusinessResources = () => { 
   const {data} = useBusinessResourcesQuery(undefined)  
   const resources = data?.data
-  // console.log(resources);   
+
   // const content = ["Protocols", "Standing Order", "Policies", "Consents"]; 
   return (
-    <div className=" shadow-lg lg:my-4  lg:h-[85vh] h-screen relative">
+    <div className=" shadow-sm lg:my-4  lg:h-[100%]  ">
       <Tabs defaultValue="Protocols" className=" mt-5 ">
         <TabsList className="bg-transparent text-[#737373] flex justify-center items-center  px-4">
           <TabsTrigger
@@ -47,14 +47,17 @@ const BusinessResources = () => {
        
             <TabsContent   value="Protocols" > 
 
-              <div className="lg:mx-8 mx-4 bg-[#FDFDFD] rounded-lg lg:px-10 px-4 py-2 lg:py-5 h-[100%]">
+              <div className="lg:mx-8 mx-4 bg-[#FDFDFD] rounded-lg lg:px-10 px-4 py-2 lg:py-5  ">
                 <p className=" text-nowrap  lg:text-xl text-[#252B42] font-semibold pb-3">
                   {" "}
                   Protocols
                 </p> 
-                <p className="lg:text-lg text-[#252B42] py-2">View Protocols Document</p> 
+                <p className="lg:text-lg text-[#252B42] py-2">View Protocols Document</p>   
+
+                <div className="h-[500px] overflow-y-auto">
+
                 {
-                  resources?.map((values:any , index:number)=>  <div key={index} > 
+                  resources?.map((values:any , index:number)=>  <div key={index}  > 
                     {
                       values?.protocol_image?.map((value:any , index:number)=><div key={index} className=" bg-[#E8F6FE] px-4 py-2 rounded-lg lg:w-[280px] mb-3">
                       <a className="flex text-[#1D75F2] items-center gap-2"  href={`${baseUrl}${value}`}
@@ -74,11 +77,12 @@ const BusinessResources = () => {
                     
                   )
                 }
+                </div>
           
               </div> 
 
               <div className=" flex justify-center items-center mx-auto"> 
-                <p className="lg:w-2/3 w-full  absolute bottom-20 text-[#737373] text-justify px-4"> Disclaimer: These forms and consents must be used in conjunction with applicable federal and state rules as they relate to the standard of care required to provide such medical and cosmetic treatment. Nothing in these documents or treatment protocols should be interpreted to supersede applicable federal or state rules. These documents are meant for guidance and information only – use of the forms should be in conjunction with advice from local legal counsel based upon your individual circumstances. Find a MD 4 Me assumes no liability from any use of these forms. Transfer or sale of these forms is strictly prohibited. All policies/procedures and protocols are copyrighted.</p>
+                <p className="lg:w-2/3 w-full  absolute bottom-2 text-[#737373] text-justify px-4"> Disclaimer: These forms and consents must be used in conjunction with applicable federal and state rules as they relate to the standard of care required to provide such medical and cosmetic treatment. Nothing in these documents or treatment protocols should be interpreted to supersede applicable federal or state rules. These documents are meant for guidance and information only – use of the forms should be in conjunction with advice from local legal counsel based upon your individual circumstances. Find a MD 4 Me assumes no liability from any use of these forms. Transfer or sale of these forms is strictly prohibited. All policies/procedures and protocols are copyrighted.</p>
               </div>
             </TabsContent>
          
@@ -88,7 +92,9 @@ const BusinessResources = () => {
                 <p className=" text-nowrap  lg:text-xl text-[#252B42] font-semibold pb-3">
                   Standing Order
                 </p> 
-                <p className="lg:text-lg text-[#252B42] py-2">View  Standing Order Document</p> 
+                <p className="lg:text-lg text-[#252B42] py-2">View  Standing Order Document</p>  
+                <div className="h-[500px] overflow-y-auto"> 
+
                 {
                   resources?.map((values:any , index:number)=> <div key={index}>
                       {
@@ -111,10 +117,11 @@ const BusinessResources = () => {
                       }
                   </div> )
                 }
+                </div>
               
               </div> 
               <div className=" flex justify-center items-center mx-auto  "> 
-                <p className="lg:w-2/3 w-full  absolute bottom-20 text-[#737373] text-justify px-4"> Disclaimer: These forms and consents must be used in conjunction with applicable federal and state rules as they relate to the standard of care required to provide such medical and cosmetic treatment. Nothing in these documents or treatment protocols should be interpreted to supersede applicable federal or state rules. These documents are meant for guidance and information only – use of the forms should be in conjunction with advice from local legal counsel based upon your individual circumstances. Find a MD 4 Me assumes no liability from any use of these forms. Transfer or sale of these forms is strictly prohibited. All policies/procedures and protocols are copyrighted.</p>
+                <p className="lg:w-2/3 w-full  absolute bottom-2 text-[#737373] text-justify px-4"> Disclaimer: These forms and consents must be used in conjunction with applicable federal and state rules as they relate to the standard of care required to provide such medical and cosmetic treatment. Nothing in these documents or treatment protocols should be interpreted to supersede applicable federal or state rules. These documents are meant for guidance and information only – use of the forms should be in conjunction with advice from local legal counsel based upon your individual circumstances. Find a MD 4 Me assumes no liability from any use of these forms. Transfer or sale of these forms is strictly prohibited. All policies/procedures and protocols are copyrighted.</p>
               </div>
             </TabsContent>
          
@@ -124,7 +131,9 @@ const BusinessResources = () => {
                   {" "}
                   Policies
                 </p> 
-                <p className="lg:text-lg text-[#252B42] py-2">View Policies Document</p>
+                <p className="lg:text-lg text-[#252B42] py-2">View Policies Document</p> 
+                <div className="h-[500px] overflow-y-auto"> 
+                  
                 {
                    resources?.map((values:any , index:number)=> <div key={index}> 
 {
@@ -143,10 +152,11 @@ values?.policy_image?.map((value:any , index:number)=><div  key={index}>
                    </div> 
                   )
                 }
+                   </div>
               
               </div> 
               <div className=" flex justify-center items-center mx-auto"> 
-                <p className="lg:w-2/3 w-full  absolute bottom-20 text-[#737373] text-justify px-4"> Disclaimer: These forms and consents must be used in conjunction with applicable federal and state rules as they relate to the standard of care required to provide such medical and cosmetic treatment. Nothing in these documents or treatment protocols should be interpreted to supersede applicable federal or state rules. These documents are meant for guidance and information only – use of the forms should be in conjunction with advice from local legal counsel based upon your individual circumstances. Find a MD 4 Me assumes no liability from any use of these forms. Transfer or sale of these forms is strictly prohibited. All policies/procedures and protocols are copyrighted.</p>
+                <p className="lg:w-2/3 w-full  absolute bottom-2 text-[#737373] text-justify px-4"> Disclaimer: These forms and consents must be used in conjunction with applicable federal and state rules as they relate to the standard of care required to provide such medical and cosmetic treatment. Nothing in these documents or treatment protocols should be interpreted to supersede applicable federal or state rules. These documents are meant for guidance and information only – use of the forms should be in conjunction with advice from local legal counsel based upon your individual circumstances. Find a MD 4 Me assumes no liability from any use of these forms. Transfer or sale of these forms is strictly prohibited. All policies/procedures and protocols are copyrighted.</p>
               </div>
             </TabsContent>
          
@@ -156,7 +166,9 @@ values?.policy_image?.map((value:any , index:number)=><div  key={index}>
                   {" "}
                   Consents
                 </p> 
-                <p className="lg:text-lg text-[#252B42] py-2">View Consents Document</p> 
+                <p className="lg:text-lg text-[#252B42] py-2">View Consents Document</p>  
+                <div className="h-[500px] overflow-y-auto"> 
+                  
                 {
                    resources?.map((values:any , index:number)=><div key={index}> 
                    {
@@ -174,10 +186,11 @@ values?.policy_image?.map((value:any , index:number)=><div  key={index}>
                    }
                                       </div>  )
                 }
+                   </div>
                 
               </div> 
               <div className=" flex justify-center items-center mx-auto"> 
-                <p className="lg:w-2/3 w-full  absolute bottom-20 text-[#737373] text-justify px-4"> Disclaimer: These forms and consents must be used in conjunction with applicable federal and state rules as they relate to the standard of care required to provide such medical and cosmetic treatment. Nothing in these documents or treatment protocols should be interpreted to supersede applicable federal or state rules. These documents are meant for guidance and information only – use of the forms should be in conjunction with advice from local legal counsel based upon your individual circumstances. Find a MD 4 Me assumes no liability from any use of these forms. Transfer or sale of these forms is strictly prohibited. All policies/procedures and protocols are copyrighted.</p>
+                <p className="lg:w-2/3 w-full  absolute bottom-2 text-[#737373] text-justify px-4"> Disclaimer: These forms and consents must be used in conjunction with applicable federal and state rules as they relate to the standard of care required to provide such medical and cosmetic treatment. Nothing in these documents or treatment protocols should be interpreted to supersede applicable federal or state rules. These documents are meant for guidance and information only – use of the forms should be in conjunction with advice from local legal counsel based upon your individual circumstances. Find a MD 4 Me assumes no liability from any use of these forms. Transfer or sale of these forms is strictly prohibited. All policies/procedures and protocols are copyrighted.</p>
               </div>
             </TabsContent>
          

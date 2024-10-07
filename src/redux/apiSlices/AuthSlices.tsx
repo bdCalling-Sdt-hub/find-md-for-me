@@ -59,7 +59,24 @@ const authApi = api.injectEndpoints({
           body: values,
         };
       },
-    }),
+    }), 
+
+    // update profile image   
+    updateImage: builder.mutation({
+      query:(formData)=>{ 
+        console.log("data", formData);
+        return{
+          url:"/profile-image-update" ,
+          method:"POST" ,
+          body:formData
+        }
+      }
+    }) , 
+
+    // get Profile  
+    getProfileImage:builder.query({
+      query:()=>"/profile-image-get"
+    }) ,
     // change password
     changePass: builder.mutation({
       query: (values) => {
@@ -79,6 +96,8 @@ export const {
   usePostOTPMutation,
   useResetPassMutation,
   useGetProfileQuery,
-  usePostProfileMutation,
+  usePostProfileMutation, 
+  useUpdateImageMutation , 
+  useGetProfileImageQuery ,
   useChangePassMutation,
 } = authApi;

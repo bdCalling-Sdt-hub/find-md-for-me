@@ -3,12 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import person from "@/assests/person.png";
-import { useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
+import { useGetProfileImageQuery, useGetProfileQuery } from "@/redux/apiSlices/AuthSlices";
 import { baseUrl } from "@/redux/api/apiSlice";
 
 const Navbar = () => { 
   const { data } = useGetProfileQuery(undefined); 
-  const user = data?.user
+  const user = data?.user 
+  const {data:profileImage} = useGetProfileImageQuery(undefined) 
   // console.log(user); 
   return (
     <div
@@ -26,8 +27,10 @@ const Navbar = () => {
       <Link href="/profile">
         <div className=" flex items-center  ">
           <Image
-            src={user? 
-              user?.image?.startsWith('https') ? user?.image : user?.image === null ? `${baseUrl}/${user?.image}` : `${baseUrl}${user?.image}`
+            src={profileImage? 
+  profileImage?.profile_image.startsWith('http')
+  ? profileImage?.profile_image
+  : `${baseUrl}${profileImage?.profile_image}`
               :person} 
               alt=""
               height={60}

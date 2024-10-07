@@ -38,7 +38,7 @@ const Login = () => {
         Swal.fire({
           title: "Failed to Login",
           // @ts-ignore
-          text: error?.data?.message,
+          text: res?.error?.data?.message,
           icon: "error",
         });
       }

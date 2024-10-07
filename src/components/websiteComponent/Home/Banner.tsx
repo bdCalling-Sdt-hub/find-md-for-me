@@ -15,7 +15,7 @@ const Banner = () => {
   return (
     <div className="bg-[#FAFAFA]">
       <div className=" pt-4 lg:pt-0 mb-5  lg:container" >
-        <div className=" lg:h-[95vh] ">
+        <div className=" lg:h-[100%] ">
           <div className=" grid lg:grid-cols-2 grid-cols-1 items-center ">
             <div className="ps-5 lg:mb-28" data-aos="fade-down"
     data-aos-easing="linear" data-aos-duration="1000">

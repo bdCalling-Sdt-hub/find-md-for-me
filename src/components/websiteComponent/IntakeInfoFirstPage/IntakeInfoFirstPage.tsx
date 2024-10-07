@@ -333,7 +333,7 @@ state_license_certificate : personalInfo?.state_license_certificate ,
           >
             <Input
               className=" w-full h-[40px] "
-      
+       placeholder="Street Address, City, State, Zip Code, Unit/Suite/Apt number"
             />
           </Form.Item>
 

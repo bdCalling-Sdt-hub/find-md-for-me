@@ -5,8 +5,10 @@ import { Form, Input, Button } from "antd";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import Swal from "sweetalert2";
 import {
+  useGetProfileImageQuery,
   useGetProfileQuery,
   usePostProfileMutation,
+  useUpdateImageMutation,
 } from "@/redux/apiSlices/AuthSlices";
 
 import { useForm } from "antd/lib/form/Form";
@@ -17,8 +19,9 @@ const UserProfile = ({isEdit}:{isEdit:boolean}) => {
   const [image, setImage] = useState("");
   const [imgURL, setImgURL] = useState(image);
   const { data , refetch , isLoading } = useGetProfileQuery(undefined); 
-  // console.log(data);  
-  const [postProfile] = usePostProfileMutation(); 
+  const [postProfile] = usePostProfileMutation();  
+  const [updateImage] = useUpdateImageMutation() 
+  const {data:profileImage , refetch:reFetch} = useGetProfileImageQuery(undefined) 
   // console.log(
   // ); 
 
@@ -36,19 +39,9 @@ const UserProfile = ({isEdit}:{isEdit:boolean}) => {
   }, []);  
   
 
-
-  useEffect(() => {
-
-      const imageUrl = data?.user?.image
-        ? data?.user?.image.startsWith('https')
-          ? data?.user?.image
-          : data?.user?.image === null ? person :  `${baseUrl}${data?.user?.image}`
-        : person ; 
-  
-      setImgURL(imageUrl); 
-      // window.location.reload();   
-  }, [data]);
-
+  const imageUrl =  profileImage?.profile_image.startsWith('http')
+    ? profileImage?.profile_image
+    : `${baseUrl}${profileImage?.profile_image}`
 
   const handleSubmit = async (values: any) => { 
     const formData= new FormData() 
@@ -86,12 +79,26 @@ formData.append(key ,value)
     // console.log(values);
   };
 
-  const onChange = (e: any) => {
+  const onChange = async(e: any) => {
     const file = e.target.files[0];
     // console.log(file); 
     const imgUrl = URL.createObjectURL(file);
     setImgURL(imgUrl);
-    setImage(file);
+    setImage(file);  
+
+
+const formData = new FormData() 
+if(file){
+  formData.append("image",file) 
+}   
+
+const method = "PUT" 
+formData.append("_method", method)
+
+await updateImage(formData).then((res)=>{ 
+  reFetch()
+})  
+
   };
 
   useEffect(() => {
@@ -104,11 +111,10 @@ formData.append(key ,value)
         buisnes_name: data?.BisnessInfo?.buisness_name,
         buisness_address: data?.BisnessInfo?.buisness_address, 
         client_type: data?.BisnessInfo?.client_type , 
-        tier_type: data?.Tier ?  data?.Tier[0]?.tyer_name : ""
+        tier_type: data?.BisnessInfo?.tier_service_interrested ?  data?.BisnessInfo?.tier_service_interrested : ""
       });
     }
   }, [data, form]); 
-
 
   if(isLoading){
     return <p>Loading..</p>
@@ -144,7 +150,7 @@ formData.append(key ,value)
                 borderRadius: "18px",
                 border: "1px solid #1D75F2",
                 background: "white",
-                backgroundImage: `url(${imgURL})`,
+                backgroundImage: `url(${imageUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -202,7 +208,7 @@ formData.append(key ,value)
                     ]}
                   >
                     <Input
-                      placeholder="Enter Your First Name"
+                     
                       type="text"
                       style={{
                         border: "1px solid #E0E4EC",
@@ -228,7 +234,7 @@ formData.append(key ,value)
                     ]}
                   >
                     <Input
-                      placeholder="Enter Your Last Name"
+                    
                       type="text"
                       style={{
                         border: "1px solid #E0E4EC",
@@ -258,7 +264,7 @@ formData.append(key ,value)
                   >
                     <Input
                       type="text"
-                      placeholder=" Please Enter  Your  Email"
+                  
                       style={{
                         border: "1px solid #E0E4EC",
                         height: "52px",
@@ -282,7 +288,7 @@ formData.append(key ,value)
                   >
                     <Input
                       type="text"
-                      placeholder="Enter Phone Number"
+                   
                       style={{
                         border: "1px solid #E0E4EC",
                         height: "52px",
@@ -310,7 +316,6 @@ formData.append(key ,value)
                   >
                     <Input
                       type="text"
-                      placeholder="Enter your Business name "
                       style={{
                         border: "1px solid #E0E4EC",
                         height: "52px",
@@ -338,7 +343,6 @@ formData.append(key ,value)
                   >
                     <Input
                       type="text"
-                      placeholder="Enter your Business address"
                       style={{
                         border: "1px solid #E0E4EC",
                         height: "52px",
@@ -365,7 +369,6 @@ formData.append(key ,value)
                   >
                     <Input
                       type="text"
-                      placeholder="Enter your Business address"
                       style={{
                         border: "1px solid #E0E4EC",
                         height: "52px",
@@ -393,7 +396,6 @@ formData.append(key ,value)
                   >
                     <Input
                       type="text"
-                      placeholder="Enter your Business address"
                       style={{
                         border: "1px solid #E0E4EC",
                         height: "52px",

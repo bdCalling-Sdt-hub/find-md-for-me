@@ -81,7 +81,10 @@ const PricingTabs = () => {
                     value?.title === "Tier 1" && "bg-[#FF31F7]"
                   } ${value?.title === "Tier 2" && "bg-[#F59E0B]"} 
                    ${value?.title === "Tier 3" && "bg-[#10B981]"} 
-                    ${value?.title === "Tier 4" && "bg-[#AA0BF5]"}  `}
+                    ${value?.title === "Tier 4" && "bg-[#AA0BF5]"} 
+                    ${value?.title === "Tier 5" && "bg-[#6082B6]"} 
+                    ${value?.title === "Tier 6" && "bg-[#8A9A5B]"} 
+                     `}
                   // style={{ backgroundColor: value?.titleColor }}
                 >
                   {" "}
@@ -94,7 +97,9 @@ const PricingTabs = () => {
                         value?.title === "Tier 1" && "text-[#FF31F7]"
                       } ${value?.title === "Tier 2" && "text-[#F59E0B]"} 
                        ${value?.title === "Tier 3" && "text-[#10B981]"} 
-                        ${value?.title === "Tier 4" && "text-[#AA0BF5]"}  `}
+                        ${value?.title === "Tier 4" && "text-[#AA0BF5]"} 
+                             ${value?.title === "Tier 5" && "text-[#6082B6]"} 
+                    ${value?.title === "Tier 6" && "text-[#8A9A5B]"}   `}
                       // style={{ color: value?.titleColor }}
                     >
                       {value?.title}{" "}
@@ -155,7 +160,9 @@ const PricingTabs = () => {
                     value?.title === "Tier 1" && "bg-[#FF31F7]"
                   } ${value?.title === "Tier 2" && "bg-[#F59E0B]"} 
                    ${value?.title === "Tier 3" && "bg-[#10B981]"} 
-                    ${value?.title === "Tier 4" && "bg-[#AA0BF5]"} `}
+                    ${value?.title === "Tier 4" && "bg-[#AA0BF5]"} 
+                         ${value?.title === "Tier 5" && "bg-[#6082B6]"} 
+                    ${value?.title === "Tier 6" && "bg-[#8A9A5B]"}   `}
                   // style={{ backgroundColor: value?.titleColor }}
                 >
                   {" "}
@@ -168,7 +175,9 @@ const PricingTabs = () => {
                         value?.title === "Tier 1" && "text-[#FF31F7]"
                       } ${value?.title === "Tier 2" && "text-[#F59E0B]"} 
                        ${value?.title === "Tier 3" && "text-[#10B981]"} 
-                        ${value?.title === "Tier 4" && "text-[#AA0BF5]"} `}
+                        ${value?.title === "Tier 4" && "text-[#AA0BF5]"} 
+                             ${value?.title === "Tier 5" && "text-[#6082B6]"} 
+                    ${value?.title === "Tier 6" && "text-[#8A9A5B]"}  `}
                       // style={{ color: value?.titleColor }}
                     >
                       {value?.title}{" "}

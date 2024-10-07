@@ -48,56 +48,23 @@ const IntakeSchedule = () => {
         </p>
       </div>
 
-      <div>
-        <div className=" lg:flex gap-10 mt-16 items-center"> 
-        <iframe
-        src="https://app.acuityscheduling.com/schedule.php?owner=32379568&calendarID=10185676&ref=embedded_csp"
-        title="Schedule Appointment"
-        width="100%"
-        height="700"
-        frameBorder="0"
-      ></iframe>
-          {/* <div>
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              className="rounded-md border w-full"
-            />
-          </div> */}
+      <div className="lg:flex w-full flex-col lg:flex-row pt-4">
+  <div className="h-[100%] w-[97%] ">
+    <iframe
+      src="https://app.acuityscheduling.com/schedule.php?owner=32379568&calendarID=10185676&ref=embedded_csp"
+      title="Schedule Appointment"
+      height="100%"
+      width="100%"
+      frameBorder="0"
+    ></iframe>
+  </div>
 
-          {/* <div className="w-full mt-10 lg:mt-1">
-            <div className="  lg:w-[80%] mx-auto  ">
-              <p className=" text-center text-lg text-[#737373] pb-3 w-2/3 mx-auto tracking-wide ">
-                All appointments are scheduled in Central Standard Time zone
-                (CST).
-              </p>
-              <p className=" font-semibold  text-lg text-center mb-2">
-                {" "}
-                Select Hours
-              </p>
-              <div className=" flex-wrap  gap-4  bg-[#FAFAFA] rounded-xl shadow-md p-10 pe-0 ">
-                {TimeValues?.map((data, index) => (
-                  <Button
-                    key={index}
-                    variant={clickBtn === data ? "btn3" : "default2"}
-                    className=" me-4 mb-3"
-                    onClick={() => handleClick(data)}
-                  >
-                    {" "}
-                    {data}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div> */}
-        </div>
-        <div className="text-center mb-10"  onClick={handleSubmit}>
-  
-          <Button variant="getStarted"> Submit </Button>
-
-        </div>
-      </div>
+  <div className="lg:flex lg:items-center lg:justify-center text-center mt-8  lg:mt-8 mb-5 lg:mb-0  ">
+    <button  className=" w-[120px] h-[43px] px-2 rounded-lg text-white bg-[#f82bf1]" onClick={handleSubmit}>
+      Submit
+    </button>
+  </div>
+</div>
     </div>
   );
 };

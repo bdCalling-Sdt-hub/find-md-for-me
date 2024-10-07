@@ -24,10 +24,7 @@ AOS.init()
 },[])
 
   const values = [
-    {
-      icon: <MdPhoneInTalk size={24} />,
-      data: "(480) 555-0103",
-    },
+
     {
       icon: <IoMdMail size={24} />,
       data: "info@FindaMD4Me.com",
@@ -45,7 +42,7 @@ AOS.init()
           icon: "success",
           title: res?.data?.message,
           showConfirmButton: false,
-          timer: 500,
+          timer: 1600,
         });
         form.resetFields();
       }
@@ -246,7 +243,7 @@ AOS.init()
                   className="mt-2"
                 />
               </Form.Item>
- <div className="flex items-center justify-center ">
+ <div className="flex items-center justify-center  mt-3">
 
            <button type="submit" style={{ height:45 , width:120 , backgroundColor:"#c738bd" , borderRadius:8 , color:"white" , fontWeight:500 }}>Submit</button>
  </div>

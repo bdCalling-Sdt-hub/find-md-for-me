@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
 const Vendors = () => {
-  const { data } = useVendorDataQuery(undefined);
+  const { data } = useVendorDataQuery(undefined); 
   const [postVendorForm, { error }] =
     usePostVendorFormMutation();  
     const router = useRouter()

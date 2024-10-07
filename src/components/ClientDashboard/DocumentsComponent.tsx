@@ -94,7 +94,7 @@ const DocumentsComponent = ({current, setCurrent}:any) => {
           // @ts-ignore
           text: response?.error?.data?.message || "An error occurred",
           icon: "error",
-          timer: 1500,
+         
         });
       }
     } catch (error) {
