@@ -21,7 +21,7 @@ const UserProfile = ({isEdit}:{isEdit:boolean}) => {
   const [postProfile] = usePostProfileMutation();  
   const [updateImage] = useUpdateImageMutation() 
   const {data:profileImage , refetch:reFetch} = useGetProfileImageQuery(undefined)  
-  console.log(profileImage);
+
   // console.log(
   // ); 
 
