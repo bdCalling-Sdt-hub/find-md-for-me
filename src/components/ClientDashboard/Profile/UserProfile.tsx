@@ -47,7 +47,7 @@ const UserProfile = ({isEdit}:{isEdit:boolean}) => {
   
       setImgURL(imageUrl);
     }
-  }, [profileImage, baseUrl]);
+  }, [profileImage]);
 
 
   const handleSubmit = async (values: any) => { 
